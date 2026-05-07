@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MR.C Logo Mockups — Review</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #050505;
+      color: #F5F5F7;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 60px 40px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    header h1 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 12px;
+    }
+    header p {
+      font-size: 15px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .logos-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .logo-card {
+      border: 1px solid #262626;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .logo-card__header {
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .logo-card__number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .logo-card__name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ccc;
+    }
+    .logo-card__tag {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .tag-neon   { background: rgba(0,229,255,0.10); color: #00E5FF; border: 1px solid rgba(0,229,255,0.25); }
+    .tag-flame  { background: rgba(255,190,11,0.10); color: #FFBE0B; border: 1px solid rgba(255,190,11,0.25); }
+    .tag-ice    { background: rgba(0,191,255,0.10); color: #00BFFF; border: 1px solid rgba(0,191,255,0.25); }
+
+    .logo-card__canvas {
+      background: #050505;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-card__canvas img,
+    .logo-card__canvas object {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      display: block;
+    }
+    .logo-card__canvas--neon  { background: #05000F; }
+    .logo-card__canvas--flame { background: #080400; }
+    .logo-card__canvas--ice   { background: #000810; }
+
+    .logo-card__desc {
+      padding: 16px 24px 20px;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .logo-card__detail {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .logo-card__detail-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .logo-card__detail-value {
+      font-size: 13px;
+      font-weight: 400;
+      color: #aaa;
+    }
+
+    /* Scale test strip */
+    .scale-strip {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 24px;
+      border-top: 1px solid #1a1a1a;
+      background: #0d0d0d;
+    }
+    .scale-strip__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: #444;
+      white-space: nowrap;
+    }
+    .scale-strip img { display: block; flex-shrink: 0; }
+
+    /* Original (reference) card */
+    .logo-card--ref .logo-card__canvas { background: #050505; }
+    .logo-card__number.ref { color: #D4AF37; }
+
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MR.C Digital Studios — Logo Mockups</h1>
+  <p>Review three new concepts below. The existing logo is shown first for reference.</p>
+</header>
+
+<div class="logos-grid">
+
+  <!-- Reference logo -->
+  <div class="logo-card logo-card--ref">
+    <div class="logo-card__header">
+      <span class="logo-card__number ref">REF</span>
+      <span class="logo-card__name">Gilded Circuit — Existing Logo</span>
+    </div>
+    <div class="logo-card__canvas">
+      <img src="logo-1-gilded-circuit.svg" alt="Gilded Circuit logo"/>
+    </div>
+    <div class="scale-strip">
+      <span class="scale-strip__label">Scale test</span>
+      <img src="logo-1-gilded-circuit.svg" width="280" alt=""/>
+      <img src="logo-1-gilded-circuit.svg" width="140" alt=""/>
+      <img src="logo-1-gilded-circuit.svg" width="70"  alt=""/>
+      <img src="logo-1-gilded-circuit.svg" width="35"  alt=""/>
+    </div>
+  </div>
+
+  <!-- Logo 2 -->
+  <div class="logo-card">
+    <div class="logo-card__header">
+      <span class="logo-card__number">Option 1</span>
+      <span class="logo-card__name">Circuit Neon</span>
+      <span class="logo-card__tag tag-neon">Electric Indigo</span>
+    </div>
+    <div class="logo-card__canvas logo-card__canvas--neon">
+      <img src="logo-2-circuit-neon.svg" alt="Circuit Neon logo"/>
+    </div>
+    <div class="logo-card__desc">
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Palette</span>
+        <span class="logo-card__detail-value">Electric Cyan #00E5FF + Violet #9D4EDD</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Icon</span>
+        <span class="logo-card__detail-value">Hexagonal circuit emblem with "C" monogram + PCB leads</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Feel</span>
+        <span class="logo-card__detail-value">Cyberpunk luxury — electric, vibrant, tech-forward</span>
+      </div>
+    </div>
+    <div class="scale-strip">
+      <span class="scale-strip__label">Scale test</span>
+      <img src="logo-2-circuit-neon.svg" width="280" alt=""/>
+      <img src="logo-2-circuit-neon.svg" width="140" alt=""/>
+      <img src="logo-2-circuit-neon.svg" width="70"  alt=""/>
+      <img src="logo-2-circuit-neon.svg" width="35"  alt=""/>
+    </div>
+  </div>
+
+  <!-- Logo 3 -->
+  <div class="logo-card">
+    <div class="logo-card__header">
+      <span class="logo-card__number">Option 2</span>
+      <span class="logo-card__name">Solar Signal</span>
+      <span class="logo-card__tag tag-flame">Warm Gold-Flame</span>
+    </div>
+    <div class="logo-card__canvas logo-card__canvas--flame">
+      <img src="logo-3-solar-signal.svg" alt="Solar Signal logo"/>
+    </div>
+    <div class="logo-card__desc">
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Palette</span>
+        <span class="logo-card__detail-value">Flame Orange #FF6B35 → Amber #FFBE0B → Hot Yellow #FFF176</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Icon</span>
+        <span class="logo-card__detail-value">Signal broadcast tower — arcing rings + vertical mast</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Feel</span>
+        <span class="logo-card__detail-value">Bold creative energy — transmitting ideas, fiery ambition</span>
+      </div>
+    </div>
+    <div class="scale-strip">
+      <span class="scale-strip__label">Scale test</span>
+      <img src="logo-3-solar-signal.svg" width="280" alt=""/>
+      <img src="logo-3-solar-signal.svg" width="140" alt=""/>
+      <img src="logo-3-solar-signal.svg" width="70"  alt=""/>
+      <img src="logo-3-solar-signal.svg" width="35"  alt=""/>
+    </div>
+  </div>
+
+  <!-- Logo 4 -->
+  <div class="logo-card">
+    <div class="logo-card__header">
+      <span class="logo-card__number">Option 3</span>
+      <span class="logo-card__name">Prism Vertex</span>
+      <span class="logo-card__tag tag-ice">Glacial Blue</span>
+    </div>
+    <div class="logo-card__canvas logo-card__canvas--ice">
+      <img src="logo-4-prism-vertex.svg" alt="Prism Vertex logo"/>
+    </div>
+    <div class="logo-card__desc">
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Palette</span>
+        <span class="logo-card__detail-value">Platinum White → Electric Blue #00BFFF → Sapphire #0066CC</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Icon</span>
+        <span class="logo-card__detail-value">Faceted gem/prism with refraction rays — precision cut diamond</span>
+      </div>
+      <div class="logo-card__detail">
+        <span class="logo-card__detail-label">Feel</span>
+        <span class="logo-card__detail-value">Ultra-premium precision — crystalline clarity, architectural clean</span>
+      </div>
+    </div>
+    <div class="scale-strip">
+      <span class="scale-strip__label">Scale test</span>
+      <img src="logo-4-prism-vertex.svg" width="280" alt=""/>
+      <img src="logo-4-prism-vertex.svg" width="140" alt=""/>
+      <img src="logo-4-prism-vertex.svg" width="70"  alt=""/>
+      <img src="logo-4-prism-vertex.svg" width="35"  alt=""/>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  MR.C Digital Studios — Logo Review &nbsp;·&nbsp; SVG vector format, fully scalable
+</footer>
+
+</body>
+</html>

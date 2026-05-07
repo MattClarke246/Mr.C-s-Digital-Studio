@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" role="img" aria-label="MR.C Digital Studio — Circuit Neon Logo">
+  <defs>
+    <!-- Cyan → Violet wordmark gradient -->
+    <linearGradient id="l2-word" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#00E5FF"/>
+      <stop offset="40%"  stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#9D4EDD"/>
+    </linearGradient>
+
+    <!-- Hex icon gradient -->
+    <linearGradient id="l2-hex" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#9D4EDD"/>
+    </linearGradient>
+
+    <!-- Soft radial BG glow -->
+    <radialGradient id="l2-bg" cx="30%" cy="50%" r="55%">
+      <stop offset="0%"   stop-color="#1A0040" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#05000F" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="l2-bg2" cx="75%" cy="50%" r="45%">
+      <stop offset="0%"   stop-color="#00204A" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#05000F" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Main glow — text -->
+    <filter id="l2-glow-txt" x="-15%" y="-40%" width="130%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6"  flood-color="#00E5FF" flood-opacity="0.55"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#9D4EDD" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Icon glow -->
+    <filter id="l2-glow-ico" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5"  flood-color="#00E5FF" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#9D4EDD" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Dot glow -->
+    <filter id="l2-dot" x="-200%" y="-200%" width="500%" height="500%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00E5FF" flood-opacity="0.9"/>
+    </filter>
+
+    <!-- Fade line gradient -->
+    <linearGradient id="l2-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#00E5FF" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#00E5FF" stop-opacity="0.4"/>
+      <stop offset="75%"  stop-color="#9D4EDD" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#9D4EDD" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="560" height="200" fill="#05000F"/>
+  <rect width="560" height="200" fill="url(#l2-bg)"/>
+  <rect width="560" height="200" fill="url(#l2-bg2)"/>
+
+  <!-- ── BACKGROUND GRID DOTS (hex field texture) ─────────────── -->
+  <!-- Row 1 -->
+  <circle cx="200" cy="22"  r="1" fill="#00E5FF" fill-opacity="0.10"/>
+  <circle cx="230" cy="22"  r="1" fill="#00E5FF" fill-opacity="0.10"/>
+  <circle cx="260" cy="22"  r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="290" cy="22"  r="1" fill="#9D4EDD" fill-opacity="0.08"/>
+  <circle cx="320" cy="22"  r="1" fill="#9D4EDD" fill-opacity="0.08"/>
+  <circle cx="350" cy="22"  r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="380" cy="22"  r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="410" cy="22"  r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <!-- Row 2 -->
+  <circle cx="215" cy="40"  r="1" fill="#00E5FF" fill-opacity="0.08"/>
+  <circle cx="245" cy="40"  r="1" fill="#00E5FF" fill-opacity="0.08"/>
+  <circle cx="275" cy="40"  r="1" fill="#9D4EDD" fill-opacity="0.07"/>
+  <circle cx="305" cy="40"  r="1" fill="#9D4EDD" fill-opacity="0.07"/>
+  <circle cx="335" cy="40"  r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="365" cy="40"  r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <circle cx="395" cy="40"  r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <!-- Row 3 -->
+  <circle cx="200" cy="58"  r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="230" cy="58"  r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="260" cy="58"  r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="290" cy="58"  r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="320" cy="58"  r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <circle cx="350" cy="58"  r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <!-- Row 4 (bottom half mirror) -->
+  <circle cx="200" cy="142" r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="230" cy="142" r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="260" cy="142" r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="290" cy="142" r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="320" cy="142" r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <circle cx="350" cy="142" r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <circle cx="200" cy="160" r="1" fill="#00E5FF" fill-opacity="0.08"/>
+  <circle cx="230" cy="160" r="1" fill="#00E5FF" fill-opacity="0.08"/>
+  <circle cx="260" cy="160" r="1" fill="#9D4EDD" fill-opacity="0.07"/>
+  <circle cx="290" cy="160" r="1" fill="#9D4EDD" fill-opacity="0.07"/>
+  <circle cx="320" cy="160" r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+  <circle cx="350" cy="160" r="1" fill="#9D4EDD" fill-opacity="0.05"/>
+  <circle cx="200" cy="178" r="1" fill="#00E5FF" fill-opacity="0.10"/>
+  <circle cx="230" cy="178" r="1" fill="#00E5FF" fill-opacity="0.10"/>
+  <circle cx="260" cy="178" r="1" fill="#00E5FF" fill-opacity="0.07"/>
+  <circle cx="290" cy="178" r="1" fill="#9D4EDD" fill-opacity="0.08"/>
+  <circle cx="320" cy="178" r="1" fill="#9D4EDD" fill-opacity="0.08"/>
+  <circle cx="350" cy="178" r="1" fill="#9D4EDD" fill-opacity="0.06"/>
+
+  <!-- ── HEX ICON — centered at (90, 100) ──────────────────────── -->
+  <!-- Outer hex: flat-top, r=46 -->
+  <!-- vertices: (136,100) (113,140) (67,140) (44,100) (67,60) (113,60) -->
+  <polygon points="136,100 113,140 67,140 44,100 67,60 113,60"
+           fill="none" stroke="url(#l2-hex)" stroke-width="1.8"
+           filter="url(#l2-glow-ico)"/>
+
+  <!-- Inner hex: r=34 -->
+  <!-- vertices: (124,100) (107,129) (73,129) (56,100) (73,71) (107,71) -->
+  <polygon points="124,100 107,129 73,129 56,100 73,71 107,71"
+           fill="none" stroke="#00E5FF" stroke-width="0.7" stroke-opacity="0.25"/>
+
+  <!-- Vertex circuit pads (outer hex corners) -->
+  <circle cx="136" cy="100" r="3" fill="none" stroke="#00E5FF" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="136" cy="100" r="1.2" fill="#00E5FF"/>
+  <circle cx="113" cy="140" r="3" fill="none" stroke="#00E5FF" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="113" cy="140" r="1.2" fill="#00E5FF"/>
+  <circle cx="67"  cy="140" r="3" fill="none" stroke="#9D4EDD" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="67"  cy="140" r="1.2" fill="#9D4EDD"/>
+  <circle cx="44"  cy="100" r="3" fill="none" stroke="#9D4EDD" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="44"  cy="100" r="1.2" fill="#9D4EDD"/>
+  <circle cx="67"  cy="60"  r="3" fill="none" stroke="#9D4EDD" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="67"  cy="60"  r="1.2" fill="#9D4EDD"/>
+  <circle cx="113" cy="60"  r="3" fill="none" stroke="#00E5FF" stroke-width="1.2" filter="url(#l2-dot)"/>
+  <circle cx="113" cy="60"  r="1.2" fill="#00E5FF"/>
+
+  <!-- Circuit leads extending from hex vertices outward -->
+  <line x1="136" y1="100" x2="148" y2="100" stroke="#00E5FF" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="44"  y1="100" x2="32"  y2="100" stroke="#9D4EDD" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="113" y1="60"  x2="120" y2="48"  stroke="#00E5FF" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="67"  y1="60"  x2="60"  y2="48"  stroke="#9D4EDD" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="113" y1="140" x2="120" y2="152" stroke="#00E5FF" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="67"  cy="140" x2="60"  y2="152" stroke="#9D4EDD" stroke-width="1" stroke-opacity="0.4"/>
+
+  <!-- Tiny terminal pads on leads -->
+  <rect x="148" y="97.5" width="5" height="5" fill="#00E5FF" fill-opacity="0.5" rx="1"/>
+  <rect x="27"  y="97.5" width="5" height="5" fill="#9D4EDD" fill-opacity="0.5" rx="1"/>
+  <rect x="120" y="44"   width="5" height="5" fill="#00E5FF" fill-opacity="0.5" rx="1"/>
+  <rect x="56"  y="44"   width="5" height="5" fill="#9D4EDD" fill-opacity="0.5" rx="1"/>
+  <rect x="120" y="151"  width="5" height="5" fill="#00E5FF" fill-opacity="0.5" rx="1"/>
+  <rect x="56"  y="151"  width="5" height="5" fill="#9D4EDD" fill-opacity="0.5" rx="1"/>
+
+  <!-- "C" monogram inside the hex -->
+  <text x="90" y="117"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="58" font-weight="900"
+        text-anchor="middle"
+        fill="url(#l2-word)"
+        filter="url(#l2-glow-ico)">C</text>
+
+  <!-- Thin horizontal scan line across icon area -->
+  <line x1="44" y1="100" x2="136" y2="100" stroke="#00E5FF" stroke-width="0.4" stroke-opacity="0.18"/>
+
+  <!-- ── VERTICAL DIVIDER ────────────────────────────────────── -->
+  <line x1="162" y1="35" x2="162" y2="165"
+        stroke="url(#l2-line)" stroke-width="0.8"/>
+
+  <!-- ── WORDMARK (right of icon) ─────────────────────────────── -->
+  <text x="365" y="117"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="78" font-weight="800"
+        text-anchor="middle"
+        fill="url(#l2-word)"
+        filter="url(#l2-glow-txt)"
+        letter-spacing="-3">MR.C</text>
+
+  <!-- Separator line -->
+  <line x1="175" y1="138" x2="548" y2="138" stroke="url(#l2-line)" stroke-width="0.7"/>
+
+  <!-- Centre diamond -->
+  <polygon points="365,133 368.5,138 365,143 361.5,138" fill="#00E5FF" fill-opacity="0.5"
+           filter="url(#l2-dot)"/>
+
+  <!-- Subtitle -->
+  <text x="365" y="162"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="11" font-weight="600"
+        text-anchor="middle"
+        fill="#9D4EDD" fill-opacity="0.85"
+        letter-spacing="7">DIGITAL STUDIO</text>
+</svg>

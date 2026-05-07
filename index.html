@@ -93,7 +93,7 @@
       outline-offset: 4px;
       box-shadow: 0 0 0 5px rgba(212,175,55,0.25);
     }
-    .nav-links a:focus-visible { border-radius: var(--r-xs); }
+    .nav-dashbar a:focus-visible { border-radius: var(--r-xs); }
 
     /* ── Apple HIG: Reduced motion ───────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
@@ -183,47 +183,81 @@
       box-shadow: inset 0 1px 1px #fff, 0 0 36px rgba(212,175,55,0.6), 0 8px 32px rgba(0,0,0,0.5);
     }
 
-    /* ── Nav (HIG: 44px min nav bar height) ─────────────────── */
+    /* ── Nav ────────────────────────────────────────────────── */
     nav {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 300;
-      height: 58px; /* ≥ 44px HIG */
-      display: flex;
+      height: 72px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      background: rgba(5,5,5,0.72);
+      padding: 0 32px;
+      background: rgba(5,5,5,0.75);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       border-bottom: 1px solid var(--c-hairline-soft);
     }
+
+    /* Left column — holds hamburger on mobile (empty on desktop) */
+    .nav-left { display: flex; align-items: center; }
+
+    /* Center column — logo */
     .nav-logo {
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      background: linear-gradient(135deg, #ffffff 40%, #C4A47C 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      min-height: 44px; /* HIG touch target */
       display: flex;
       align-items: center;
+      justify-content: center;
+      min-height: 44px;
     }
-    .nav-links { display: flex; gap: 30px; }
-    .nav-links a {
-      font-size: 14px;
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    /* Right column — dashbar pill */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .nav-dashbar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 5px 6px 5px 10px;
+      background: rgba(10, 10, 18, 0.65);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.45),
+                  inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-dashbar a {
+      font-size: 13.5px;
       font-weight: 500;
       color: var(--c-ink-muted);
-      transition: color 0.15s;
-      min-height: 44px; /* HIG touch target */
+      padding: 7px 14px;
+      border-radius: 100px;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+      min-height: 36px;
       display: flex;
       align-items: center;
-      padding: 0 4px;
+      letter-spacing: -0.01em;
     }
-    .nav-links a:hover { color: var(--c-ink); }
-    .nav-ctas { display: flex; gap: 10px; }
+    .nav-dashbar a:hover { color: var(--c-ink); background: rgba(255,255,255,0.06); }
+    .nav-dashbar-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
 
+    /* Hamburger — hidden on desktop, shown on mobile */
     .nav-hamburger {
       display: none;
       flex-direction: column;
@@ -232,7 +266,6 @@
       background: none;
       border: none;
       padding: 0;
-      /* HIG: 44×44 touch target */
       min-width: 44px;
       min-height: 44px;
       align-items: center;
@@ -247,7 +280,7 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      inset: 58px 0 0 0;
+      inset: 72px 0 0 0;
       z-index: 290;
       background: rgba(5,5,5,0.97);
       backdrop-filter: blur(24px);
@@ -585,13 +618,108 @@
     .form-success p  { font-size: 15px; color: var(--c-ink-muted); line-height: 1.55; }
 
     /* ── Footer ──────────────────────────────────────────────── */
-    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 52px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .footer-logo { font-size: 15px; font-weight: 700; letter-spacing: -0.04em; background: linear-gradient(135deg, #ffffff 40%, #C4A47C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .footer-copy { font-size: 13px; color: var(--c-ink-muted); }
-    .footer-right { display: flex; align-items: center; gap: 24px; }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 13px; color: var(--c-ink-muted); transition: color 0.15s; min-height: 44px; display: flex; align-items: center; }
+    footer[role="contentinfo"] {
+      border-top: 1px solid var(--c-hairline-soft);
+      padding: 56px 40px 36px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--c-hairline-soft);
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 0 0 auto;
+    }
+    .footer-logo-img {
+      height: 60px;
+      width: auto;
+      display: block;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--c-ink-muted);
+      max-width: 210px;
+      line-height: 1.55;
+    }
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer-nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--c-ink-muted);
+      opacity: 0.5;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--c-ink-muted);
+      transition: color 0.15s;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+    }
     .footer-links a:hover { color: var(--c-gold); }
+    .footer-connect {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-end;
+    }
+    .footer-connect-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--c-ink-muted);
+      opacity: 0.5;
+      align-self: flex-end;
+    }
+    .footer-social {
+      display: flex;
+      gap: 18px;
+    }
+    .footer-social a {
+      font-size: 14px;
+      color: var(--c-ink-muted);
+      transition: color 0.15s;
+    }
+    .footer-social a:hover { color: var(--c-ink); }
+    .footer-email {
+      font-size: 13px;
+      color: var(--c-ink-muted);
+      transition: color 0.15s;
+    }
+    .footer-email:hover { color: var(--c-gold); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .footer-copy { font-size: 13px; color: var(--c-ink-muted); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: 13px; color: var(--c-ink-muted); transition: color 0.15s; }
+    .footer-legal a:hover { color: var(--c-ink); }
 
     /* ── Scroll reveal ───────────────────────────────────────── */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s cubic-bezier(.22,1,.36,1), transform 1.2s cubic-bezier(.22,1,.36,1); }
@@ -620,7 +748,7 @@
     /* ── Responsive ──────────────────────────────────────────── */
     @media (max-width: 960px) {
       nav { padding: 0 20px; }
-      .nav-links, .nav-ctas { display: none; }
+      .nav-dashbar { display: none; }
       .nav-hamburger { display: flex; }
 
       /* Hero: single column on mobile */
@@ -650,8 +778,14 @@
       .testimonials-grid { grid-template-columns: 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .booking-grid { grid-template-columns: 1fr; gap: 48px; }
-      .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
-      .footer-right { flex-direction: column; gap: 16px; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 36px; }
+      .footer-brand { align-items: center; }
+      .footer-tagline { max-width: none; text-align: center; }
+      .footer-nav { align-items: center; }
+      .footer-links { align-items: center; }
+      .footer-connect { align-items: center; }
+      .footer-connect-label { align-self: center; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
       .projects-header { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 600px) {
@@ -669,21 +803,33 @@
 
 <!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
 <nav aria-label="Main navigation">
-  <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">MR.C</a>
-  <ul class="nav-links" role="list">
-    <li><a href="#about">About</a></li>
-    <li><a href="#how-it-works">Process</a></li>
-    <li><a href="#projects">Work</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <div class="nav-ctas">
-    <a href="#booking" class="btn btn-gold">Book a Free Call</a>
+
+  <!-- Left column: hamburger on mobile, empty on desktop -->
+  <div class="nav-left">
+    <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-  </button>
+
+  <!-- Center column: logo -->
+  <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
+    <img src="assets/logo/logo-prism-vertex.svg" alt="MR.C Digital Studio" width="134" height="48"/>
+  </a>
+
+  <!-- Right column: dashbar pill -->
+  <div class="nav-right">
+    <nav class="nav-dashbar" aria-label="Site navigation">
+      <a href="#about">About</a>
+      <a href="#how-it-works">Process</a>
+      <a href="#projects">Work</a>
+      <a href="#faq">FAQ</a>
+      <span class="nav-dashbar-sep" aria-hidden="true"></span>
+      <a href="#booking" class="btn btn-gold" style="padding: 8px 18px; font-size: 13.5px; min-height: 36px;">Book a Free Call</a>
+    </nav>
+  </div>
+
 </nav>
 
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true" hidden>
@@ -1112,33 +1258,47 @@
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ FOOTER ══════════════════════════════ -->
-<footer role="contentinfo" style="padding: 60px 40px; text-align: center;">
-  <div class="footer-inner" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-      <span class="footer-logo" style="font-size: 24px;">MR.C</span>
-      <p style="color: var(--c-ink-muted); font-size: 15px;">Your website should be your best salesperson.</p>
-    </div>
-    
-    <nav class="footer-links" aria-label="Footer navigation" style="display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
-      <a href="#about" style="color: var(--c-ink-muted); transition: color 0.2s;">About</a>
-      <a href="#how-it-works" style="color: var(--c-ink-muted); transition: color 0.2s;">Process</a>
-      <a href="#projects" style="color: var(--c-ink-muted); transition: color 0.2s;">Work</a>
-      <a href="#faq" style="color: var(--c-ink-muted); transition: color 0.2s;">FAQ</a>
-    </nav>
-    
-    <div style="display: flex; gap: 24px; justify-content: center;">
-      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">Instagram</a>
-      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">LinkedIn</a>
-      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">Twitter</a>
-      <a href="mailto:hello@mrc-digital.com" style="color: var(--c-ink-muted); transition: color 0.2s;">hello@mrc-digital.com</a>
+<footer role="contentinfo">
+  <div class="footer-inner">
+
+    <!-- Left: logo + tagline -->
+    <div class="footer-brand">
+      <a href="#" aria-label="Mr.C's Digital Studio — home">
+        <img src="assets/logo/logo-prism-vertex.svg" alt="MR.C Digital Studio" class="footer-logo-img" width="168" height="60"/>
+      </a>
+      <p class="footer-tagline">Your website should be your best salesperson.</p>
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 16px; align-items: center; border-top: 1px solid var(--c-hairline-soft); padding-top: 40px; width: 100%;">
-      <span class="footer-copy" style="color: var(--c-ink-muted); font-size: 14px;">© 2026 Mr.C's Digital Studio. All rights reserved.</span>
-      <div style="display: flex; gap: 16px; font-size: 13px;">
-        <a href="#" style="color: var(--c-ink-muted);">Privacy Policy</a>
-        <a href="#" style="color: var(--c-ink-muted);">Terms of Service</a>
+    <!-- Center: navigation links -->
+    <div class="footer-nav">
+      <span class="footer-nav-label">Navigation</span>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#how-it-works">Process</a>
+        <a href="#projects">Work</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+
+    <!-- Right: social + contact -->
+    <div class="footer-connect">
+      <span class="footer-connect-label">Connect</span>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter</a>
       </div>
+      <a href="mailto:hello@mrc-digital.com" class="footer-email">hello@mrc-digital.com</a>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Mr.C's Digital Studio. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
     </div>
   </div>
 </footer>

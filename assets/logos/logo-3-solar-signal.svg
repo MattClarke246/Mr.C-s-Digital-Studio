@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" role="img" aria-label="MR.C Digital Studio — Solar Signal Logo">
+  <defs>
+    <!-- Fire gradient: orange → amber → yellow-white -->
+    <linearGradient id="l3-fire" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%"   stop-color="#FF4500"/>
+      <stop offset="35%"  stop-color="#FF6B35"/>
+      <stop offset="65%"  stop-color="#FFBE0B"/>
+      <stop offset="100%" stop-color="#FFF176"/>
+    </linearGradient>
+
+    <!-- Horizontal wordmark gradient -->
+    <linearGradient id="l3-word" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#FF6B35"/>
+      <stop offset="30%"  stop-color="#FFBE0B"/>
+      <stop offset="60%"  stop-color="#FFF176"/>
+      <stop offset="100%" stop-color="#FFBE0B"/>
+    </linearGradient>
+
+    <!-- Radial background warm glow -->
+    <radialGradient id="l3-bg" cx="50%" cy="50%" r="55%">
+      <stop offset="0%"   stop-color="#2A0E00" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#080400" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Signal ring gradient -->
+    <radialGradient id="l3-ring" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFBE0B" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0.7"/>
+    </radialGradient>
+
+    <!-- Text glow -->
+    <filter id="l3-glow-txt" x="-15%" y="-40%" width="130%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7"  flood-color="#FFBE0B" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#FF6B35" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Icon glow -->
+    <filter id="l3-glow-ico" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5"  flood-color="#FFBE0B" flood-opacity="0.7"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="#FF6B35" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Dot glow -->
+    <filter id="l3-dot" x="-200%" y="-200%" width="500%" height="500%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#FFBE0B" flood-opacity="0.9"/>
+    </filter>
+
+    <!-- Separator fade -->
+    <linearGradient id="l3-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#FF6B35" stop-opacity="0"/>
+      <stop offset="20%"  stop-color="#FF6B35" stop-opacity="0.5"/>
+      <stop offset="50%"  stop-color="#FFF176" stop-opacity="0.8"/>
+      <stop offset="80%"  stop-color="#FFBE0B" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFBE0B" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="560" height="200" fill="#080400"/>
+  <rect width="560" height="200" fill="url(#l3-bg)"/>
+
+  <!-- ── SIGNAL / BROADCAST ICON — center (90,100) ──────────── -->
+  <!-- This is a stylised upward-pointing broadcast / signal tower:
+       arc rings + vertical mast + base, evoking "transmitting ideas" -->
+
+  <!-- Outermost arc ring (r=50) — very faint -->
+  <path d="M 53,100 A 37,37 0 0,1 127,100"
+        fill="none" stroke="#FF6B35" stroke-width="1.2" stroke-opacity="0.2"
+        stroke-linecap="round" filter="url(#l3-glow-ico)"/>
+  <!-- r=50 top arc approx -->
+  <path d="M 40,100 A 50,50 0 0,1 140,100"
+        fill="none" stroke="#FF4500" stroke-width="1" stroke-opacity="0.12"
+        stroke-linecap="round"/>
+
+  <!-- Arc ring 1 (r=37) -->
+  <path d="M 53,100 A 37,37 0 0,1 127,100"
+        fill="none" stroke="url(#l3-fire)" stroke-width="1.5" stroke-opacity="0.35"
+        stroke-linecap="round"/>
+
+  <!-- Arc ring 2 (r=26) -->
+  <path d="M 64,100 A 26,26 0 0,1 116,100"
+        fill="none" stroke="url(#l3-fire)" stroke-width="1.8" stroke-opacity="0.6"
+        stroke-linecap="round" filter="url(#l3-glow-ico)"/>
+
+  <!-- Arc ring 3 (r=16) — brightest, innermost -->
+  <path d="M 74,100 A 16,16 0 0,1 106,100"
+        fill="none" stroke="#FFF176" stroke-width="2" stroke-opacity="0.9"
+        stroke-linecap="round" filter="url(#l3-glow-ico)"/>
+
+  <!-- Vertical mast from arc center (90,100) upward -->
+  <line x1="90" y1="100" x2="90" y2="58"
+        stroke="url(#l3-fire)" stroke-width="1.8" stroke-linecap="round"
+        filter="url(#l3-glow-ico)"/>
+
+  <!-- Mast tip dot -->
+  <circle cx="90" cy="56" r="3.5" fill="#FFF176" filter="url(#l3-dot)"/>
+  <circle cx="90" cy="56" r="1.5" fill="#ffffff"/>
+
+  <!-- Base platform -->
+  <line x1="78" y1="100" x2="102" y2="100" stroke="#FFBE0B" stroke-width="2"
+        stroke-linecap="round" filter="url(#l3-glow-ico)"/>
+  <!-- Base legs -->
+  <line x1="82" y1="100" x2="75"  y2="115" stroke="#FF6B35" stroke-width="1.4"
+        stroke-linecap="round"/>
+  <line x1="98" y1="100" x2="105" y2="115" stroke="#FF6B35" stroke-width="1.4"
+        stroke-linecap="round"/>
+  <line x1="73" y1="115" x2="107" y2="115" stroke="#FF6B35" stroke-width="1.4"
+        stroke-linecap="round" stroke-opacity="0.7"/>
+
+  <!-- Spark/signal dots on arcs (landing indicators) -->
+  <!-- Ring 2 left end -->
+  <circle cx="64"  cy="100" r="2.2" fill="#FFBE0B" filter="url(#l3-dot)"/>
+  <!-- Ring 2 right end -->
+  <circle cx="116" cy="100" r="2.2" fill="#FFBE0B" filter="url(#l3-dot)"/>
+  <!-- Ring 1 left end -->
+  <circle cx="53"  cy="100" r="1.5" fill="#FF6B35" fill-opacity="0.7"/>
+  <!-- Ring 1 right end -->
+  <circle cx="127" cy="100" r="1.5" fill="#FF6B35" fill-opacity="0.7"/>
+
+  <!-- Radiating particle sparks -->
+  <!-- Left upward spark -->
+  <line x1="67" y1="72" x2="62" y2="65" stroke="#FFBE0B" stroke-width="1" stroke-opacity="0.5"
+        stroke-linecap="round"/>
+  <circle cx="61" cy="64" r="1.2" fill="#FFF176" fill-opacity="0.6"/>
+  <!-- Right upward spark -->
+  <line x1="113" y1="72" x2="118" y2="65" stroke="#FFBE0B" stroke-width="1" stroke-opacity="0.5"
+        stroke-linecap="round"/>
+  <circle cx="119" cy="64" r="1.2" fill="#FFF176" fill-opacity="0.6"/>
+  <!-- Top spark -->
+  <line x1="90" y1="48" x2="90" y2="41" stroke="#FFF176" stroke-width="1" stroke-opacity="0.4"
+        stroke-linecap="round"/>
+  <circle cx="90" cy="40" r="1" fill="#FFF176" fill-opacity="0.5"/>
+
+  <!-- ── CORNER MARKS (techy brackets) ───────────────────────── -->
+  <!-- Top-left -->
+  <polyline points="16,50 16,16 50,16" fill="none" stroke="#FF6B35" stroke-opacity="0.4"
+            stroke-width="1.5" stroke-linecap="square"/>
+  <circle cx="16" cy="16" r="2" fill="#FFBE0B" fill-opacity="0.5"/>
+  <!-- Top-right -->
+  <polyline points="544,50 544,16 510,16" fill="none" stroke="#FF6B35" stroke-opacity="0.4"
+            stroke-width="1.5" stroke-linecap="square"/>
+  <circle cx="544" cy="16" r="2" fill="#FFBE0B" fill-opacity="0.5"/>
+  <!-- Bottom-left -->
+  <polyline points="16,150 16,184 50,184" fill="none" stroke="#FF6B35" stroke-opacity="0.4"
+            stroke-width="1.5" stroke-linecap="square"/>
+  <circle cx="16" cy="184" r="2" fill="#FFBE0B" fill-opacity="0.5"/>
+  <!-- Bottom-right -->
+  <polyline points="544,150 544,184 510,184" fill="none" stroke="#FF6B35" stroke-opacity="0.4"
+            stroke-width="1.5" stroke-linecap="square"/>
+  <circle cx="544" cy="184" r="2" fill="#FFBE0B" fill-opacity="0.5"/>
+
+  <!-- ── VERTICAL DIVIDER ───────────────────────────────────── -->
+  <line x1="162" y1="38" x2="162" y2="162"
+        stroke="#FF6B35" stroke-width="0.8" stroke-opacity="0.25"/>
+
+  <!-- ── WORDMARK ───────────────────────────────────────────── -->
+  <text x="365" y="117"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="78" font-weight="800"
+        text-anchor="middle"
+        fill="url(#l3-word)"
+        filter="url(#l3-glow-txt)"
+        letter-spacing="-3">MR.C</text>
+
+  <!-- Separator -->
+  <line x1="175" y1="138" x2="550" y2="138" stroke="url(#l3-line)" stroke-width="0.7"/>
+  <!-- Centre accent -->
+  <polygon points="365,133 368.5,138 365,143 361.5,138" fill="#FFBE0B" fill-opacity="0.6"
+           filter="url(#l3-dot)"/>
+
+  <!-- Subtitle -->
+  <text x="365" y="162"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="11" font-weight="600"
+        text-anchor="middle"
+        fill="#FF6B35" fill-opacity="0.85"
+        letter-spacing="7">DIGITAL STUDIO</text>
+</svg>

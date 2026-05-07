@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" role="img" aria-label="MR.C Digital Studio">
+  <defs>
+    <!-- Ice gradient: platinum → electric blue → deep sapphire -->
+    <linearGradient id="l4-ice" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="35%"  stop-color="#A8E6FF"/>
+      <stop offset="70%"  stop-color="#00BFFF"/>
+      <stop offset="100%" stop-color="#0066CC"/>
+    </linearGradient>
+
+    <!-- Wordmark gradient (left-to-right) -->
+    <linearGradient id="l4-word" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#A8E6FF"/>
+      <stop offset="25%"  stop-color="#FFFFFF"/>
+      <stop offset="55%"  stop-color="#00BFFF"/>
+      <stop offset="100%" stop-color="#5B9BD5"/>
+    </linearGradient>
+
+    <!-- Prism face gradients -->
+    <linearGradient id="l4-face-a" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#00BFFF" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="l4-face-b" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#00BFFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0044AA" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="l4-face-c" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#003399" stop-opacity="0.02"/>
+    </linearGradient>
+
+    <!-- Text glow -->
+    <filter id="l4-glow-txt" x="-15%" y="-40%" width="130%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6"  flood-color="#00BFFF" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#0066CC" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Prism glow -->
+    <filter id="l4-glow-prism" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6"  flood-color="#00BFFF" flood-opacity="0.65"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#A8E6FF" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Refraction ray filter -->
+    <filter id="l4-ray" x="-300%" y="-300%" width="700%" height="700%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#A8E6FF" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Dot glow -->
+    <filter id="l4-dot" x="-200%" y="-200%" width="500%" height="500%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00BFFF" flood-opacity="0.9"/>
+    </filter>
+
+    <!-- Separator fade -->
+    <linearGradient id="l4-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#00BFFF" stop-opacity="0"/>
+      <stop offset="25%"  stop-color="#00BFFF" stop-opacity="0.45"/>
+      <stop offset="55%"  stop-color="#FFFFFF" stop-opacity="0.7"/>
+      <stop offset="80%"  stop-color="#0066CC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0066CC" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── SUBTLE SCANLINES ──────────────────────────────────────── -->
+  <line x1="0" y1="66"  x2="560" y2="66"  stroke="#00BFFF" stroke-width="0.3" stroke-opacity="0.04"/>
+  <line x1="0" y1="100" x2="560" y2="100" stroke="#00BFFF" stroke-width="0.3" stroke-opacity="0.04"/>
+  <line x1="0" y1="134" x2="560" y2="134" stroke="#00BFFF" stroke-width="0.3" stroke-opacity="0.04"/>
+
+  <!-- ── PRISM/GEM ICON — centered at (90, 92) ──────────────────
+       A = (90, 30)   top apex
+       B = (52, 85)   upper-left
+       C = (128, 85)  upper-right
+       D = (62, 130)  lower-left
+       E = (118, 130) lower-right
+       F = (90, 155)  bottom apex
+       G = (90, 85)   center waist
+  ─────────────────────────────────────────────────────────────── -->
+  <!-- Gem faces (fill) -->
+  <polygon points="90,30 52,85 90,85"   fill="url(#l4-face-a)" stroke="none"/>
+  <polygon points="90,30 128,85 90,85"  fill="url(#l4-face-c)" stroke="none"/>
+  <polygon points="52,85 62,130 90,85"  fill="url(#l4-face-b)" stroke="none"/>
+  <polygon points="128,85 118,130 90,85" fill="url(#l4-face-a)" stroke="none"/>
+  <polygon points="62,130 90,155 90,85" fill="url(#l4-face-b)" stroke="none"/>
+  <polygon points="118,130 90,155 90,85" fill="url(#l4-face-c)" stroke="none"/>
+
+  <!-- Prism edge strokes -->
+  <line x1="90" y1="30" x2="52"  y2="85"  stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="90" y1="30" x2="128" y2="85"  stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="52" y1="85" x2="128" y2="85"  stroke="#A8E6FF"      stroke-width="1"   stroke-opacity="0.6" filter="url(#l4-glow-prism)"/>
+  <line x1="52" y1="85" x2="62"  y2="130" stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="128" y1="85" x2="118" y2="130" stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="62"  y1="130" x2="118" y2="130" stroke="#00BFFF" stroke-width="0.9" stroke-opacity="0.5"/>
+  <line x1="62"  y1="130" x2="90"  y2="155" stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="118" y1="130" x2="90"  y2="155" stroke="url(#l4-ice)" stroke-width="1.5" filter="url(#l4-glow-prism)"/>
+  <line x1="90"  y1="30"  x2="90"  y2="155" stroke="#FFFFFF"  stroke-width="0.7" stroke-opacity="0.20"/>
+
+  <!-- Internal facet lines -->
+  <line x1="90" y1="85" x2="52"  y2="85"  stroke="#A8E6FF" stroke-width="0.5" stroke-opacity="0.3"/>
+  <line x1="90" y1="85" x2="128" y2="85"  stroke="#A8E6FF" stroke-width="0.5" stroke-opacity="0.3"/>
+  <line x1="90" y1="85" x2="62"  y2="130" stroke="#A8E6FF" stroke-width="0.5" stroke-opacity="0.2"/>
+  <line x1="90" y1="85" x2="118" y2="130" stroke="#A8E6FF" stroke-width="0.5" stroke-opacity="0.2"/>
+  <line x1="90" y1="85" x2="90"  y2="30"  stroke="#FFFFFF"  stroke-width="0.5" stroke-opacity="0.25"/>
+  <line x1="90" y1="85" x2="90"  y2="155" stroke="#0066CC"  stroke-width="0.5" stroke-opacity="0.2"/>
+
+  <!-- Vertex dots -->
+  <circle cx="90"  cy="30"  r="3"   fill="#FFFFFF" filter="url(#l4-dot)"/>
+  <circle cx="90"  cy="30"  r="1.2" fill="#A8E6FF"/>
+  <circle cx="52"  cy="85"  r="2.5" fill="#00BFFF" filter="url(#l4-dot)"/>
+  <circle cx="128" cy="85"  r="2.5" fill="#00BFFF" filter="url(#l4-dot)"/>
+  <circle cx="62"  cy="130" r="2"   fill="#0066CC" fill-opacity="0.8"/>
+  <circle cx="118" cy="130" r="2"   fill="#0066CC" fill-opacity="0.8"/>
+  <circle cx="90"  cy="155" r="2.5" fill="#00BFFF" fill-opacity="0.7"/>
+
+  <!-- Refraction light rays -->
+  <line x1="128" y1="85"  x2="148" y2="78"  stroke="#A8E6FF" stroke-width="1"   stroke-opacity="0.45" stroke-linecap="round" filter="url(#l4-ray)"/>
+  <line x1="128" y1="85"  x2="150" y2="85"  stroke="#00BFFF" stroke-width="1.2" stroke-opacity="0.55" stroke-linecap="round" filter="url(#l4-ray)"/>
+  <line x1="128" y1="85"  x2="148" y2="93"  stroke="#0066CC" stroke-width="1"   stroke-opacity="0.40" stroke-linecap="round" filter="url(#l4-ray)"/>
+  <line x1="118" y1="130" x2="136" y2="136" stroke="#0044AA" stroke-width="0.8" stroke-opacity="0.35" stroke-linecap="round"/>
+
+  <!-- ── CORNER PRECISION MARKS ──────────────────────────────────── -->
+  <polyline points="16,52 16,16 52,16"   fill="none" stroke="#00BFFF" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="square"/>
+  <circle cx="16"  cy="16"  r="2" fill="#A8E6FF" fill-opacity="0.6"/>
+  <polyline points="544,52 544,16 508,16" fill="none" stroke="#00BFFF" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="square"/>
+  <circle cx="544" cy="16"  r="2" fill="#A8E6FF" fill-opacity="0.6"/>
+  <polyline points="16,148 16,184 52,184"   fill="none" stroke="#00BFFF" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="square"/>
+  <circle cx="16"  cy="184" r="2" fill="#A8E6FF" fill-opacity="0.6"/>
+  <polyline points="544,148 544,184 508,184" fill="none" stroke="#00BFFF" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="square"/>
+  <circle cx="544" cy="184" r="2" fill="#A8E6FF" fill-opacity="0.6"/>
+
+  <!-- ── VERTICAL DIVIDER ─────────────────────────────────────────── -->
+  <line x1="164" y1="38" x2="164" y2="162" stroke="#00BFFF" stroke-width="0.8" stroke-opacity="0.22"/>
+
+  <!-- ── WORDMARK ──────────────────────────────────────────────────── -->
+  <text x="367" y="117"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="78" font-weight="800"
+        text-anchor="middle"
+        fill="url(#l4-word)"
+        filter="url(#l4-glow-txt)"
+        letter-spacing="-3">MR.C</text>
+
+  <!-- Separator -->
+  <line x1="177" y1="138" x2="551" y2="138" stroke="url(#l4-line)" stroke-width="0.7"/>
+  <polygon points="367,133 370.5,138 367,143 363.5,138" fill="#00BFFF" fill-opacity="0.55" filter="url(#l4-dot)"/>
+
+  <!-- Subtitle -->
+  <text x="367" y="162"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="11" font-weight="600"
+        text-anchor="middle"
+        fill="#5B9BD5" fill-opacity="0.9"
+        letter-spacing="7">DIGITAL STUDIO</text>
+</svg>
