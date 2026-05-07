@@ -104,7 +104,7 @@
       }
       .reveal { opacity: 1 !important; transform: none !important; }
       #hero-canvas { display: none; }
-      .btn-gold, .about-spotlight, .spotlight-card, .stat-number { animation: none; }
+      .btn-gold, .about-spotlight, .spotlight-card, .stat-number, .pricing-main { animation: none; }
     }
 
     /* ── Typography ──────────────────────────────────────────── */
@@ -643,6 +643,68 @@
     .faq-answer-inner strong { color: var(--c-ink); font-weight: 500; }
     .faq-answer-inner a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
 
+    /* ── Pricing ─────────────────────────────────────────────── */
+    .pricing-headline { margin: 14px 0 64px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    /* Featured card — same gold metallic treatment as about-spotlight */
+    .pricing-main {
+      background: linear-gradient(105deg, #C49A38 0%, #EDD879 20%, #FEFCE8 38%, #F0C832 52%, #FEFCE8 66%, #EDD879 84%, #C49A38 100%);
+      background-size: 250% auto;
+      animation: btn-gold-shine 7s ease-in-out infinite;
+      animation-delay: -1.5s;
+      border: 1px solid rgba(243,229,171,0.65);
+      border-top: 1px solid rgba(255,255,255,0.92);
+      box-shadow: 0 0 48px rgba(212,175,55,0.40), 0 24px 64px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.70), inset 0 -1px 0 rgba(0,0,0,0.12);
+      border-radius: var(--r-xxl);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-main::before {
+      content: ''; position: absolute; top: -25%; right: -10%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0.14) 45%, transparent 70%);
+      pointer-events: none;
+    }
+    .pricing-from { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.5); margin-bottom: 8px; }
+    .pricing-amount { font-size: clamp(60px, 8vw, 96px); font-weight: 800; letter-spacing: -0.05em; color: #0a0800; text-shadow: 0 1px 0 rgba(255,255,255,0.45); line-height: 1; margin-bottom: 6px; }
+    .pricing-plan { font-size: 14px; font-weight: 600; color: rgba(0,0,0,0.58); letter-spacing: 0.02em; margin-bottom: 32px; }
+    .pricing-divider { height: 1px; background: rgba(0,0,0,0.15); margin-bottom: 28px; }
+    .pricing-list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 32px; }
+    .pricing-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 500; color: rgba(0,0,0,0.78); line-height: 1.4; }
+    .pricing-list li::before { content: ''; width: 5px; height: 5px; background: rgba(0,0,0,0.45); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .pricing-scale { font-size: 13px; color: rgba(0,0,0,0.55); line-height: 1.65; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.12); }
+    /* Right stack */
+    .pricing-stack { display: flex; flex-direction: column; gap: 16px; }
+    .pricing-add-card {
+      background: rgba(18,18,18,0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--r-xl);
+      padding: 28px 32px;
+    }
+    .pricing-add-label { font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-ink-muted); opacity: 0.6; margin-bottom: 10px; }
+    .pricing-add-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
+    .pricing-add-amount { font-size: 42px; font-weight: 700; letter-spacing: -0.04em; color: var(--c-gold); line-height: 1; }
+    .pricing-add-unit { font-size: 15px; font-weight: 400; color: var(--c-ink-muted); }
+    .pricing-add-desc { font-size: 14px; color: var(--c-ink-muted); line-height: 1.65; }
+    .pricing-client-note {
+      border: 1px solid var(--c-hairline);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .pricing-client-note-dot { width: 6px; height: 6px; background: var(--c-gold); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .pricing-client-note p { font-size: 13px; color: var(--c-ink-muted); line-height: 1.65; }
+    .pricing-client-note strong { color: var(--c-ink); font-weight: 500; }
+
     /* ── Booking ─────────────────────────────────────────────── */
     .booking-headline { margin: 14px 0 64px; }
     .booking-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
@@ -834,6 +896,7 @@
 
       .section-inner { padding: 96px 24px; }
       .about-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .card-grid { grid-template-columns: 1fr 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
@@ -885,6 +948,7 @@
       <a href="#about">About</a>
       <a href="#how-it-works">Process</a>
       <a href="#projects">Work</a>
+      <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <span class="nav-dashbar-sep" aria-hidden="true"></span>
       <a href="#booking" class="btn btn-gold">Book a Free Call</a>
@@ -897,6 +961,7 @@
   <a href="#about"        onclick="closeMobile()">About</a>
   <a href="#how-it-works" onclick="closeMobile()">Process</a>
   <a href="#projects"     onclick="closeMobile()">Work</a>
+  <a href="#pricing"      onclick="closeMobile()">Pricing</a>
   <a href="#faq"          onclick="closeMobile()">FAQ</a>
   <a href="#booking" onclick="closeMobile()" class="btn btn-gold" style="margin-top:8px;">Book a Free Call</a>
 </div>
@@ -1150,19 +1215,71 @@
 
 <hr class="divider">
 
+<!-- ═══════════════════════════════════ PRICING ═════════════════════════════════ -->
+<section id="pricing" aria-labelledby="pricing-heading">
+  <div class="section-inner">
+    <p class="t-caption reveal">Investment</p>
+    <h2 id="pricing-heading" class="t-display-xl pricing-headline reveal">Simple, transparent<br>pricing.</h2>
+
+    <div class="pricing-grid reveal reveal-d1">
+
+      <!-- Featured card: landing page starting rate (gold metallic) -->
+      <div class="pricing-main">
+        <p class="pricing-from">Starting from</p>
+        <div class="pricing-amount">$1,000</div>
+        <p class="pricing-plan">Landing Page &nbsp;·&nbsp; Single Page Build</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-list">
+          <li>Custom design built from scratch — no templates</li>
+          <li>Conversion-focused layout &amp; copy structure</li>
+          <li>Fully mobile-responsive &amp; performance-optimised</li>
+          <li>Delivered within 2–3 weeks</li>
+          <li>Managed &amp; maintained exclusively by Mr.C</li>
+        </ul>
+        <p class="pricing-scale">
+          Need more pages or a more complex build? Price scales with the number of pages and project scope. You'll receive a clear, fixed-price quote after your discovery call — no surprises.
+        </p>
+      </div>
+
+      <!-- Right stack: add-ons + client note -->
+      <div class="pricing-stack">
+
+        <div class="pricing-add-card">
+          <p class="pricing-add-label">Monthly Maintenance</p>
+          <div class="pricing-add-row">
+            <span class="pricing-add-amount">$50</span>
+            <span class="pricing-add-unit">/ month</span>
+          </div>
+          <p class="pricing-add-desc">Keeps your site secure, up-to-date, and performing at its best. Required on all active projects.</p>
+        </div>
+
+        <div class="pricing-add-card">
+          <p class="pricing-add-label">Edits &amp; Updates</p>
+          <div class="pricing-add-row">
+            <span class="pricing-add-amount">$50</span>
+            <span class="pricing-add-unit">/ hr &amp; up</span>
+          </div>
+          <p class="pricing-add-desc">All changes are handled directly by Mr.C — no client editing access is provided. This keeps your site performing exactly as designed. Rate scales with the complexity of each request and is always scoped before work begins.</p>
+        </div>
+
+        <div class="pricing-client-note">
+          <div class="pricing-client-note-dot"></div>
+          <p><strong>Domain &amp; Hosting</strong> — Clients are responsible for their own domain registration and hosting fees. Mr.C will guide you through setup and recommend the right platform for your project.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- ═══════════════════════════════════ FAQ ════════════════════════════════════ -->
 <section id="faq" aria-labelledby="faq-heading">
   <div class="section-inner">
     <p class="t-caption reveal">Questions</p>
-    <h2 id="faq-heading" class="t-display-xl faq-headline">Everything you<br>want to know.</h2>
+    <h2 id="faq-heading" class="t-display-xl faq-headline">Still have<br>questions?</h2>
     <div class="faq-grid reveal reveal-d1">
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>How much does a website cost?</span>
-          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
-        </button>
-        <div class="faq-answer" role="region"><div class="faq-answer-inner">Projects start from <strong>$1,000</strong>. The exact investment depends on scope — after your discovery call you'll receive a clear, fixed-price proposal. No hidden fees, no surprises.</div></div>
-      </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>How long does a build take?</span>
@@ -1176,13 +1293,6 @@
           <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
         <div class="faq-answer" role="region"><div class="faq-answer-inner">Not at all. All you need is <strong>30 minutes on a discovery call</strong>. Mr.C will help you define your goals, messaging, and site structure — that clarity is built into the process from day one.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false">
-          <span>Can I make changes to the site myself?</span>
-          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
-        </button>
-        <div class="faq-answer" role="region"><div class="faq-answer-inner">Sites are <strong>custom-built and maintained exclusively by Mr.C</strong> — no client-side editing access is provided. This keeps your site performing exactly as designed. Any updates, additions, or tweaks are handled directly at a flat rate of <strong>$50/hr</strong>, scoped to the complexity of each request.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
@@ -1200,7 +1310,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
-          <span>Still have questions?</span>
+          <span>Ready to get started?</span>
           <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
         <div class="faq-answer" role="region"><div class="faq-answer-inner">The fastest way to get answers is to <a href="#booking"><strong>book a free 30-minute discovery call</strong></a>. No obligation, straight answers. We respond to all enquiries within 24 hours.</div></div>
