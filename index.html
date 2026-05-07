@@ -460,6 +460,23 @@
     .card-desc  { font-size: 14px; color: var(--c-ink-muted); line-height: 1.5; }
     .card-result { font-size: 12px; font-weight: 600; color: var(--c-gold); letter-spacing: -0.01em; display: flex; align-items: center; gap: 5px; margin-top: auto; padding-top: 4px; }
     .card-result::before { content: '↑'; font-size: 10px; }
+    .card-visit {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--c-ink-muted);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: 1px solid var(--c-hairline);
+      border-radius: var(--r-pill);
+      width: fit-content;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .card-visit:hover { color: var(--c-gold); border-color: var(--c-gold-border); }
 
     /* Spotlight cards */
     .spotlight-card {
@@ -847,13 +864,24 @@
     <div class="card-grid">
 
       <article class="project-card reveal">
-        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0D0A28,#2A1060);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><rect x="8" y="8" width="32" height="24" rx="3" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="36" x2="40" y2="36" stroke="#D4A853" stroke-width="1.5"/><line x1="24" y1="36" x2="24" y2="42" stroke="#D4A853" stroke-width="1.5"/><line x1="16" y1="42" x2="32" y2="42" stroke="#D4A853" stroke-width="1.5"/></svg>
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0A1E08,#183A12);">
+          <!-- Pantry Belt: shelf / food resource icon -->
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55">
+            <rect x="6" y="10" width="36" height="4" rx="1.5" stroke="#D4A853" stroke-width="1.5"/>
+            <rect x="6" y="22" width="36" height="4" rx="1.5" stroke="#D4A853" stroke-width="1.5"/>
+            <rect x="6" y="34" width="36" height="4" rx="1.5" stroke="#D4A853" stroke-width="1.5"/>
+            <line x1="10" y1="10" x2="10" y2="38" stroke="#D4A853" stroke-width="1.5"/>
+            <line x1="38" y1="10" x2="38" y2="38" stroke="#D4A853" stroke-width="1.5"/>
+            <circle cx="19" cy="18" r="2.5" fill="#D4A853" opacity="0.7"/>
+            <circle cx="26" cy="18" r="2.5" fill="#D4A853" opacity="0.7"/>
+            <circle cx="22" cy="30" r="2.5" fill="#D4A853" opacity="0.7"/>
+            <circle cx="31" cy="30" r="2.5" fill="#D4A853" opacity="0.7"/>
+          </svg>
         </div></div>
-        <span class="card-tag">E-commerce</span>
-        <p class="card-title">Prestige Retail Co.</p>
-        <p class="card-desc">A high-converting online store with custom product pages, seamless checkout, and brand-forward design that drives repeat purchases.</p>
-        <span class="card-result">Conversion rate up 68% in 30 days</span>
+        <span class="card-tag">Community Platform</span>
+        <p class="card-title">Pantry Belt</p>
+        <p class="card-desc">A food resource platform connecting rural communities across the US with essential pantry services — designed to be accessible, fast, and community-first.</p>
+        <a href="https://pantrybelt.com" target="_blank" rel="noopener noreferrer" class="card-visit">Visit site →</a>
       </article>
 
       <div class="spotlight-card spotlight-violet reveal reveal-d1" data-parallax-card="0.05" aria-hidden="true">
@@ -862,13 +890,18 @@
       </div>
 
       <article class="project-card reveal reveal-d2">
-        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0A1A10,#0F2E1A);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><circle cx="24" cy="20" r="8" stroke="#D4A853" stroke-width="1.5"/><path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#071825,#0A3045);">
+          <!-- CACAO Online: cultural / community star motif -->
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55">
+            <circle cx="24" cy="24" r="16" stroke="#D4A853" stroke-width="1.5"/>
+            <path d="M24 10 L26.4 18.3 L35.1 18.3 L28.3 23.4 L30.8 31.7 L24 26.5 L17.2 31.7 L19.7 23.4 L12.9 18.3 L21.6 18.3 Z" stroke="#D4A853" stroke-width="1.3" fill="none"/>
+            <circle cx="24" cy="24" r="3.5" fill="#D4A853" opacity="0.6"/>
+          </svg>
         </div></div>
-        <span class="card-tag">Service Business</span>
-        <p class="card-title">Apex Consulting Group</p>
-        <p class="card-desc">A professional services site engineered to generate qualified leads and establish authority in a highly competitive market.</p>
-        <span class="card-result">3× more qualified leads per month</span>
+        <span class="card-tag">Nonprofit Organisation</span>
+        <p class="card-title">CACAO Online</p>
+        <p class="card-desc">Digital home for the Caribbean American Cultural Arts Organization — spotlighting their scholarship fund, the annual Marvel City Caribbean Festival, and cultural programmes in Alabama.</p>
+        <a href="https://cacaoonline.org" target="_blank" rel="noopener noreferrer" class="card-visit">Visit site →</a>
       </article>
 
       <article class="project-card reveal">
