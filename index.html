@@ -1343,7 +1343,7 @@
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(W, H);
+  renderer.setSize(W, H, false); /* false = don't write inline px styles on canvas */
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.7;
 
@@ -1456,10 +1456,14 @@
     scrollProg = window.scrollY / window.innerHeight;
   }, { passive: true });
   window.addEventListener('resize', () => {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
+    /* Read from the hero section — canvas CSS may have been overridden */
+    const hero = canvas.parentElement;
+    const w = hero.clientWidth  || window.innerWidth;
+    const h = hero.clientHeight || window.innerHeight;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h, false);
   });
 
   const clock = new THREE.Clock();
