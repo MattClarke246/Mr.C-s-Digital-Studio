@@ -667,7 +667,7 @@
       pointer-events: none;
       z-index: 50;
       mix-blend-mode: screen;
-      opacity: 0.88;
+      opacity: 0.92;
     }
     /* Tech DNA image — hue-shifted atmospheric texture layer */
     #dna-bg {
@@ -1554,187 +1554,197 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
 });
 
 /* ══════════════════════════════════════════════════════════
-   TECH DNA — SCROLL-DRIVEN 3D HELIX
+   TECH DNA — TORNADO SPIRAL
 
-   Architecture:
-   - Full-page fixed Three.js canvas (z-index: 50, mix-blend-mode: screen)
-   - Screen blend: black canvas areas = transparent; colored strands = additive glow
-   - Camera travels DOWN the Y-axis as user scrolls (parallax)
-   - DNA group rotates 3 × 360° over full page scroll (the 360 spiral effect)
-   - Idle base rotation adds life when scroll is static
-   - Gold strand + violet strand + alternating rungs + glowing nodes
-   - Instanced meshes for performance (single draw call per geometry type)
-   - Tech DNA.webp image used as hue-shifted atmospheric background (#dna-bg div)
+   Shape: conical double helix — wide at the hero (top), tapering
+   to a tight vortex at the footer (bottom). The whole structure
+   is tilted ~15° from vertical and sweeps diagonally left across
+   the viewport as the user scrolls, resembling a tornado path.
+
+   Scroll behaviour:
+   - Camera travels DOWN the helix axis as user scrolls
+   - Helix rotates 4 × 360° over full page scroll (barrel-roll effect)
+   - lookAt target drifts with the helix X-path so camera "follows" the funnel
+
+   Geometry is thin & bright (screen-blend mode means emissive glow
+   is additive over content — no dark blobs, only light).
 ══════════════════════════════════════════════════════════ */
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const canvas = document.getElementById('dna-canvas');
-
-  /* ── Scene & renderer ── */
+  const canvas   = document.getElementById('dna-canvas');
   const scene    = new THREE.Scene();
-  const camera   = new THREE.PerspectiveCamera(49, window.innerWidth / window.innerHeight, 0.1, 200);
+  const camera   = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 200);
   camera.position.set(0, 0, 10);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-  renderer.setClearColor(0x000000, 1); /* solid black = transparent under screen blend */
+  renderer.setClearColor(0x000000, 1);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.6;
+  renderer.toneMappingExposure = 2.0;
 
-  /* ── DNA parameters ── */
-  const isMobile     = window.innerWidth < 768;
-  const RADIUS       = 0.88;          /* helix radius (world units) */
-  const PITCH        = 1.55;          /* vertical distance per full turn */
-  const TURNS        = isMobile ? 10 : 16;  /* complete turns; more = longer strand */
-  const STEPS        = TURNS * 32;    /* curve smoothness */
-  const RNG_PER_TURN = isMobile ? 5 : 7;   /* rungs per turn */
-  const TOTAL_RUNGS  = TURNS * RNG_PER_TURN;
-  const DNA_HEIGHT   = PITCH * TURNS;  /* total world-unit height of strand */
-  const DNA_X        = 3.2;           /* x-offset → right side, aligns with hero crystal */
+  /* ── Tornado geometry parameters ── */
+  const mob        = window.innerWidth < 768;
+  const R_TOP      = mob ? 1.0  : 2.0;   /* wide funnel mouth at hero */
+  const R_BOT      = mob ? 0.25 : 0.45;  /* tight vortex tip at footer */
+  const PITCH      = 1.3;                 /* vertical spacing per full turn */
+  const TURNS      = mob ? 12   : 22;    /* more turns = denser spiral */
+  const STEPS      = TURNS * 36;         /* curve resolution */
+  const RPT        = mob ? 6    : 9;     /* rungs per turn */
+  const N_RUNGS    = TURNS * RPT;
+  const H          = PITCH * TURNS;      /* total world height */
 
-  /* ── DNA group ── */
+  /* Funnel mouth starts right-of-centre, tip drifts toward centre */
+  const X_TOP = mob ? 0.6 : 1.8;
+  const X_BOT = mob ? 0.2 : 0.4;
+
+  /* ── Helpers ── */
+  function funnelR(t) {
+    /* pow(0.6) gives a natural trumpet-bell curve, wide → narrow quickly */
+    return R_BOT + (R_TOP - R_BOT) * Math.pow(1 - t, 0.6);
+  }
+  function funnelX(t) { return X_TOP + (X_BOT - X_TOP) * t; }
+
+  /* ── DNA group (tilted to give diagonal slant) ── */
   const dna = new THREE.Group();
-  dna.position.x = DNA_X;
+  dna.rotation.z =  0.20;   /* lean ~11.5° to the right */
+  dna.rotation.x = -0.09;   /* slight forward lean */
   scene.add(dna);
 
-  /* ── Build strand paths ── */
+  /* ── Strand paths ── */
   const pts1 = [], pts2 = [];
   for (let i = 0; i <= STEPS; i++) {
     const t = i / STEPS;
     const a = t * Math.PI * 2 * TURNS;
-    const y = (t - 0.5) * DNA_HEIGHT;
-    pts1.push(new THREE.Vector3( Math.cos(a) * RADIUS, y,  Math.sin(a) * RADIUS));
-    pts2.push(new THREE.Vector3(-Math.cos(a) * RADIUS, y, -Math.sin(a) * RADIUS));
+    const r = funnelR(t);
+    const x = funnelX(t);
+    const y = (t - 0.5) * H;
+    pts1.push(new THREE.Vector3(x + Math.cos(a) * r,  y,  Math.sin(a) * r));
+    pts2.push(new THREE.Vector3(x - Math.cos(a) * r,  y, -Math.sin(a) * r));
   }
 
-  /* ── Strand tubes ── */
-  const matGold = new THREE.MeshStandardMaterial({
-    color: 0xD4A853, emissive: 0xC89B3C, emissiveIntensity: 0.7, metalness: 0.92, roughness: 0.08,
+  /* ── Thin, brilliant strand tubes ── */
+  const matS1 = new THREE.MeshStandardMaterial({
+    color: 0xF5D880, emissive: 0xD4A853, emissiveIntensity: 1.5,
+    metalness: 0.95, roughness: 0.04,
   });
-  const matViolet = new THREE.MeshStandardMaterial({
-    color: 0x7C3AED, emissive: 0x5B21B6, emissiveIntensity: 0.7, metalness: 0.92, roughness: 0.08,
+  const matS2 = new THREE.MeshStandardMaterial({
+    color: 0xA880FF, emissive: 0x7C3AED, emissiveIntensity: 1.5,
+    metalness: 0.95, roughness: 0.04,
   });
-
+  const TUBE_R = 0.015; /* thin filament */
   dna.add(new THREE.Mesh(
-    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts1), STEPS * 2, 0.036, 8, false), matGold
-  ));
+    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts1), STEPS * 2, TUBE_R, 6, false), matS1));
   dna.add(new THREE.Mesh(
-    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts2), STEPS * 2, 0.036, 8, false), matViolet
-  ));
+    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts2), STEPS * 2, TUBE_R, 6, false), matS2));
 
-  /* ── Instanced rungs (3 color buckets) ── */
-  const RUNG_COLORS = [0xD4A853, 0x7C3AED, 0x06B6D4];
-  const bucketSize  = Math.ceil(TOTAL_RUNGS / 3);
-  const rungGeo     = new THREE.CylinderGeometry(0.018, 0.018, 1, 6);
-  const rungMeshes  = RUNG_COLORS.map(c =>
-    new THREE.InstancedMesh(rungGeo,
-      new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.55, metalness: 0.75, roughness: 0.18 }),
-      bucketSize)
-  );
-  rungMeshes.forEach(m => dna.add(m));
+  /* ── Instanced rungs — 3 colour buckets ── */
+  const RUNG_C   = [0xD4A853, 0x7C3AED, 0x06B6D4];
+  const bSize    = Math.ceil(N_RUNGS / 3);
+  const rungGeo  = new THREE.CylinderGeometry(0.011, 0.011, 1, 5);
+  const rMeshes  = RUNG_C.map(c => new THREE.InstancedMesh(rungGeo,
+    new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 1.1,
+      metalness: 0.7, roughness: 0.2 }), bSize));
+  rMeshes.forEach(m => dna.add(m));
 
-  /* ── Instanced nodes ── */
-  const nodeGeo   = new THREE.SphereGeometry(0.058, 8, 8);
-  const nodeGold  = new THREE.InstancedMesh(nodeGeo,
-    new THREE.MeshStandardMaterial({ color: 0xF0C96A, emissive: 0xD4A853, emissiveIntensity: 1.1, metalness: 0.96, roughness: 0.04 }),
-    TOTAL_RUNGS);
-  const nodeViolet = new THREE.InstancedMesh(nodeGeo,
-    new THREE.MeshStandardMaterial({ color: 0x9B6EE8, emissive: 0x7C3AED, emissiveIntensity: 1.1, metalness: 0.96, roughness: 0.04 }),
-    TOTAL_RUNGS);
-  dna.add(nodeGold, nodeViolet);
+  /* ── Instanced nodes — tiny, hyper-bright ── */
+  const nGeo = new THREE.SphereGeometry(0.028, 7, 7);
+  const nG   = new THREE.InstancedMesh(nGeo, new THREE.MeshStandardMaterial({
+    color: 0xFFE89A, emissive: 0xF0C96A, emissiveIntensity: 2.0,
+    metalness: 0.98, roughness: 0.02 }), N_RUNGS);
+  const nV   = new THREE.InstancedMesh(nGeo, new THREE.MeshStandardMaterial({
+    color: 0xC8AAFF, emissive: 0x9B6EE8, emissiveIntensity: 2.0,
+    metalness: 0.98, roughness: 0.02 }), N_RUNGS);
+  dna.add(nG, nV);
 
-  /* ── Populate rung & node transforms ── */
-  const dummy    = new THREE.Object3D();
-  const UP       = new THREE.Vector3(0, 1, 0);
-  const bCounts  = [0, 0, 0];
+  /* ── Populate transforms ── */
+  const dummy  = new THREE.Object3D();
+  const UP_VEC = new THREE.Vector3(0, 1, 0);
+  const bC     = [0, 0, 0];
 
-  for (let i = 0; i < TOTAL_RUNGS; i++) {
-    const t     = i / TOTAL_RUNGS;
-    const angle = t * Math.PI * 2 * TURNS;
-    const y     = (t - 0.5) * DNA_HEIGHT;
-    const p1    = new THREE.Vector3( Math.cos(angle) * RADIUS, y,  Math.sin(angle) * RADIUS);
-    const p2    = new THREE.Vector3(-Math.cos(angle) * RADIUS, y, -Math.sin(angle) * RADIUS);
-    const mid   = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
-    const len   = p1.distanceTo(p2);
-    const dir   = new THREE.Vector3().subVectors(p2, p1).normalize();
+  for (let i = 0; i < N_RUNGS; i++) {
+    const t  = i / N_RUNGS;
+    const a  = t * Math.PI * 2 * TURNS;
+    const r  = funnelR(t);
+    const xC = funnelX(t);
+    const y  = (t - 0.5) * H;
+    const p1 = new THREE.Vector3(xC + Math.cos(a) * r,  y,  Math.sin(a) * r);
+    const p2 = new THREE.Vector3(xC - Math.cos(a) * r,  y, -Math.sin(a) * r);
+    const mid = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+    const len = p1.distanceTo(p2);
+    const dir = new THREE.Vector3().subVectors(p2, p1).normalize();
 
-    /* rung */
     dummy.position.copy(mid);
     dummy.scale.set(1, len, 1);
-    dummy.quaternion.setFromUnitVectors(UP, dir);
+    dummy.quaternion.setFromUnitVectors(UP_VEC, dir);
     dummy.updateMatrix();
-    const bucket = i % 3;
-    rungMeshes[bucket].setMatrixAt(bCounts[bucket]++, dummy.matrix);
+    rMeshes[i % 3].setMatrixAt(bC[i % 3]++, dummy.matrix);
 
-    /* nodes */
     dummy.position.copy(p1); dummy.scale.setScalar(1); dummy.quaternion.identity(); dummy.updateMatrix();
-    nodeGold.setMatrixAt(i, dummy.matrix);
+    nG.setMatrixAt(i, dummy.matrix);
     dummy.position.copy(p2); dummy.updateMatrix();
-    nodeViolet.setMatrixAt(i, dummy.matrix);
+    nV.setMatrixAt(i, dummy.matrix);
   }
-  rungMeshes.forEach((m, i) => { m.count = bCounts[i]; m.instanceMatrix.needsUpdate = true; });
-  nodeGold.instanceMatrix.needsUpdate   = true;
-  nodeViolet.instanceMatrix.needsUpdate = true;
+  rMeshes.forEach((m, i) => { m.count = bC[i]; m.instanceMatrix.needsUpdate = true; });
+  nG.instanceMatrix.needsUpdate = true;
+  nV.instanceMatrix.needsUpdate = true;
 
-  /* ── Floating particles around helix ── */
-  const P_COUNT = isMobile ? 100 : 250;
-  const pPos    = new Float32Array(P_COUNT * 3);
-  const pCol    = new Float32Array(P_COUNT * 3);
-  for (let i = 0; i < P_COUNT; i++) {
-    const r     = RADIUS * (1.6 + Math.random() * 3.5);
-    const theta = Math.random() * Math.PI * 2;
-    const y     = (Math.random() - 0.5) * DNA_HEIGHT;
-    pPos[i*3]   = Math.cos(theta) * r;
+  /* ── Tornado debris cloud: particles follow funnel shape ── */
+  const P = mob ? 140 : 350;
+  const pPos = new Float32Array(P * 3);
+  const pCol = new Float32Array(P * 3);
+  for (let i = 0; i < P; i++) {
+    const t    = Math.random();
+    /* scatter particles in a cone shape matching the funnel */
+    const r    = funnelR(t) * (0.8 + Math.random() * 2.8);
+    const th   = Math.random() * Math.PI * 2;
+    const xC   = funnelX(t);
+    const y    = (t - 0.5) * H;
+    pPos[i*3]   = xC + Math.cos(th) * r;
     pPos[i*3+1] = y;
-    pPos[i*3+2] = Math.sin(theta) * r;
-    const gold  = Math.random() > 0.45;
-    pCol[i*3]   = gold ? 0.83 : 0.49;
-    pCol[i*3+1] = gold ? 0.66 : 0.23;
-    pCol[i*3+2] = gold ? 0.32 : 0.93;
+    pPos[i*3+2] = Math.sin(th) * r;
+    /* more gold particles near top (wide), more violet near bottom (tight) */
+    const gold = Math.random() > t * 0.55;
+    pCol[i*3]   = gold ? 0.94 : 0.61; pCol[i*3+1] = gold ? 0.79 : 0.42; pCol[i*3+2] = gold ? 0.42 : 0.96;
   }
   const pGeo = new THREE.BufferGeometry();
   pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
   pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
   const particles = new THREE.Points(pGeo,
-    new THREE.PointsMaterial({ size: 0.055, vertexColors: true, transparent: true, opacity: 0.72, sizeAttenuation: true }));
+    new THREE.PointsMaterial({ size: 0.058, vertexColors: true, transparent: true, opacity: 0.85, sizeAttenuation: true }));
   dna.add(particles);
 
-  /* ── Five-point light rig ── */
-  const lA = new THREE.PointLight(0xF0C96A, 10, 22); lA.position.set(4, 5, 7); scene.add(lA);
-  const lB = new THREE.PointLight(0x7C3AED,  8, 18); lB.position.set(-3,-4, 6); scene.add(lB);
-  const lC = new THREE.PointLight(0x06B6D4,  4, 14); lC.position.set( 1, 6,-4); scene.add(lC);
-  const lD = new THREE.PointLight(0xDB2777,  3, 12); lD.position.set(-2, 5, 5); scene.add(lD);
-  scene.add(new THREE.AmbientLight(0x050210, 8));
+  /* ── Lights — travel with camera for even illumination ── */
+  const lA = new THREE.PointLight(0xF0C96A, 14, 28); scene.add(lA);
+  const lB = new THREE.PointLight(0x7C3AED, 10, 22); scene.add(lB);
+  const lC = new THREE.PointLight(0x06B6D4,  6, 16); scene.add(lC);
+  scene.add(new THREE.AmbientLight(0x050210, 12));
 
   /* ── Scroll state ── */
-  const topCamY    =  DNA_HEIGHT / 2 + 4;  /* camera Y at scroll=0 */
-  const bottomCamY = -DNA_HEIGHT / 2 - 4;  /* camera Y at scroll=max */
-  let   scrollRot  = 0;                     /* rotation driven by scroll */
+  const CAM_TOP = H / 2 + 5;
+  const CAM_BOT = -H / 2 - 5;
+  let   scrollRot = 0;
 
   function onScroll() {
-    const maxS   = Math.max(1, document.body.scrollHeight - window.innerHeight);
-    const prog   = Math.min(window.scrollY / maxS, 1);
-    const camY   = topCamY - prog * (topCamY - bottomCamY);
+    const maxS = Math.max(1, document.body.scrollHeight - window.innerHeight);
+    const prog = Math.min(window.scrollY / maxS, 1);
+    const camY = CAM_TOP - prog * (CAM_TOP - CAM_BOT);
 
-    /* camera follows scroll through the strand */
     camera.position.y = camY;
-    camera.lookAt(DNA_X, camY, 0);
+    /* lookAt follows the funnel's drift path so the tornado stays framed */
+    camera.lookAt(funnelX(prog), camY, 0);
 
-    /* lights travel with camera */
-    lA.position.y = camY + 5;
-    lB.position.y = camY - 4;
-    lC.position.y = camY + 3;
-    lD.position.y = camY + 2;
+    /* lights orbit the current camera level */
+    lA.position.set(funnelX(prog) + 3,  camY + 6,  9);
+    lB.position.set(funnelX(prog) - 3,  camY - 4,  8);
+    lC.position.set(funnelX(prog),       camY + 2, -4);
 
-    /* 3 × 360° rotation over full page scroll */
-    scrollRot = prog * Math.PI * 6;
+    /* 4 full rotations over the entire page scroll */
+    scrollRot = prog * Math.PI * 8;
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-
-  /* ── Resize ── */
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -1746,24 +1756,22 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
   if (dnaBgEl) {
     window.addEventListener('scroll', () => {
       const prog = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
-      /* scroll background-position to match the Three.js camera travel */
       dnaBgEl.style.backgroundPositionY = `${prog * 100}%`;
-      /* fade in slightly as user moves down */
-      dnaBgEl.style.opacity = (0.055 + prog * 0.04).toString();
+      dnaBgEl.style.opacity = (0.045 + prog * 0.05).toString();
     }, { passive: true });
   }
 
-  onScroll(); /* initial position */
+  onScroll();
 
-  /* ── Animation loop ── */
+  /* ── Render loop ── */
   const clock = new THREE.Clock();
   (function tick() {
     requestAnimationFrame(tick);
-    const t      = clock.getElapsedTime();
-    /* idle base spin + scroll-driven rotation combined */
-    dna.rotation.y = scrollRot + t * 0.11;
-    /* gentle particle drift */
-    particles.rotation.y = t * 0.018;
+    const t = clock.getElapsedTime();
+    /* tornado spin: scroll-driven + gentle idle */
+    dna.rotation.y = scrollRot + t * 0.08;
+    /* debris cloud drifts at a different rate for depth */
+    particles.rotation.y = scrollRot * 0.6 + t * 0.04;
     renderer.render(scene, camera);
   })();
 })();
