@@ -594,12 +594,12 @@
     .footer-links a:hover { color: var(--c-gold); }
 
     /* ── Scroll reveal ───────────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s cubic-bezier(.22,1,.36,1), transform 1.2s cubic-bezier(.22,1,.36,1); }
     .reveal.visible { opacity: 1; transform: none; }
-    .reveal-d1 { transition-delay: 0.08s; }
-    .reveal-d2 { transition-delay: 0.16s; }
-    .reveal-d3 { transition-delay: 0.24s; }
-    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d1 { transition-delay: 0.15s; }
+    .reveal-d2 { transition-delay: 0.30s; }
+    .reveal-d3 { transition-delay: 0.45s; }
+    .reveal-d4 { transition-delay: 0.60s; }
 
     /* ── Ambient particles ───────────────────────────────────── */
     @keyframes float-particle {
@@ -1394,14 +1394,14 @@ gsap.utils.toArray('h2.t-display-xl, h2.t-display-lg').forEach(el => {
 const grids = ['.steps-grid', '.testimonials-grid'];
 grids.forEach(gridSelector => {
   ScrollTrigger.create({
-    trigger: gridSelector, start: 'top 80%', once: true,
+    trigger: gridSelector, start: 'top 85%', once: true,
     onEnter() {
       // 1. Float in from side (left)
-      gsap.from(`${gridSelector} > *:nth-child(1)`, { x: -100, opacity: 0, duration: 1.0, ease: 'power3.out', delay: 0.0 });
+      gsap.from(`${gridSelector} > *:nth-child(1)`, { x: -60, opacity: 0, duration: 1.6, ease: 'power2.out', delay: 0.1 });
       // 2. Fade in
-      gsap.from(`${gridSelector} > *:nth-child(2)`, { opacity: 0, duration: 1.0, ease: 'power3.out', delay: 0.2 });
+      gsap.from(`${gridSelector} > *:nth-child(2)`, { opacity: 0, duration: 1.6, ease: 'power2.out', delay: 0.35 });
       // 3. Pop in
-      gsap.from(`${gridSelector} > *:nth-child(3)`, { scale: 0.5, opacity: 0, duration: 1.0, ease: 'back.out(1.5)', delay: 0.4 });
+      gsap.from(`${gridSelector} > *:nth-child(3)`, { scale: 0.8, opacity: 0, duration: 1.6, ease: 'back.out(1.2)', delay: 0.6 });
     }
   });
 });
