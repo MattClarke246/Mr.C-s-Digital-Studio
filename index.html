@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr.C's Digital Studio — Turning Vision to High-Performance Design</title>
+  <meta name="description" content="Mr.C's Digital Studio builds premium, high-converting websites for businesses that want to stand out.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Inter+Variable:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design tokens (Framer DESIGN.md) ───────────────────── */
+    :root {
+      --c-primary:          #ffffff;
+      --c-on-primary:       #000000;
+      --c-accent:           #0099ff;
+      --c-ink:              #ffffff;
+      --c-ink-muted:        #999999;
+      --c-canvas:           #090909;
+      --c-surface-1:        #141414;
+      --c-surface-2:        #1c1c1c;
+      --c-hairline:         #262626;
+      --c-hairline-soft:    #1a1a1a;
+      --c-grad-magenta:     #d44df0;
+      --c-grad-violet:      #6a4cf5;
+      --c-grad-orange:      #ff7a3d;
+      --c-grad-coral:       #ff5577;
+
+      --r-xs:   4px;
+      --r-sm:   6px;
+      --r-md:   10px;
+      --r-lg:   15px;
+      --r-xl:   20px;
+      --r-xxl:  30px;
+      --r-pill: 100px;
+      --r-full: 9999px;
+    }
+
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--c-canvas);
+      color: var(--c-ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-feature-settings: 'cv01', 'cv05', 'cv09', 'cv11', 'ss03', 'ss07';
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    input, select, textarea, button { font-family: inherit; }
+
+    /* ── Typography ──────────────────────────────────────────── */
+    .t-display-xxl {
+      font-size: clamp(52px, 8.5vw, 110px);
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+    .t-display-xl {
+      font-size: clamp(40px, 6.5vw, 85px);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+    .t-display-lg {
+      font-size: clamp(28px, 4.5vw, 62px);
+      font-weight: 500;
+      line-height: 1.0;
+      letter-spacing: -0.05em;
+    }
+    .t-body-lg { font-size: 18px; font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: var(--c-ink-muted); }
+    .t-body    { font-size: 15px; font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: var(--c-ink-muted); }
+    .t-caption { font-size: 13px; font-weight: 500; line-height: 1.2; letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-ink-muted); }
+
+    /* ── Buttons ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      padding: 11px 20px;
+      border-radius: var(--r-pill);
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.1s ease;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn:hover  { opacity: 0.82; }
+    .btn-primary   { background: var(--c-primary); color: var(--c-on-primary); }
+    .btn-secondary { background: var(--c-surface-1); color: var(--c-ink); }
+
+    /* ── Nav ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      background: rgba(9,9,9,0.80);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--c-hairline-soft);
+    }
+    .nav-logo {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--c-ink);
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--c-ink-muted);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--c-ink); }
+    .nav-ctas { display: flex; gap: 8px; }
+
+    /* hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--c-ink);
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 56px 0 0 0;
+      z-index: 190;
+      background: rgba(9,9,9,0.97);
+      backdrop-filter: blur(14px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      color: var(--c-ink);
+    }
+
+    /* ── Section wrapper ─────────────────────────────────────── */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 36px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 36px 96px;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      margin-bottom: 28px;
+    }
+    .hero-headline {
+      max-width: 960px;
+      margin-bottom: 28px;
+    }
+    .hero-sub {
+      max-width: 460px;
+      margin-bottom: 44px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Parallax blobs ──────────────────────────────────────── */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.30;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .blob-a {
+      width: 560px; height: 560px;
+      background: var(--c-grad-violet);
+      top: 5%; right: -80px;
+    }
+    .blob-b {
+      width: 360px; height: 360px;
+      background: var(--c-grad-magenta);
+      bottom: 12%; right: 25%;
+    }
+    .blob-c {
+      width: 280px; height: 280px;
+      background: var(--c-grad-orange);
+      top: 40%; left: -60px;
+      opacity: 0.15;
+    }
+
+    /* ── Divider ─────────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--c-hairline-soft); }
+
+    /* ── About ───────────────────────────────────────────────── */
+    .about-headline { margin: 16px 0 48px; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .about-spotlight {
+      background: linear-gradient(135deg, #4a35c8 0%, #b03ae8 100%);
+      border-radius: var(--r-xxl);
+      padding: 48px 40px;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      will-change: transform;
+    }
+    .about-spotlight h3 {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .about-spotlight p { font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.5; }
+    .about-text { display: flex; flex-direction: column; gap: 18px; justify-content: center; }
+    .stat-row { display: flex; gap: 36px; margin-top: 16px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; gap: 4px; }
+    .stat-number { font-size: clamp(32px, 4vw, 48px); font-weight: 500; letter-spacing: -0.04em; color: var(--c-ink); }
+    .stat-label  { font-size: 13px; color: var(--c-ink-muted); }
+
+    /* ── Projects ────────────────────────────────────────────── */
+    .projects-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      gap: 20px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    /* project card */
+    .project-card {
+      background: var(--c-surface-1);
+      border-radius: var(--r-xl);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--c-surface-2);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .card-thumb-pattern {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-tag {
+      display: inline-flex;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--c-ink-muted);
+      background: var(--c-surface-2);
+      padding: 4px 9px;
+      border-radius: var(--r-xs);
+      width: fit-content;
+    }
+    .card-title { font-size: 17px; font-weight: 500; letter-spacing: -0.03em; color: var(--c-ink); line-height: 1.25; }
+    .card-desc  { font-size: 14px; color: var(--c-ink-muted); line-height: 1.45; }
+
+    /* spotlight card */
+    .spotlight-card {
+      border-radius: var(--r-xxl);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+      will-change: transform;
+    }
+    .spotlight-violet { background: linear-gradient(140deg, #3a2bc0 0%, #8a4cf5 100%); }
+    .spotlight-coral  { background: linear-gradient(140deg, #e03060 0%, #ff7a3d 100%); }
+    .spotlight-card h3 { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #fff; }
+    .spotlight-card p  { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.45; }
+    /* noise texture for spotlights */
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.18;
+      border-radius: inherit;
+    }
+
+    /* ── Booking ─────────────────────────────────────────────── */
+    .booking-headline { margin: 16px 0 56px; }
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .booking-intro p { font-size: 17px; color: var(--c-ink-muted); line-height: 1.55; margin-top: 0; }
+    .perks { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .perk { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--c-ink-muted); }
+    .perk-dot { width: 6px; height: 6px; background: var(--c-accent); border-radius: 50%; flex-shrink: 0; }
+
+    /* form */
+    form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 13px; font-weight: 500; color: var(--c-ink-muted); letter-spacing: -0.01em; }
+    input, select, textarea {
+      background: var(--c-surface-1);
+      color: var(--c-ink);
+      border: 1px solid var(--c-hairline);
+      border-radius: var(--r-md);
+      padding: 11px 14px;
+      font-size: 15px;
+      font-feature-settings: 'cv01', 'cv11';
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: #444; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--c-accent);
+      box-shadow: 0 0 0 1px rgba(0,153,255,0.18);
+    }
+    select { appearance: none; -webkit-appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    option { background: var(--c-surface-1); }
+    textarea { resize: vertical; min-height: 120px; }
+    .form-submit .btn-primary { width: 100%; padding: 14px 20px; font-size: 15px; border-radius: var(--r-pill); margin-top: 4px; }
+    .form-success { display: none; padding: 20px; background: var(--c-surface-1); border-radius: var(--r-xl); text-align: center; color: var(--c-ink-muted); font-size: 15px; }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .footer-logo { font-size: 15px; font-weight: 700; letter-spacing: -0.04em; }
+    .footer-copy { font-size: 13px; color: var(--c-ink-muted); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--c-ink-muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--c-ink); }
+
+    /* ── Scroll reveal ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links, .nav-ctas { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-content { padding: 100px 20px 80px; }
+      .section-inner { padding: 72px 20px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .booking-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
+      .projects-header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .form-row  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">MR.C</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="#booking" class="btn btn-primary">Start a project</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- mobile overlay -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about"    onclick="closeMobile()">About</a>
+  <a href="#projects" onclick="closeMobile()">Work</a>
+  <a href="#booking"  onclick="closeMobile()">Contact</a>
+  <a href="#booking"  onclick="closeMobile()" class="btn btn-primary" style="margin-top:8px;">Start a project</a>
+</div>
+
+<!-- ═══════════════════════════════════ HERO ══════════════════════════════════ -->
+<section id="hero">
+  <!-- parallax blobs -->
+  <div class="blob blob-a" data-parallax="0.28"></div>
+  <div class="blob blob-b" data-parallax="0.18"></div>
+  <div class="blob blob-c" data-parallax="0.10"></div>
+
+  <div class="hero-content">
+    <p class="t-caption hero-eyebrow reveal">Website Design &amp; Development Studio</p>
+    <h1 class="t-display-xxl hero-headline reveal reveal-d1">
+      Turning Vision<br>to High&#8209;Performance<br>Design.
+    </h1>
+    <p class="t-body-lg hero-sub reveal reveal-d2">
+      We build premium, conversion-driven websites for businesses that refuse to blend in.
+    </p>
+    <div class="hero-ctas reveal reveal-d3">
+      <a href="#booking"  class="btn btn-primary">Start a project</a>
+      <a href="#projects" class="btn btn-secondary">See our work</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════ ABOUT ══════════════════════════════════ -->
+<div id="about">
+  <div class="section-inner">
+    <p class="t-caption reveal">About</p>
+    <h2 class="t-display-xl about-headline reveal reveal-d1">
+      We build for<br>businesses that<br>mean business.
+    </h2>
+    <div class="about-grid">
+      <div class="about-spotlight reveal reveal-d1" data-parallax-card="0.06">
+        <h3>Strategy-first design<br>that converts.</h3>
+        <p>Every pixel is intentional. We combine visual design with performance engineering to deliver sites that look stunning and drive real results.</p>
+      </div>
+      <div class="about-text reveal reveal-d2">
+        <p class="t-body-lg">Mr.C's Digital Studio is a boutique web design and development studio specialising in custom websites for businesses that want to stand out.</p>
+        <p class="t-body">From strategy and design to development and launch — we handle it all. No templates. No shortcuts. Just work we're proud of.</p>
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat-number">40+</span>
+            <span class="stat-label">Projects delivered</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Client satisfaction</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">3×</span>
+            <span class="stat-label">Avg. conversion lift</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════ PROJECTS ══════════════════════════════ -->
+<div id="projects">
+  <div class="section-inner">
+    <div class="projects-header">
+      <div>
+        <p class="t-caption reveal">Selected work</p>
+        <h2 class="t-display-xl reveal reveal-d1">Projects.</h2>
+      </div>
+      <a href="#booking" class="btn btn-secondary reveal reveal-d1">Start your project →</a>
+    </div>
+
+    <div class="card-grid">
+
+      <!-- Card 1 -->
+      <div class="project-card reveal">
+        <div class="card-thumb">
+          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#1c1f2e,#2a1f3d);">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.25">
+              <rect x="8" y="8" width="32" height="24" rx="3" stroke="white" stroke-width="1.5"/>
+              <line x1="8" y1="36" x2="40" y2="36" stroke="white" stroke-width="1.5"/>
+              <line x1="24" y1="36" x2="24" y2="42" stroke="white" stroke-width="1.5"/>
+              <line x1="16" y1="42" x2="32" y2="42" stroke="white" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+        <span class="card-tag">E-commerce</span>
+        <p class="card-title">Prestige Retail Co.</p>
+        <p class="card-desc">A high-converting online store with custom product pages, seamless checkout, and brand-forward design that drives repeat purchases.</p>
+      </div>
+
+      <!-- Spotlight violet -->
+      <div class="spotlight-card spotlight-violet reveal reveal-d1" data-parallax-card="0.05">
+        <h3>Design that<br>sells itself.</h3>
+        <p>Our sites do the talking so you don't have to.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="project-card reveal reveal-d2">
+        <div class="card-thumb">
+          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#1f2a1c,#1a2e1f);">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.25">
+              <circle cx="24" cy="20" r="8" stroke="white" stroke-width="1.5"/>
+              <path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <span class="card-tag">Service Business</span>
+        <p class="card-title">Apex Consulting Group</p>
+        <p class="card-desc">A professional services site engineered to generate qualified leads and establish authority in a highly competitive market.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="project-card reveal">
+        <div class="card-thumb">
+          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#2a1c1c,#3d1f2a);">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.25">
+              <rect x="6" y="14" width="16" height="20" rx="2" stroke="white" stroke-width="1.5"/>
+              <rect x="26" y="8" width="16" height="14" rx="2" stroke="white" stroke-width="1.5"/>
+              <rect x="26" y="26" width="16" height="8" rx="2" stroke="white" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+        <span class="card-tag">Creative Portfolio</span>
+        <p class="card-title">Nova Creative Studio</p>
+        <p class="card-desc">A cinematic portfolio with scroll-driven animations and immersive layout that puts the work front and centre.</p>
+      </div>
+
+      <!-- Spotlight coral -->
+      <div class="spotlight-card spotlight-coral reveal reveal-d1" data-parallax-card="0.04">
+        <h3>Performance<br>built in.</h3>
+        <p>90+ Lighthouse scores, lightning-fast loads, and mobile-first from day one — every time.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="project-card reveal reveal-d2">
+        <div class="card-thumb">
+          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#1c1c2a,#1f2040);">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" opacity="0.25">
+              <rect x="8" y="10" width="32" height="28" rx="4" stroke="white" stroke-width="1.5"/>
+              <line x1="8" y1="18" x2="40" y2="18" stroke="white" stroke-width="1.5"/>
+              <circle cx="13" cy="14" r="1.5" fill="white"/>
+              <circle cx="18" cy="14" r="1.5" fill="white"/>
+              <circle cx="23" cy="14" r="1.5" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <span class="card-tag">SaaS Landing Page</span>
+        <p class="card-title">Flux SaaS</p>
+        <p class="card-desc">A conversion-optimised landing page for a B2B SaaS product, engineered from scratch to maximise free-trial signups.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════ BOOKING ══════════════════════════════ -->
+<div id="booking">
+  <div class="section-inner">
+    <p class="t-caption reveal">Get in touch</p>
+    <h2 class="t-display-xl booking-headline reveal reveal-d1">
+      Ready to build<br>something great?
+    </h2>
+
+    <div class="booking-grid">
+      <div class="booking-intro reveal reveal-d1">
+        <p>Tell us about your project and we'll come back to you within 24 hours to schedule a free discovery call.</p>
+        <div class="perks">
+          <div class="perk"><span class="perk-dot"></span><span>Free discovery call — no strings attached</span></div>
+          <div class="perk"><span class="perk-dot"></span><span>Clear proposal and transparent pricing</span></div>
+          <div class="perk"><span class="perk-dot"></span><span>Delivered in weeks, not months</span></div>
+          <div class="perk"><span class="perk-dot"></span><span>Ongoing support after launch</span></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <form id="booking-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="project-type">Project type</label>
+              <select id="project-type" name="project-type" required>
+                <option value="" disabled selected>Select a type</option>
+                <option>Landing Page</option>
+                <option>E-commerce Store</option>
+                <option>Portfolio Site</option>
+                <option>Business Website</option>
+                <option>Web Application</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="budget">Budget range</label>
+              <select id="budget" name="budget" required>
+                <option value="" disabled selected>Select a range</option>
+                <option>Under $1,000</option>
+                <option>$1,000 – $3,000</option>
+                <option>$3,000 – $7,500</option>
+                <option>$7,500 – $15,000</option>
+                <option>$15,000+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell us about your project</label>
+            <textarea id="message" name="message" placeholder="What are you building? Who is it for? Any must-haves?"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Send enquiry →</button>
+          </div>
+        </form>
+        <div class="form-success" id="form-success">
+          ✓ &nbsp; Message received — we'll be in touch within 24 hours.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">MR.C</span>
+    <span class="footer-copy">© 2025 Mr.C's Digital Studio. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#booking">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Hamburger ─────────────────────────────────────────────── */
+  const hamburger   = document.getElementById('hamburger');
+  const mobileMenu  = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ── Scroll reveal via IntersectionObserver ────────────────── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => io.observe(el));
+
+  /* Hero elements reveal immediately (no wait for scroll) */
+  document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 80 + i * 80);
+  });
+
+  /* ── Parallax ─────────────────────────────────────────────── */
+  const blobs        = document.querySelectorAll('[data-parallax]');
+  const parallaxCards = document.querySelectorAll('[data-parallax-card]');
+
+  let ticking = false;
+
+  function applyParallax() {
+    const scrollY = window.scrollY;
+
+    blobs.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax);
+      el.style.transform = `translateY(${scrollY * speed}px)`;
+    });
+
+    parallaxCards.forEach(el => {
+      const rect   = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      const speed  = parseFloat(el.dataset.parallaxCard);
+      el.style.transform = `translateY(${center * speed * -1}px)`;
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(applyParallax); ticking = true; }
+  }, { passive: true });
+
+  applyParallax();
+
+  /* ── Form submit ──────────────────────────────────────────── */
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  });
+</script>
+</body>
+</html>
