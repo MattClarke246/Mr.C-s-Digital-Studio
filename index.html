@@ -104,7 +104,6 @@
       }
       .reveal { opacity: 1 !important; transform: none !important; }
       #hero-canvas { display: none; }
-      .marquee-track { animation: none; }
       .btn-gold { animation: none; }
     }
 
@@ -447,42 +446,6 @@
       min-height: 28px; display: flex; align-items: center;
     }
 
-    /* ── Marquee strip ───────────────────────────────────────── */
-    .marquee-wrap {
-      overflow: hidden;
-      border-top: 1px solid var(--c-hairline-soft);
-      border-bottom: 1px solid var(--c-hairline-soft);
-      padding: 14px 0;
-      background: linear-gradient(90deg, var(--c-canvas), #111111 50%, var(--c-canvas));
-      position: relative;
-    }
-    .marquee-wrap::before,
-    .marquee-wrap::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
-    }
-    .marquee-wrap::before { left:  0; background: linear-gradient(90deg,  var(--c-canvas), transparent); }
-    .marquee-wrap::after  { right: 0; background: linear-gradient(270deg, var(--c-canvas), transparent); }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .marquee-track {
-      display: inline-flex;
-      animation: marquee 28s linear infinite;
-      white-space: nowrap;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-    .marquee-item {
-      display: inline-flex; align-items: center; gap: 16px; padding: 0 24px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-muted);
-    }
-    .marquee-item .dot { width: 4px; height: 4px; background: var(--c-gold); border-radius: 50%; opacity: 0.8; flex-shrink: 0; }
-
-    /* ── Trust bar ───────────────────────────────────────────── */
-    #trust-bar { padding: 28px 40px; }
-    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 28px; }
-    .trust-bar-label { font-size: 11px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-ink-muted); white-space: nowrap; flex-shrink: 0; }
-    .trust-bar-sep { width: 1px; height: 20px; background: var(--c-hairline); flex-shrink: 0; }
-    .trust-bar-logos { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-    .trust-bar-logo { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; color: var(--c-ink-muted); opacity: 0.60; transition: opacity 0.2s, color 0.2s; }
-    .trust-bar-logo:hover { opacity: 1; color: var(--c-gold); }
 
     /* ── About ───────────────────────────────────────────────── */
     .about-headline { margin: 14px 0 48px; }
@@ -827,8 +790,6 @@
       .hero-headline { font-size: clamp(38px, 9vw, 56px); max-width: none; }
 
       .section-inner { padding: 96px 24px; }
-      #trust-bar { padding: 20px 24px; }
-      .trust-bar-inner { gap: 16px; flex-wrap: wrap; }
       .about-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .card-grid { grid-template-columns: 1fr 1fr; }
@@ -944,46 +905,6 @@
   <!-- RIGHT: structural spacer (3D fills this visually) -->
   <div class="hero-right" aria-hidden="true"></div>
 </section>
-
-<!-- ═══════════════════════════ MARQUEE STRIP ════════════════════════════════ -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item">Premium Design <span class="dot"></span></span>
-    <span class="marquee-item">High-Performance Builds <span class="dot"></span></span>
-    <span class="marquee-item">Conversion-First Strategy <span class="dot"></span></span>
-    <span class="marquee-item">Luxury Brand Experiences <span class="dot"></span></span>
-    <span class="marquee-item">3× Average Conversion Lift <span class="dot"></span></span>
-    <span class="marquee-item">Delivered in Weeks <span class="dot"></span></span>
-    <span class="marquee-item">40+ Projects Delivered <span class="dot"></span></span>
-    <span class="marquee-item">100% Client Satisfaction <span class="dot"></span></span>
-    <span class="marquee-item">Premium Design <span class="dot"></span></span>
-    <span class="marquee-item">High-Performance Builds <span class="dot"></span></span>
-    <span class="marquee-item">Conversion-First Strategy <span class="dot"></span></span>
-    <span class="marquee-item">Luxury Brand Experiences <span class="dot"></span></span>
-    <span class="marquee-item">3× Average Conversion Lift <span class="dot"></span></span>
-    <span class="marquee-item">Delivered in Weeks <span class="dot"></span></span>
-    <span class="marquee-item">40+ Projects Delivered <span class="dot"></span></span>
-    <span class="marquee-item">100% Client Satisfaction <span class="dot"></span></span>
-  </div>
-</div>
-
-<!-- ═══════════════════════ TRUST BAR ════════════════════════════════════════ -->
-<div id="trust-bar">
-  <div class="trust-bar-inner reveal">
-    <span class="trust-bar-label">Trusted by</span>
-    <div class="trust-bar-sep" aria-hidden="true"></div>
-    <div class="trust-bar-logos">
-      <span class="trust-bar-logo">Prestige Retail Co.</span>
-      <span class="trust-bar-logo">Apex Consulting</span>
-      <span class="trust-bar-logo">Nova Creative</span>
-      <span class="trust-bar-logo">Flux SaaS</span>
-      <span class="trust-bar-logo">Harbour &amp; Co.</span>
-      <span class="trust-bar-logo">Meridian Health</span>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
 
 <!-- ═══════════════════════════════════ ABOUT ══════════════════════════════════ -->
 <section id="about" aria-labelledby="about-heading">
