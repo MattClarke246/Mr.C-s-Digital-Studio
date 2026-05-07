@@ -1347,60 +1347,59 @@
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.7;
 
-  /* ── Crystal group — positioned to right column ── */
+  /* ── Crystal group ── */
   const group = new THREE.Group();
   group.position.set(3.2, 0, 0);
   scene.add(group);
 
-  /* Geometry set — significantly larger than previous version */
   const geoCore  = new THREE.IcosahedronGeometry(2.10, 1);
   const geoMid   = new THREE.IcosahedronGeometry(2.45, 1);
   const geoOuter = new THREE.IcosahedronGeometry(2.65, 1);
   const geoEdge  = new THREE.IcosahedronGeometry(2.70, 1);
   const geoInner = new THREE.IcosahedronGeometry(2.18, 1);
 
-  /* Layer 1 — Deep Obsidian core */
+  /* Layer 1 — Vibrant gold core */
   const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x0A0A0A, emissive: 0x050505,
+    color: 0xD4AF37, emissive: 0xC4A47C,
     emissiveIntensity: 1.4,
-    metalness: 0.9, roughness: 0.1,
+    metalness: 0.92, roughness: 0.08,
   });
   const coreMesh = new THREE.Mesh(geoCore, coreMat);
   group.add(coreMesh);
 
-  /* Layer 2 — Smoked glass inner shell (back-face for interior glow) */
+  /* Layer 2 — Gold inner shell */
   const midMat = new THREE.MeshStandardMaterial({
-    color: 0x1A1A1A, emissive: 0x0F0F0F, emissiveIntensity: 0.7,
-    metalness: 0.88, roughness: 0.04,
-    transparent: true, opacity: 0.62, side: THREE.BackSide,
+    color: 0xC4A47C, emissive: 0xB8860B, emissiveIntensity: 0.8,
+    metalness: 0.88, roughness: 0.05,
+    transparent: true, opacity: 0.65, side: THREE.BackSide,
   });
   group.add(new THREE.Mesh(geoMid, midMat));
 
-  /* Layer 3 — Outer translucent shell (light refraction) */
+  /* Layer 3 — Champagne outer shell */
   const outerMat = new THREE.MeshStandardMaterial({
-    color: 0x2A2A2A, metalness: 0.72, roughness: 0.08,
-    transparent: true, opacity: 0.18,
+    color: 0xF3E5AB, metalness: 0.72, roughness: 0.06,
+    transparent: true, opacity: 0.22,
   });
   group.add(new THREE.Mesh(geoOuter, outerMat));
 
-  /* Layer 4 — Gold edge lines: primary luxury signature */
-  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xC4A47C, transparent: true, opacity: 0.92 });
+  /* Layer 4 — Bright gold edge lines */
+  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xF3E5AB, transparent: true, opacity: 0.92 });
   group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoEdge), goldEdgeMat));
 
-  /* Layer 5 — Inner soft-gold edge for depth */
-  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xD8C3A5, transparent: true, opacity: 0.28 });
+  /* Layer 5 — Inner gold edge */
+  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xD4AF37, transparent: true, opacity: 0.45 });
   group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoInner), softEdgeMat));
 
-  /* Layer 6 — Outer atmosphere sphere (deep space ambience) */
+  /* Layer 6 — Atmosphere sphere */
   const atmMat = new THREE.MeshBasicMaterial({
     color: 0x050505, transparent: true, opacity: 0.09, side: THREE.BackSide,
   });
   group.add(new THREE.Mesh(new THREE.SphereGeometry(4.2, 24, 24), atmMat));
 
-  /* ── Three orbital rings at varied angles ── */
-  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xC4A47C, transparent: true, opacity: 0.60 });
-  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xD8C3A5, transparent: true, opacity: 0.32 });
-  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0x8A7052, transparent: true, opacity: 0.18 });
+  /* ── Orbital rings ── */
+  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xD4AF37, transparent: true, opacity: 0.65 });
+  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xF3E5AB, transparent: true, opacity: 0.38 });
+  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0xC4A47C, transparent: true, opacity: 0.22 });
 
   const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.018, 8, 120), ringMat1);
   ring1.rotation.x = Math.PI / 3.2;
@@ -1412,46 +1411,68 @@
   group.add(ring2);
 
   const ring3 = new THREE.Mesh(new THREE.TorusGeometry(4.4, 0.007, 8, 100), ringMat3);
-  ring3.rotation.x = Math.PI / 2; /* equatorial */
+  ring3.rotation.x = Math.PI / 2;
   group.add(ring3);
 
-  /* ── Particles — spherically distributed around crystal ── */
+  /* ── Particles — all-gold palette ── */
   const pCount = window.innerWidth < 768 ? 90 : 220;
   const pPos   = new Float32Array(pCount * 3);
   const pCol   = new Float32Array(pCount * 3);
   for (let i = 0; i < pCount; i++) {
-    /* Distribute on a shell between r=2.8 and r=8 */
     const r     = 2.8 + Math.random() * 5.2;
     const theta = Math.random() * Math.PI * 2;
     const phi   = Math.acos(2 * Math.random() - 1);
     pPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
     pPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
     pPos[i*3+2] = r * Math.cos(phi);
-    const isGold = Math.random() > 0.42;
-    if (isGold) { pCol[i*3]=0.77; pCol[i*3+1]=0.64; pCol[i*3+2]=0.49; } /* Champagne */
-    else        { pCol[i*3]=0.85; pCol[i*3+1]=0.85; pCol[i*3+2]=0.85; } /* Silver/White */
+    const bright = Math.random() > 0.4;
+    if (bright) { pCol[i*3]=0.95; pCol[i*3+1]=0.84; pCol[i*3+2]=0.32; } /* Vivid gold */
+    else        { pCol[i*3]=0.77; pCol[i*3+1]=0.64; pCol[i*3+2]=0.30; } /* Deep gold  */
   }
   const pGeo = new THREE.BufferGeometry();
   pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
   pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
-  const pMat = new THREE.PointsMaterial({ size: 0.065, vertexColors: true, transparent: true, opacity: 0.78, sizeAttenuation: true });
+  const pMat = new THREE.PointsMaterial({ size: 0.07, vertexColors: true, transparent: true, opacity: 0.85, sizeAttenuation: true });
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
 
-  /* ── Five-light dramatic rig (Neutral/Gold) ── */
-  const lGold   = new THREE.PointLight(0xC4A47C, 16, 24); lGold.position.set( 5,  3,  7); scene.add(lGold);
-  const lViolet = new THREE.PointLight(0x8A7052, 12, 20); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
-  const lCyan   = new THREE.PointLight(0xFFFFFF,  6, 16); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
-  const lRose   = new THREE.PointLight(0xD8C3A5,  5, 14); lRose.position.set(-3,  4,  4); scene.add(lRose);
-  const lWarm   = new THREE.PointLight(0x2A2A2A,  4, 12); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
-  scene.add(new THREE.AmbientLight(0x0A0A0A, 8));
+  /* ── Gold-dominant light rig ── */
+  const lGold   = new THREE.PointLight(0xD4AF37, 20, 24); lGold.position.set( 5,  3,  7); scene.add(lGold);
+  const lViolet = new THREE.PointLight(0xC4A47C, 14, 20); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
+  const lCyan   = new THREE.PointLight(0xF3E5AB,  8, 16); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
+  const lRose   = new THREE.PointLight(0xD4AF37,  6, 14); lRose.position.set(-3,  4,  4); scene.add(lRose);
+  const lWarm   = new THREE.PointLight(0xB8860B,  5, 12); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
+  scene.add(new THREE.AmbientLight(0x1A0E00, 6));
 
   /* ── State ── */
   let mX = 0, mY = 0, tRX = 0, tRY = 0, scrollProg = 0;
+  let curNDCx = 0, curNDCy = 0, hoverInf = 0;
+  let tVelX = 0, tVelY = 0, tRotX = 0, tRotY = 0;
+  let isTouching = false, lastTX = 0, lastTY = 0;
+  let lastMove = performance.now(), idleP = 0;
+  const _v = new THREE.Vector3();
+
   document.addEventListener('mousemove', e => {
     mX = (e.clientX / window.innerWidth  - 0.5) * 2;
     mY = (e.clientY / window.innerHeight - 0.5) * 2;
+    curNDCx = mX;    /* mX is already NDC -1…1 */
+    curNDCy = -mY;   /* flip Y axis            */
+    lastMove = performance.now();
   });
+
+  /* Touch drag on document — passive, no pointer-events change needed */
+  document.addEventListener('touchstart', e => {
+    isTouching = true; tVelX = tVelY = 0;
+    lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!isTouching) return;
+    tVelX = (e.touches[0].clientX - lastTX) * 0.012;
+    tVelY = (e.touches[0].clientY - lastTY) * 0.012;
+    lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', () => { isTouching = false; }, { passive: true });
+
   window.addEventListener('scroll', () => {
     scrollProg = window.scrollY / window.innerHeight;
   }, { passive: true });
@@ -1463,40 +1484,78 @@
   });
 
   const clock = new THREE.Clock();
-  let   frame = 0;
+  let frame = 0;
 
   (function animate() {
     requestAnimationFrame(animate);
     frame++;
     const t = clock.getElapsedTime();
 
-    /* Smooth mouse tracking */
+    /* ep: entrance progress 0→1 over 1.3 s, stays 1 forever after.
+       Used ONLY for additive visuals — never controls visibility.       */
+    const ep = Math.min(t / 1.3, 1.0);
+
+    /* ── Mouse tracking ── */
     tRY += (mX * 0.65 - tRY) * 0.038;
     tRX += (-mY * 0.38 - tRX) * 0.038;
 
-    /* Crystal rotation */
-    group.rotation.y = t * 0.11 + tRY;
-    group.rotation.x = Math.sin(t * 0.15) * 0.14 + tRX;
+    /* ── Touch momentum (decays when finger lifts) ── */
+    if (!isTouching) { tVelX *= 0.93; tVelY *= 0.93; }
+    tRotY += tVelX; tRotX += tVelY;
+
+    /* ── Idle escalation: rings + emissive boost after 4 s idle ── */
+    const idleSec = (performance.now() - lastMove) / 1000;
+    idleP += ((idleSec > 4 ? Math.min((idleSec - 4) / 2.5, 1) : 0) - idleP) * 0.015;
+
+    /* ── Hover proximity: cursor near crystal boosts glow + rings ── */
+    _v.copy(group.position).project(camera);
+    const hDist = Math.sqrt(Math.pow(curNDCx - _v.x, 2) + Math.pow(curNDCy - _v.y, 2));
+    hoverInf += (Math.max(0, 1 - hDist / 0.58) - hoverInf) * 0.08;
+
+    /* ── Crystal rotation (mouse follow + touch drag) ── */
+    group.rotation.y = t * 0.11 + tRY + tRotY;
+    group.rotation.x = Math.sin(t * 0.15) * 0.14 + tRX + tRotX;
     group.rotation.z = t * 0.032;
 
-    /* Floating */
+    /* ── Floating ── */
     group.position.y = Math.sin(t * 0.42) * 0.24;
 
-    /* Pulsing emissive — luxury "heartbeat" */
-    coreMat.emissiveIntensity = 1.1 + Math.sin(t * 1.9) * 0.6;
+    /* ── Emissive: heartbeat base is always on.
+       Every addition is guarded by Math.max(0,...) — no value can
+       pull the emissive below the heartbeat floor (~0.5).            ── */
+    coreMat.emissiveIntensity =
+      1.1 + Math.sin(t * 1.9) * 0.6           /* heartbeat base    */
+      + Math.max(0, 2.5 * Math.sin(ep * Math.PI)) /* entrance burst */
+      + hoverInf * 1.8                          /* hover glow        */
+      + idleP    * 0.9;                         /* idle escalation   */
 
-    /* Scroll: retreat crystal as user scrolls past hero */
+    /* ── Scroll retreat (identical to original) ── */
     const sp = Math.min(scrollProg, 1);
-    group.position.z    = -sp * 5.5;
+    group.position.z     = -sp * 5.5;
     group.scale.setScalar(Math.max(0.05, 1 - sp * 0.68));
     canvas.style.opacity = Math.max(0, 1 - sp * 1.6).toString();
 
-    /* Ring rotations */
-    ring1.rotation.z = t * 0.10;
-    ring2.rotation.z = -t * 0.075;
-    ring3.rotation.y = t * 0.045;
+    /* ── Ring rotations + hover/idle speed boost ── */
+    const rm = 1 + hoverInf * 2.2 + idleP * 2.8;
+    ring1.rotation.z =  t * 0.10  * rm;
+    ring2.rotation.z = -t * 0.075 * rm;
+    ring3.rotation.y =  t * 0.045 * rm;
 
-    /* Orbiting lights (every other frame for perf) */
+    /* ── Ring entrance contraction: 3.2× → 1× over 1.3 s.
+       Math.max(0, 1-ep) reaches 0 at ep=1 and stays 0 — rings
+       always end up at exactly scale 1.0 after the entrance.        ── */
+    ring1.scale.setScalar(1 + Math.max(0, 1 - ep) * 2.2);
+    ring2.scale.setScalar(1 + Math.max(0, 1 - ep) * 1.6);
+    ring3.scale.setScalar(1 + Math.max(0, 1 - ep) * 1.0);
+
+    /* ── Gold edge opacity: base 0.92, lifts slightly on hover ── */
+    goldEdgeMat.opacity = 0.92 + hoverInf * 0.08;
+
+    /* ── Particles lean toward cursor when hovering ── */
+    particles.position.x += (curNDCx * hoverInf * 0.7 - particles.position.x) * 0.04;
+    particles.position.y += (curNDCy * hoverInf * 0.5 - particles.position.y) * 0.04;
+
+    /* ── Orbiting lights (every other frame for perf) ── */
     if (frame % 2 === 0) {
       lGold.position.x    =  Math.sin(t * 0.36) * 7;
       lGold.position.y    =  Math.cos(t * 0.27) * 5;
@@ -1505,7 +1564,7 @@
       lCyan.position.x    =  Math.sin(t * 0.52 + 2) * 5;
     }
 
-    /* Particle drift */
+    /* ── Particle drift ── */
     particles.rotation.y = t * 0.022;
     particles.rotation.x = t * 0.009;
 
