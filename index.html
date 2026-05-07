@@ -25,10 +25,10 @@
     :root {
       --c-primary:       #ffffff;
       --c-on-primary:    #000000;
-      --c-gold:          #C4A47C;
-      --c-gold-light:    #D8C3A5;
-      --c-gold-dim:      rgba(196,164,124,0.10);
-      --c-gold-border:   rgba(196,164,124,0.20);
+      --c-gold:          #D4AF37;
+      --c-gold-light:    #F3E5AB;
+      --c-gold-dim:      rgba(212,175,55,0.15);
+      --c-gold-border:   rgba(212,175,55,0.30);
       --c-ink:           #F5F5F7;
       --c-ink-muted:     #A1A1AA;
       --c-canvas:        #050505;
@@ -91,7 +91,7 @@
     .btn:focus-visible {
       outline: 2px solid var(--c-gold);
       outline-offset: 4px;
-      box-shadow: 0 0 0 5px rgba(212,168,83,0.18);
+      box-shadow: 0 0 0 5px rgba(212,175,55,0.25);
     }
     .nav-links a:focus-visible { border-radius: var(--r-xs); }
 
@@ -162,7 +162,7 @@
     }
     .btn:active { transform: scale(0.97); }
     .btn-primary   { background: rgba(255, 255, 255, 0.95); color: var(--c-on-primary); border: 1px solid rgba(255,255,255,0.8); }
-    .btn-primary:hover { box-shadow: inset 0 1px 1px #fff, 0 0 28px rgba(196,164,124,0.4); opacity: 0.98; }
+    .btn-primary:hover { box-shadow: inset 0 1px 1px #fff, 0 0 28px rgba(212,175,55,0.5); opacity: 0.98; }
     .btn-secondary {
       background: rgba(20,20,20,0.6);
       color: var(--c-ink);
@@ -171,7 +171,7 @@
     }
     .btn-secondary:hover { border-color: var(--c-gold-border); background: rgba(30,30,30,0.7); }
     .btn-gold {
-      background: linear-gradient(135deg, rgba(181,154,109,0.9), rgba(216,195,165,0.95), rgba(181,154,109,0.9));
+      background: linear-gradient(135deg, rgba(212,175,55,0.9), rgba(243,229,171,0.95), rgba(212,175,55,0.9));
       background-size: 200% auto;
       color: #000;
       font-weight: 600;
@@ -180,7 +180,7 @@
     }
     .btn-gold:hover {
       background-position: right center;
-      box-shadow: inset 0 1px 1px #fff, 0 0 36px rgba(196,164,124,0.45), 0 8px 32px rgba(0,0,0,0.5);
+      box-shadow: inset 0 1px 1px #fff, 0 0 36px rgba(212,175,55,0.6), 0 8px 32px rgba(0,0,0,0.5);
     }
 
     /* ── Nav (HIG: 44px min nav bar height) ─────────────────── */
@@ -505,8 +505,8 @@
       backdrop-filter: blur(12px) saturate(150%);
       -webkit-backdrop-filter: blur(12px) saturate(150%);
     }
-    .spotlight-violet { background: linear-gradient(140deg, #D8C3A5 0%, #C4A47C 50%, #B59A6D 100%); border: none; }
-    .spotlight-rose   { background: linear-gradient(140deg, #F0D5AC 0%, #D8C3A5 50%, #C4A47C 100%); border: none; }
+    .spotlight-violet { background: linear-gradient(140deg, #F3E5AB 0%, #D4AF37 50%, #B8860B 100%); border: none; }
+    .spotlight-rose   { background: linear-gradient(140deg, #FFF8DC 0%, #F3E5AB 50%, #D4AF37 100%); border: none; }
     .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); pointer-events: none; }
     .spotlight-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #000; position: relative; z-index: 1; }
     .spotlight-card p  { font-size: 14px; color: rgba(0,0,0,0.75); line-height: 1.5; font-weight: 500; position: relative; z-index: 1; }
@@ -641,20 +641,14 @@
       }
       .hero-headline { font-size: clamp(38px, 9vw, 56px); max-width: none; }
 
-      .section-inner { padding: 72px 24px; }
+      .section-inner { padding: 96px 24px; }
       #trust-bar { padding: 20px 24px; }
       .trust-bar-inner { gap: 16px; flex-wrap: wrap; }
       .about-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
-      .step:first-child { border-radius: var(--r-xxl) var(--r-xxl) 0 0; }
-      .step:last-child  { border-radius: 0 0 var(--r-xxl) var(--r-xxl); }
       .card-grid { grid-template-columns: 1fr 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
-      .faq-item:nth-child(1)  { border-radius: var(--r-lg) var(--r-lg) 0 0; }
-      .faq-item:nth-child(2)  { border-radius: 0; }
-      .faq-item:nth-last-child(1) { border-radius: 0 0 var(--r-lg) var(--r-lg); grid-column: span 1; }
-      .faq-item:nth-last-child(2), .faq-item:nth-last-child(3):nth-child(even) { border-radius: 0; }
       .booking-grid { grid-template-columns: 1fr; gap: 48px; }
       .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
       .footer-right { flex-direction: column; gap: 16px; }
