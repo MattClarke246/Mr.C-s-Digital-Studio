@@ -654,9 +654,73 @@
       .hero-trust { flex-direction: column; align-items: flex-start; gap: 10px; }
       .trust-sep { display: none; }
     }
+    /* ═══════════════════════════════════════════════════════════
+       DNA HELIX — scroll-driven Three.js canvas
+       mix-blend-mode: screen → black areas = transparent,
+       colored strands = additive glow over entire page
+    ═══════════════════════════════════════════════════════════ */
+    #dna-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      mix-blend-mode: screen;
+      opacity: 0.88;
+    }
+    /* Tech DNA image — hue-shifted atmospheric texture layer */
+    #dna-bg {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 52%;
+      height: 100%;
+      background-image: url('assets/Tech DNA.webp');
+      background-size: 380px auto;
+      background-repeat: repeat-y;
+      background-position: center top;
+      /* hue-rotate(200deg) shifts source cyan → warm gold */
+      filter: hue-rotate(200deg) saturate(2.2) brightness(1.5);
+      mix-blend-mode: screen;
+      opacity: 0.07;
+      pointer-events: none;
+      z-index: 49;
+      will-change: background-position;
+    }
+    /* Text legibility against DNA glow */
+    .hero-headline,
+    h2.t-display-xl, h2.t-display-lg,
+    .t-caption,
+    .step h3, .about-spotlight h3, .spotlight-card h3 {
+      text-shadow:
+        0 0 28px rgba(6,6,18,0.95),
+        0 0  8px rgba(6,6,18,0.80);
+    }
+    /* Card/form content: subtle dark halo so DNA glow reads nicely behind them */
+    .project-card,
+    .testimonial-card,
+    .faq-item,
+    .step,
+    .about-spotlight,
+    .spotlight-card {
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #dna-canvas { display: none; }
+      #dna-bg { display: none; }
+    }
+    @media (max-width: 768px) {
+      #dna-bg { display: none; }
+    }
   </style>
 </head>
 <body>
+
+<!-- DNA canvas — scroll-driven helix (decorative, aria-hidden) -->
+<canvas id="dna-canvas" aria-hidden="true"></canvas>
+<!-- Tech DNA image — atmospheric texture (decorative) -->
+<div id="dna-bg" aria-hidden="true"></div>
 
 <!-- HIG: Skip link (keyboard accessibility) -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -1486,8 +1550,223 @@ document.getElementById('booking-form').addEventListener('submit', function (e) 
   this.style.display = 'none';
   const success = document.getElementById('form-success');
   success.style.display = 'block';
-  success.focus(); /* move focus to success message (accessibility) */
+  success.focus();
 });
+
+/* ══════════════════════════════════════════════════════════
+   TECH DNA — SCROLL-DRIVEN 3D HELIX
+
+   Architecture:
+   - Full-page fixed Three.js canvas (z-index: 50, mix-blend-mode: screen)
+   - Screen blend: black canvas areas = transparent; colored strands = additive glow
+   - Camera travels DOWN the Y-axis as user scrolls (parallax)
+   - DNA group rotates 3 × 360° over full page scroll (the 360 spiral effect)
+   - Idle base rotation adds life when scroll is static
+   - Gold strand + violet strand + alternating rungs + glowing nodes
+   - Instanced meshes for performance (single draw call per geometry type)
+   - Tech DNA.webp image used as hue-shifted atmospheric background (#dna-bg div)
+══════════════════════════════════════════════════════════ */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.getElementById('dna-canvas');
+
+  /* ── Scene & renderer ── */
+  const scene    = new THREE.Scene();
+  const camera   = new THREE.PerspectiveCamera(49, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(0, 0, 10);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setClearColor(0x000000, 1); /* solid black = transparent under screen blend */
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.6;
+
+  /* ── DNA parameters ── */
+  const isMobile     = window.innerWidth < 768;
+  const RADIUS       = 0.88;          /* helix radius (world units) */
+  const PITCH        = 1.55;          /* vertical distance per full turn */
+  const TURNS        = isMobile ? 10 : 16;  /* complete turns; more = longer strand */
+  const STEPS        = TURNS * 32;    /* curve smoothness */
+  const RNG_PER_TURN = isMobile ? 5 : 7;   /* rungs per turn */
+  const TOTAL_RUNGS  = TURNS * RNG_PER_TURN;
+  const DNA_HEIGHT   = PITCH * TURNS;  /* total world-unit height of strand */
+  const DNA_X        = 3.2;           /* x-offset → right side, aligns with hero crystal */
+
+  /* ── DNA group ── */
+  const dna = new THREE.Group();
+  dna.position.x = DNA_X;
+  scene.add(dna);
+
+  /* ── Build strand paths ── */
+  const pts1 = [], pts2 = [];
+  for (let i = 0; i <= STEPS; i++) {
+    const t = i / STEPS;
+    const a = t * Math.PI * 2 * TURNS;
+    const y = (t - 0.5) * DNA_HEIGHT;
+    pts1.push(new THREE.Vector3( Math.cos(a) * RADIUS, y,  Math.sin(a) * RADIUS));
+    pts2.push(new THREE.Vector3(-Math.cos(a) * RADIUS, y, -Math.sin(a) * RADIUS));
+  }
+
+  /* ── Strand tubes ── */
+  const matGold = new THREE.MeshStandardMaterial({
+    color: 0xD4A853, emissive: 0xC89B3C, emissiveIntensity: 0.7, metalness: 0.92, roughness: 0.08,
+  });
+  const matViolet = new THREE.MeshStandardMaterial({
+    color: 0x7C3AED, emissive: 0x5B21B6, emissiveIntensity: 0.7, metalness: 0.92, roughness: 0.08,
+  });
+
+  dna.add(new THREE.Mesh(
+    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts1), STEPS * 2, 0.036, 8, false), matGold
+  ));
+  dna.add(new THREE.Mesh(
+    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts2), STEPS * 2, 0.036, 8, false), matViolet
+  ));
+
+  /* ── Instanced rungs (3 color buckets) ── */
+  const RUNG_COLORS = [0xD4A853, 0x7C3AED, 0x06B6D4];
+  const bucketSize  = Math.ceil(TOTAL_RUNGS / 3);
+  const rungGeo     = new THREE.CylinderGeometry(0.018, 0.018, 1, 6);
+  const rungMeshes  = RUNG_COLORS.map(c =>
+    new THREE.InstancedMesh(rungGeo,
+      new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: 0.55, metalness: 0.75, roughness: 0.18 }),
+      bucketSize)
+  );
+  rungMeshes.forEach(m => dna.add(m));
+
+  /* ── Instanced nodes ── */
+  const nodeGeo   = new THREE.SphereGeometry(0.058, 8, 8);
+  const nodeGold  = new THREE.InstancedMesh(nodeGeo,
+    new THREE.MeshStandardMaterial({ color: 0xF0C96A, emissive: 0xD4A853, emissiveIntensity: 1.1, metalness: 0.96, roughness: 0.04 }),
+    TOTAL_RUNGS);
+  const nodeViolet = new THREE.InstancedMesh(nodeGeo,
+    new THREE.MeshStandardMaterial({ color: 0x9B6EE8, emissive: 0x7C3AED, emissiveIntensity: 1.1, metalness: 0.96, roughness: 0.04 }),
+    TOTAL_RUNGS);
+  dna.add(nodeGold, nodeViolet);
+
+  /* ── Populate rung & node transforms ── */
+  const dummy    = new THREE.Object3D();
+  const UP       = new THREE.Vector3(0, 1, 0);
+  const bCounts  = [0, 0, 0];
+
+  for (let i = 0; i < TOTAL_RUNGS; i++) {
+    const t     = i / TOTAL_RUNGS;
+    const angle = t * Math.PI * 2 * TURNS;
+    const y     = (t - 0.5) * DNA_HEIGHT;
+    const p1    = new THREE.Vector3( Math.cos(angle) * RADIUS, y,  Math.sin(angle) * RADIUS);
+    const p2    = new THREE.Vector3(-Math.cos(angle) * RADIUS, y, -Math.sin(angle) * RADIUS);
+    const mid   = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+    const len   = p1.distanceTo(p2);
+    const dir   = new THREE.Vector3().subVectors(p2, p1).normalize();
+
+    /* rung */
+    dummy.position.copy(mid);
+    dummy.scale.set(1, len, 1);
+    dummy.quaternion.setFromUnitVectors(UP, dir);
+    dummy.updateMatrix();
+    const bucket = i % 3;
+    rungMeshes[bucket].setMatrixAt(bCounts[bucket]++, dummy.matrix);
+
+    /* nodes */
+    dummy.position.copy(p1); dummy.scale.setScalar(1); dummy.quaternion.identity(); dummy.updateMatrix();
+    nodeGold.setMatrixAt(i, dummy.matrix);
+    dummy.position.copy(p2); dummy.updateMatrix();
+    nodeViolet.setMatrixAt(i, dummy.matrix);
+  }
+  rungMeshes.forEach((m, i) => { m.count = bCounts[i]; m.instanceMatrix.needsUpdate = true; });
+  nodeGold.instanceMatrix.needsUpdate   = true;
+  nodeViolet.instanceMatrix.needsUpdate = true;
+
+  /* ── Floating particles around helix ── */
+  const P_COUNT = isMobile ? 100 : 250;
+  const pPos    = new Float32Array(P_COUNT * 3);
+  const pCol    = new Float32Array(P_COUNT * 3);
+  for (let i = 0; i < P_COUNT; i++) {
+    const r     = RADIUS * (1.6 + Math.random() * 3.5);
+    const theta = Math.random() * Math.PI * 2;
+    const y     = (Math.random() - 0.5) * DNA_HEIGHT;
+    pPos[i*3]   = Math.cos(theta) * r;
+    pPos[i*3+1] = y;
+    pPos[i*3+2] = Math.sin(theta) * r;
+    const gold  = Math.random() > 0.45;
+    pCol[i*3]   = gold ? 0.83 : 0.49;
+    pCol[i*3+1] = gold ? 0.66 : 0.23;
+    pCol[i*3+2] = gold ? 0.32 : 0.93;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
+  const particles = new THREE.Points(pGeo,
+    new THREE.PointsMaterial({ size: 0.055, vertexColors: true, transparent: true, opacity: 0.72, sizeAttenuation: true }));
+  dna.add(particles);
+
+  /* ── Five-point light rig ── */
+  const lA = new THREE.PointLight(0xF0C96A, 10, 22); lA.position.set(4, 5, 7); scene.add(lA);
+  const lB = new THREE.PointLight(0x7C3AED,  8, 18); lB.position.set(-3,-4, 6); scene.add(lB);
+  const lC = new THREE.PointLight(0x06B6D4,  4, 14); lC.position.set( 1, 6,-4); scene.add(lC);
+  const lD = new THREE.PointLight(0xDB2777,  3, 12); lD.position.set(-2, 5, 5); scene.add(lD);
+  scene.add(new THREE.AmbientLight(0x050210, 8));
+
+  /* ── Scroll state ── */
+  const topCamY    =  DNA_HEIGHT / 2 + 4;  /* camera Y at scroll=0 */
+  const bottomCamY = -DNA_HEIGHT / 2 - 4;  /* camera Y at scroll=max */
+  let   scrollRot  = 0;                     /* rotation driven by scroll */
+
+  function onScroll() {
+    const maxS   = Math.max(1, document.body.scrollHeight - window.innerHeight);
+    const prog   = Math.min(window.scrollY / maxS, 1);
+    const camY   = topCamY - prog * (topCamY - bottomCamY);
+
+    /* camera follows scroll through the strand */
+    camera.position.y = camY;
+    camera.lookAt(DNA_X, camY, 0);
+
+    /* lights travel with camera */
+    lA.position.y = camY + 5;
+    lB.position.y = camY - 4;
+    lC.position.y = camY + 3;
+    lD.position.y = camY + 2;
+
+    /* 3 × 360° rotation over full page scroll */
+    scrollRot = prog * Math.PI * 6;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ── Resize ── */
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  /* ── Tech DNA image parallax ── */
+  const dnaBgEl = document.getElementById('dna-bg');
+  if (dnaBgEl) {
+    window.addEventListener('scroll', () => {
+      const prog = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
+      /* scroll background-position to match the Three.js camera travel */
+      dnaBgEl.style.backgroundPositionY = `${prog * 100}%`;
+      /* fade in slightly as user moves down */
+      dnaBgEl.style.opacity = (0.055 + prog * 0.04).toString();
+    }, { passive: true });
+  }
+
+  onScroll(); /* initial position */
+
+  /* ── Animation loop ── */
+  const clock = new THREE.Clock();
+  (function tick() {
+    requestAnimationFrame(tick);
+    const t      = clock.getElapsedTime();
+    /* idle base spin + scroll-driven rotation combined */
+    dna.rotation.y = scrollRot + t * 0.11;
+    /* gentle particle drift */
+    particles.rotation.y = t * 0.018;
+    renderer.render(scene, camera);
+  })();
+})();
 </script>
 </body>
 </html>
