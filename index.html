@@ -7,44 +7,34 @@
   <meta name="description" content="Mr.C's Digital Studio builds premium, conversion-first websites for businesses that are serious about growth. Book a free discovery call today.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Inter+Variable:wght@100..900&display=swap" rel="stylesheet">
-  <!-- Three.js -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <!-- GSAP + ScrollTrigger -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
   <style>
-    /* ── Luxury design tokens ────────────────────────────────── */
+    /* ── Design tokens ───────────────────────────────────────── */
     :root {
       --c-primary:       #ffffff;
       --c-on-primary:    #000000;
       --c-gold:          #D4A853;
       --c-gold-light:    #F0C96A;
-      --c-gold-dim:      rgba(212,168,83,0.12);
-      --c-gold-border:   rgba(212,168,83,0.22);
-      --c-focus:         #0099ff;
+      --c-gold-dim:      rgba(212,168,83,0.10);
+      --c-gold-border:   rgba(212,168,83,0.20);
       --c-ink:           #ffffff;
-      --c-ink-muted:     #888899;
+      --c-ink-muted:     #9A9AB0;   /* lightened for HIG contrast ≥ 4.5:1 */
       --c-canvas:        #060612;
       --c-surface-1:     #0D0D1F;
       --c-surface-2:     #13132A;
       --c-hairline:      #1E1E38;
       --c-hairline-soft: #111122;
       --c-amethyst:      #7C3AED;
-      --c-deep-violet:   #4C1D95;
       --c-rose:          #DB2777;
-      --c-cyan:          #06B6D4;
       --c-success:       #22c55e;
 
-      --r-xs:   4px;
-      --r-sm:   6px;
-      --r-md:   10px;
-      --r-lg:   15px;
-      --r-xl:   20px;
-      --r-xxl:  30px;
-      --r-pill: 100px;
-      --r-full: 9999px;
+      --r-xs:   4px;  --r-sm:   6px;  --r-md:   10px;
+      --r-lg:   15px; --r-xl:   20px; --r-xxl:  30px;
+      --r-pill: 100px; --r-full: 9999px;
     }
 
     /* ── Reset ───────────────────────────────────────────────── */
@@ -53,24 +43,81 @@
     body {
       background: var(--c-canvas);
       color: var(--c-ink);
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-feature-settings: 'cv01','cv05','cv09','cv11','ss03','ss07';
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      /* HIG: system-level text rendering */
+      text-rendering: optimizeLegibility;
     }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
+    img { display: block; max-width: 100%; }
     input, select, textarea, button { font-family: inherit; }
 
+    /* ── Apple HIG: Skip navigation link ────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -120px;
+      left: 24px;
+      z-index: 9999;
+      padding: 12px 22px;
+      background: var(--c-gold);
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--r-pill);
+      transition: top 0.2s ease;
+      white-space: nowrap;
+    }
+    .skip-link:focus { top: 20px; }
+
+    /* ── Apple HIG: Focus styles (2px gold ring) ─────────────── */
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 3px;
+      border-radius: var(--r-sm);
+    }
+    .btn:focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 5px rgba(212,168,83,0.18);
+    }
+    .nav-links a:focus-visible { border-radius: var(--r-xs); }
+
+    /* ── Apple HIG: Reduced motion ───────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      #hero-canvas { display: none; }
+      .marquee-track { animation: none; }
+    }
+
     /* ── Typography ──────────────────────────────────────────── */
-    .t-display-xxl { font-size: clamp(48px, 8vw, 108px); font-weight: 500; line-height: 0.9; letter-spacing: -0.05em; }
-    .t-display-xl  { font-size: clamp(38px, 6vw,  82px); font-weight: 500; line-height: 0.95; letter-spacing: -0.05em; }
-    .t-display-lg  { font-size: clamp(26px, 4vw,  60px); font-weight: 500; line-height: 1.0;  letter-spacing: -0.05em; }
-    .t-body-lg { font-size: 18px; font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: var(--c-ink-muted); }
-    .t-body    { font-size: 15px; font-weight: 400; line-height: 1.4; letter-spacing: -0.01em; color: var(--c-ink-muted); }
+    .t-display-xl {
+      font-size: clamp(38px, 6vw, 82px);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+    .t-display-lg {
+      font-size: clamp(26px, 4vw, 60px);
+      font-weight: 500;
+      line-height: 1.0;
+      letter-spacing: -0.05em;
+    }
+    /* HIG: body text ≥ 16px for comfortable reading */
+    .t-body-lg { font-size: 18px; font-weight: 400; line-height: 1.5; letter-spacing: -0.01em; color: var(--c-ink-muted); }
+    .t-body    { font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -0.01em; color: var(--c-ink-muted); }
     .t-caption { font-size: 12px; font-weight: 600; line-height: 1.2; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-gold); }
 
-    /* Gold shimmer text */
+    /* Gold shimmer */
     @keyframes gold-shimmer {
       0%   { background-position: -200% center; }
       100% { background-position: 200% center; }
@@ -84,62 +131,59 @@
       animation: gold-shimmer 4s linear infinite;
     }
 
-    /* ── Buttons ─────────────────────────────────────────────── */
+    /* ── Buttons (HIG: min 44×44pt touch target) ─────────────── */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 1;
-      padding: 12px 22px;
+      padding: 13px 24px;
+      /* HIG: minimum 44px touch target */
+      min-height: 44px;
       border-radius: var(--r-pill);
       border: none;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      transition: opacity 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
       white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn:active { transform: scale(0.97); }
-    .btn-primary {
-      background: var(--c-primary);
-      color: var(--c-on-primary);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 0 24px rgba(240,201,106,0.35), 0 0 8px rgba(212,168,83,0.2);
-      opacity: 0.95;
-    }
+    .btn-primary   { background: var(--c-primary); color: var(--c-on-primary); }
+    .btn-primary:hover { box-shadow: 0 0 28px rgba(240,201,106,0.4); opacity: 0.92; }
     .btn-secondary {
       background: var(--c-surface-1);
       color: var(--c-ink);
       border: 1px solid var(--c-hairline);
     }
-    .btn-secondary:hover { border-color: var(--c-gold-border); opacity: 0.9; }
+    .btn-secondary:hover { border-color: var(--c-gold-border); opacity: 0.88; }
     .btn-gold {
       background: linear-gradient(135deg, #C89B3C, #F0C96A, #C89B3C);
       background-size: 200% auto;
       color: #000;
       font-weight: 600;
-      transition: background-position 0.4s, box-shadow 0.2s, transform 0.1s;
+      transition: background-position 0.4s, box-shadow 0.2s, transform 0.12s;
     }
     .btn-gold:hover {
       background-position: right center;
-      box-shadow: 0 0 30px rgba(212,168,83,0.5), 0 8px 24px rgba(0,0,0,0.4);
+      box-shadow: 0 0 36px rgba(212,168,83,0.55), 0 8px 32px rgba(0,0,0,0.5);
     }
 
-    /* ── Nav ─────────────────────────────────────────────────── */
+    /* ── Nav (HIG: 44px min nav bar height) ─────────────────── */
     nav {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 300;
-      height: 58px;
+      height: 58px; /* ≥ 44px HIG */
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 40px;
-      background: rgba(6,6,18,0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(6,6,18,0.72);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
       border-bottom: 1px solid var(--c-hairline-soft);
     }
     .nav-logo {
@@ -150,9 +194,21 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      min-height: 44px; /* HIG touch target */
+      display: flex;
+      align-items: center;
     }
     .nav-links { display: flex; gap: 30px; }
-    .nav-links a { font-size: 14px; font-weight: 500; color: var(--c-ink-muted); transition: color 0.15s; }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--c-ink-muted);
+      transition: color 0.15s;
+      min-height: 44px; /* HIG touch target */
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+    }
     .nav-links a:hover { color: var(--c-ink); }
     .nav-ctas { display: flex; gap: 10px; }
 
@@ -161,9 +217,15 @@
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
-      padding: 4px;
       background: none;
       border: none;
+      padding: 0;
+      /* HIG: 44×44 touch target */
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--c-ink); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -176,27 +238,33 @@
       inset: 58px 0 0 0;
       z-index: 290;
       background: rgba(6,6,18,0.97);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 32px;
     }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 26px; font-weight: 500; letter-spacing: -0.04em; color: var(--c-ink); }
+    .mobile-menu a { font-size: 26px; font-weight: 500; letter-spacing: -0.04em; color: var(--c-ink); min-height: 44px; display: flex; align-items: center; }
 
     /* ── Section wrapper ─────────────────────────────────────── */
     .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 40px; }
     .divider { border: none; border-top: 1px solid var(--c-hairline-soft); }
 
-    /* ── Hero ────────────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       HERO — TWO-COLUMN GRID
+       Text on left (60%), 3D crystal on right (40%)
+       Canvas is absolute/full-bleed behind both columns
+    ══════════════════════════════════════════════════════════ */
     #hero {
       position: relative;
       min-height: 100vh;
-      display: flex;
+      display: grid;
+      grid-template-columns: 60fr 40fr;
       align-items: center;
       overflow: hidden;
     }
+    /* Full-bleed 3D canvas — behind everything */
     #hero-canvas {
       position: absolute;
       inset: 0;
@@ -204,42 +272,78 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
+      /* Simulated bloom: glowing crystal through CSS filter */
+      filter:
+        drop-shadow(0 0 55px rgba(212,168,83,0.30))
+        drop-shadow(0 0 110px rgba(124,58,237,0.20))
+        drop-shadow(0 0 200px rgba(124,58,237,0.10));
     }
-    /* Vignette to ground the canvas */
+    /* Left-side text readability vignette */
     #hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 20% 50%, transparent 40%, var(--c-canvas) 100%);
+      background: linear-gradient(
+        98deg,
+        var(--c-canvas)      0%,
+        rgba(6,6,18,0.88)   18%,
+        rgba(6,6,18,0.55)   38%,
+        rgba(6,6,18,0.12)   58%,
+        transparent         74%
+      );
       pointer-events: none;
       z-index: 2;
     }
-    .hero-content {
+    /* Left text column */
+    .hero-left {
       position: relative;
       z-index: 3;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 120px 40px 100px;
-      width: 100%;
-      max-width: 680px;
+      padding: 120px 40px 100px 60px;
     }
-    .hero-eyebrow { margin-bottom: 24px; }
-    .hero-headline { margin-bottom: 24px; }
-    .hero-sub { max-width: 440px; margin-bottom: 36px; }
+    /* Right column — structural placeholder, crystal fills this visually */
+    .hero-right { position: relative; z-index: 1; min-height: 100vh; }
+
+    .hero-eyebrow { margin-bottom: 20px; }
+
+    /* HIG-informed hero headline:
+       - Horizontal, wide, 2-line composition
+       - Generous line-height 1.02 for optical comfort
+       - No forced <br> — browser wraps naturally in wide column */
+    .hero-headline {
+      font-size: clamp(38px, 4.55vw, 62px);
+      font-weight: 500;
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      margin-bottom: 28px;
+      /* HIG: max ~75 chars per line for display text */
+      max-width: 24ch;
+    }
+
+    /* HIG: body sub max ~65ch for optimal reading comfort */
+    .hero-sub {
+      max-width: 46ch;
+      margin-bottom: 36px;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+      color: var(--c-ink-muted);
+    }
     .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
 
     /* Trust cluster */
     .hero-trust { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .trust-stars { display: flex; gap: 3px; }
+    .trust-stars { display: flex; gap: 3px; align-items: center; }
     .trust-rating { font-size: 13px; font-weight: 500; color: var(--c-ink-muted); }
     .trust-rating strong { color: var(--c-ink); }
-    .trust-sep { width: 1px; height: 16px; background: var(--c-hairline); }
+    .trust-sep { width: 1px; height: 16px; background: var(--c-hairline); flex-shrink: 0; }
     .trust-chips { display: flex; gap: 6px; flex-wrap: wrap; }
     .trust-chip {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
       color: var(--c-gold); background: var(--c-gold-dim);
       border: 1px solid var(--c-gold-border);
-      padding: 4px 10px; border-radius: var(--r-pill);
+      padding: 5px 11px; border-radius: var(--r-pill);
+      min-height: 28px; display: flex; align-items: center;
     }
 
     /* ── Marquee strip ───────────────────────────────────────── */
@@ -253,50 +357,26 @@
     }
     .marquee-wrap::before,
     .marquee-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-      pointer-events: none;
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
     }
-    .marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--c-canvas), transparent); }
+    .marquee-wrap::before { left:  0; background: linear-gradient(90deg,  var(--c-canvas), transparent); }
     .marquee-wrap::after  { right: 0; background: linear-gradient(270deg, var(--c-canvas), transparent); }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .marquee-track {
       display: inline-flex;
-      gap: 0;
       animation: marquee 28s linear infinite;
       white-space: nowrap;
     }
     .marquee-track:hover { animation-play-state: paused; }
     .marquee-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      padding: 0 24px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--c-ink-muted);
+      display: inline-flex; align-items: center; gap: 16px; padding: 0 24px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-muted);
     }
-    .marquee-item .dot {
-      width: 4px; height: 4px;
-      background: var(--c-gold);
-      border-radius: 50%;
-      opacity: 0.7;
-    }
+    .marquee-item .dot { width: 4px; height: 4px; background: var(--c-gold); border-radius: 50%; opacity: 0.8; flex-shrink: 0; }
 
     /* ── Trust bar ───────────────────────────────────────────── */
     #trust-bar { padding: 28px 40px; }
-    .trust-bar-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
+    .trust-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 28px; }
     .trust-bar-label { font-size: 11px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-ink-muted); white-space: nowrap; flex-shrink: 0; }
     .trust-bar-sep { width: 1px; height: 20px; background: var(--c-hairline); flex-shrink: 0; }
     .trust-bar-logos { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
@@ -308,34 +388,29 @@
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
     .about-spotlight {
       background: linear-gradient(135deg, #080520 0%, #1E0B4A 45%, #5B21B6 100%);
-      border: 1px solid rgba(124,58,237,0.3);
+      border: 1px solid rgba(124,58,237,0.28);
       border-radius: var(--r-xxl);
       padding: 48px 40px;
       min-height: 360px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      will-change: transform;
-      position: relative;
-      overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      will-change: transform; position: relative; overflow: hidden;
     }
     .about-spotlight::before {
       content: '';
-      position: absolute;
-      top: -40%; right: -20%;
+      position: absolute; top: -40%; right: -20%;
       width: 280px; height: 280px;
       background: radial-gradient(circle, rgba(212,168,83,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
     .about-spotlight h3 { font-size: clamp(22px, 3vw, 30px); font-weight: 500; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 12px; }
-    .about-spotlight p { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+    .about-spotlight p  { font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.6; }
     .about-text { display: flex; flex-direction: column; gap: 18px; justify-content: center; }
     .stat-row { display: flex; gap: 36px; margin-top: 16px; flex-wrap: wrap; }
     .stat { display: flex; flex-direction: column; gap: 4px; }
     .stat-number { font-size: clamp(32px, 4vw, 52px); font-weight: 500; letter-spacing: -0.05em; color: var(--c-gold); }
     .stat-label  { font-size: 12px; color: var(--c-ink-muted); letter-spacing: 0.02em; }
 
-    /* ── How it Works ────────────────────────────────────────── */
+    /* ── How It Works ────────────────────────────────────────── */
     .steps-headline { margin: 14px 0 52px; }
     .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
     .step {
@@ -347,46 +422,34 @@
     .step:hover { background: var(--c-surface-2); }
     .step:first-child { border-radius: var(--r-xxl) 0 0 var(--r-xxl); }
     .step:last-child  { border-radius: 0 var(--r-xxl) var(--r-xxl) 0; }
-    .step-number {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--c-gold); margin-bottom: 24px;
-      display: flex; align-items: center; gap: 10px;
-    }
+    .step-number { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
     .step-number::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--c-gold-border), transparent); }
-    .step-icon {
-      width: 42px; height: 42px;
-      background: var(--c-gold-dim);
-      border: 1px solid var(--c-gold-border);
-      border-radius: var(--r-full);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
-    }
-    .step h3 { font-size: 19px; font-weight: 500; letter-spacing: -0.03em; color: var(--c-ink); margin-bottom: 10px; line-height: 1.2; }
-    .step p { font-size: 14px; color: var(--c-ink-muted); line-height: 1.6; }
+    .step-icon { width: 42px; height: 42px; background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); border-radius: var(--r-full); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .step h3 { font-size: 19px; font-weight: 500; letter-spacing: -0.03em; color: var(--c-ink); margin-bottom: 10px; line-height: 1.25; }
+    .step p  { font-size: 15px; color: var(--c-ink-muted); line-height: 1.6; }
     .step-timeline { margin-top: 20px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--c-gold); letter-spacing: 0.02em; }
-    .step-timeline::before { content: ''; width: 5px; height: 5px; background: var(--c-gold); border-radius: 50%; }
+    .step-timeline::before { content: ''; width: 5px; height: 5px; background: var(--c-gold); border-radius: 50%; flex-shrink: 0; }
 
     /* ── Projects ────────────────────────────────────────────── */
     .projects-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px; gap: 20px; }
     .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-
     .project-card {
       background: var(--c-surface-1);
       border: 1px solid var(--c-hairline);
       border-radius: var(--r-xl);
       padding: 20px;
       display: flex; flex-direction: column; gap: 10px;
-      transition: transform 0.3s cubic-bezier(.22,1,.36,1), box-shadow 0.3s, border-color 0.2s;
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s, border-color 0.2s;
       cursor: default;
       transform-style: preserve-3d;
       will-change: transform;
     }
-    .project-card:hover { border-color: var(--c-gold-border); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(212,168,83,0.08); }
+    .project-card:hover { border-color: var(--c-gold-border); box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 36px rgba(212,168,83,0.09); }
     .card-thumb { width: 100%; aspect-ratio: 16/9; background: var(--c-surface-2); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 4px; }
     .card-thumb-pattern { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .card-tag { display: inline-flex; font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-gold); background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); padding: 3px 9px; border-radius: var(--r-xs); width: fit-content; }
     .card-title { font-size: 17px; font-weight: 500; letter-spacing: -0.03em; color: var(--c-ink); line-height: 1.25; }
-    .card-desc  { font-size: 14px; color: var(--c-ink-muted); line-height: 1.45; }
+    .card-desc  { font-size: 14px; color: var(--c-ink-muted); line-height: 1.5; }
     .card-result { font-size: 12px; font-weight: 600; color: var(--c-gold); letter-spacing: -0.01em; display: flex; align-items: center; gap: 5px; margin-top: auto; padding-top: 4px; }
     .card-result::before { content: '↑'; font-size: 10px; }
 
@@ -401,9 +464,9 @@
     }
     .spotlight-violet { background: linear-gradient(140deg, #0D0826 0%, #2D1660 50%, #5B21B6 100%); border: 1px solid rgba(92,33,182,0.4); }
     .spotlight-rose   { background: linear-gradient(140deg, #1A0010 0%, #7E1040 50%, #C2185B 100%); border: 1px solid rgba(194,24,91,0.4); }
-    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(212,168,83,0.2) 0%, transparent 70%); pointer-events: none; }
+    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(212,168,83,0.22) 0%, transparent 70%); pointer-events: none; }
     .spotlight-card h3 { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #fff; position: relative; z-index: 1; }
-    .spotlight-card p  { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5; position: relative; z-index: 1; }
+    .spotlight-card p  { font-size: 14px; color: rgba(255,255,255,0.68); line-height: 1.5; position: relative; z-index: 1; }
 
     /* ── Testimonials ────────────────────────────────────────── */
     .testimonials-headline { margin: 14px 0 48px; }
@@ -414,15 +477,15 @@
       border-radius: var(--r-xl);
       padding: 28px;
       display: flex; flex-direction: column; gap: 20px;
-      transition: transform 0.3s cubic-bezier(.22,1,.36,1), border-color 0.2s, box-shadow 0.2s;
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1), border-color 0.2s, box-shadow 0.35s;
       transform-style: preserve-3d;
     }
-    .testimonial-card:hover { border-color: var(--c-gold-border); box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 20px rgba(212,168,83,0.07); }
+    .testimonial-card:hover { border-color: var(--c-gold-border); box-shadow: 0 16px 48px rgba(0,0,0,0.45), 0 0 24px rgba(212,168,83,0.08); }
     .testimonial-stars { display: flex; gap: 3px; }
-    .testimonial-quote { font-size: 15px; color: var(--c-ink); line-height: 1.65; letter-spacing: -0.01em; flex: 1; }
-    .testimonial-quote::before { content: '\201C'; color: var(--c-gold); font-size: 22px; line-height: 1; display: block; margin-bottom: 6px; }
+    .testimonial-quote { font-size: 15px; color: var(--c-ink); line-height: 1.7; letter-spacing: -0.01em; flex: 1; }
+    .testimonial-quote::before { content: '\201C'; color: var(--c-gold); font-size: 24px; line-height: 1; display: block; margin-bottom: 6px; }
     .testimonial-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--c-hairline-soft); }
-    .testimonial-avatar { width: 36px; height: 36px; border-radius: var(--r-full); background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-gold); flex-shrink: 0; }
+    .testimonial-avatar { width: 38px; height: 38px; border-radius: var(--r-full); background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--c-gold); flex-shrink: 0; }
     .testimonial-name { font-size: 13px; font-weight: 600; color: var(--c-ink); }
     .testimonial-role { font-size: 12px; color: var(--c-ink-muted); }
 
@@ -435,23 +498,24 @@
     .faq-item:nth-last-child(1) { border-radius: 0 0 var(--r-lg) var(--r-lg); grid-column: span 2; }
     .faq-item:nth-last-child(2) { border-radius: 0 0 0 var(--r-lg); }
     .faq-item:nth-last-child(3):nth-child(even) { border-radius: 0 0 var(--r-lg) 0; }
-    .faq-question { width: 100%; background: none; border: none; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; text-align: left; transition: background 0.15s; }
+    /* HIG: min 44px touch target for FAQ rows */
+    .faq-question { width: 100%; background: none; border: none; padding: 22px 28px; min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; text-align: left; transition: background 0.15s; -webkit-tap-highlight-color: transparent; }
     .faq-question:hover { background: var(--c-surface-2); }
-    .faq-question span { font-size: 15px; font-weight: 500; color: var(--c-ink); letter-spacing: -0.02em; line-height: 1.3; }
-    .faq-icon { width: 24px; height: 24px; background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); border-radius: var(--r-full); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.25s, background 0.15s; }
+    .faq-question span { font-size: 15px; font-weight: 500; color: var(--c-ink); letter-spacing: -0.02em; line-height: 1.35; }
+    .faq-icon { width: 24px; height: 24px; background: var(--c-gold-dim); border: 1px solid var(--c-gold-border); border-radius: var(--r-full); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.25s ease, background 0.15s; }
     .faq-icon svg { display: block; transition: transform 0.25s ease; }
     .faq-item.open .faq-icon { background: var(--c-gold-border); transform: rotate(45deg); }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(.22,1,.36,1); }
-    .faq-answer-inner { padding: 0 28px 24px; font-size: 14px; color: var(--c-ink-muted); line-height: 1.7; }
+    .faq-answer-inner { padding: 0 28px 24px; font-size: 15px; color: var(--c-ink-muted); line-height: 1.7; }
     .faq-answer-inner strong { color: var(--c-ink); font-weight: 500; }
-    .faq-answer-inner a { color: var(--c-gold); }
+    .faq-answer-inner a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
 
     /* ── Booking ─────────────────────────────────────────────── */
     .booking-headline { margin: 14px 0 56px; }
     .booking-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
-    .booking-intro p { font-size: 17px; color: var(--c-ink-muted); line-height: 1.6; }
+    .booking-intro p { font-size: 17px; color: var(--c-ink-muted); line-height: 1.65; }
     .perks { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
-    .perk { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--c-ink-muted); }
+    .perk { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--c-ink-muted); }
     .perk-dot { width: 6px; height: 6px; background: var(--c-gold); border-radius: 50%; flex-shrink: 0; }
 
     form { display: flex; flex-direction: column; gap: 16px; }
@@ -463,47 +527,49 @@
       color: var(--c-ink);
       border: 1px solid var(--c-hairline);
       border-radius: var(--r-md);
-      padding: 12px 14px;
-      font-size: 15px;
+      padding: 13px 15px; /* ≥ 44px total with label */
+      font-size: 16px; /* HIG: ≥ 16px prevents iOS auto-zoom */
       font-feature-settings: 'cv01','cv11';
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
       width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
     }
-    input::placeholder, textarea::placeholder { color: #333352; }
-    input:focus, select:focus, textarea:focus { border-color: var(--c-gold); box-shadow: 0 0 0 1px rgba(212,168,83,0.2); }
-    select { appearance: none; -webkit-appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    input::placeholder, textarea::placeholder { color: #2E2E50; }
+    input:focus, select:focus, textarea:focus { border-color: var(--c-gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.18); }
+    select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-color: var(--c-surface-1); padding-right: 36px; }
     option { background: var(--c-surface-1); }
     textarea { resize: vertical; min-height: 120px; }
     .form-submit .btn-gold { width: 100%; padding: 16px 20px; font-size: 15px; border-radius: var(--r-pill); margin-top: 4px; }
-    .form-success { display: none; padding: 32px; background: var(--c-surface-1); border: 1px solid var(--c-gold-border); border-radius: var(--r-xl); text-align: center; }
+    .form-success { display: none; padding: 36px; background: var(--c-surface-1); border: 1px solid var(--c-gold-border); border-radius: var(--r-xl); text-align: center; }
     .form-success-icon { font-size: 32px; margin-bottom: 12px; color: var(--c-gold); }
-    .form-success h3 { font-size: 18px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .form-success p  { font-size: 14px; color: var(--c-ink-muted); line-height: 1.5; }
+    .form-success h3 { font-size: 20px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .form-success p  { font-size: 15px; color: var(--c-ink-muted); line-height: 1.55; }
 
     /* ── Footer ──────────────────────────────────────────────── */
     .footer-inner { max-width: 1200px; margin: 0 auto; padding: 52px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .footer-logo { font-size: 15px; font-weight: 700; letter-spacing: -0.04em; }
+    .footer-logo { font-size: 15px; font-weight: 700; letter-spacing: -0.04em; background: linear-gradient(135deg, #fff 40%, #D4A853 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .footer-copy { font-size: 13px; color: var(--c-ink-muted); }
     .footer-right { display: flex; align-items: center; gap: 24px; }
     .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 13px; color: var(--c-ink-muted); transition: color 0.15s; }
+    .footer-links a { font-size: 13px; color: var(--c-ink-muted); transition: color 0.15s; min-height: 44px; display: flex; align-items: center; }
     .footer-links a:hover { color: var(--c-gold); }
 
     /* ── Scroll reveal ───────────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
     .reveal.visible { opacity: 1; transform: none; }
     .reveal-d1 { transition-delay: 0.08s; }
     .reveal-d2 { transition-delay: 0.16s; }
     .reveal-d3 { transition-delay: 0.24s; }
     .reveal-d4 { transition-delay: 0.32s; }
 
-    /* ── Ambient particle ────────────────────────────────────── */
+    /* ── Ambient particles ───────────────────────────────────── */
     @keyframes float-particle {
-      0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
-      5%   { opacity: 1; transform: translateY(95vh) translateX(0) scale(1); }
-      95%  { opacity: 0.6; }
-      100% { transform: translateY(-5vh) translateX(var(--drift)) scale(0.5); opacity: 0; }
+      0%   { transform: translateY(100vh) scale(0);   opacity: 0;   }
+      5%   { opacity: 1;  transform: translateY(94vh) scale(1); }
+      95%  { opacity: 0.5; }
+      100% { transform: translateY(-4vh) translateX(var(--drift)) scale(0.6); opacity: 0; }
     }
     .amb-particle {
       position: fixed;
@@ -519,9 +585,25 @@
       nav { padding: 0 20px; }
       .nav-links, .nav-ctas { display: none; }
       .nav-hamburger { display: flex; }
-      .hero-content { padding: 110px 20px 80px; }
-      .section-inner { padding: 72px 20px; }
-      #trust-bar { padding: 20px; }
+
+      /* Hero: single column on mobile */
+      #hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        display: flex;
+        align-items: center;
+      }
+      .hero-left { padding: 110px 24px 80px; }
+      .hero-right { display: none; }
+      /* Softer vignette on mobile — text is full width */
+      #hero::after {
+        background: linear-gradient(180deg, transparent 40%, rgba(6,6,18,0.7) 100%),
+                    linear-gradient(0deg, transparent 40%, rgba(6,6,18,0.4) 100%);
+      }
+      .hero-headline { font-size: clamp(38px, 9vw, 56px); max-width: none; }
+
+      .section-inner { padding: 72px 24px; }
+      #trust-bar { padding: 20px 24px; }
       .trust-bar-inner { gap: 16px; flex-wrap: wrap; }
       .about-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
@@ -530,15 +612,14 @@
       .card-grid { grid-template-columns: 1fr 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
-      .faq-item:nth-child(1) { border-radius: var(--r-lg) var(--r-lg) 0 0; }
-      .faq-item:nth-child(2) { border-radius: 0; }
+      .faq-item:nth-child(1)  { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+      .faq-item:nth-child(2)  { border-radius: 0; }
       .faq-item:nth-last-child(1) { border-radius: 0 0 var(--r-lg) var(--r-lg); grid-column: span 1; }
       .faq-item:nth-last-child(2), .faq-item:nth-last-child(3):nth-child(even) { border-radius: 0; }
       .booking-grid { grid-template-columns: 1fr; gap: 48px; }
       .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
       .footer-right { flex-direction: column; gap: 16px; }
       .projects-header { flex-direction: column; align-items: flex-start; }
-      #hero::after { background: radial-gradient(ellipse 80% 60% at 50% 80%, transparent 20%, var(--c-canvas) 100%); }
     }
     @media (max-width: 600px) {
       .card-grid { grid-template-columns: 1fr; }
@@ -550,12 +631,13 @@
 </head>
 <body>
 
-<!-- ═══════ AMBIENT PARTICLES (injected by JS) ═══════════════════════════ -->
+<!-- HIG: Skip link (keyboard accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
-<nav>
-  <a href="#" class="nav-logo">MR.C</a>
-  <ul class="nav-links">
+<nav aria-label="Main navigation">
+  <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">MR.C</a>
+  <ul class="nav-links" role="list">
     <li><a href="#about">About</a></li>
     <li><a href="#how-it-works">Process</a></li>
     <li><a href="#projects">Work</a></li>
@@ -564,12 +646,14 @@
   <div class="nav-ctas">
     <a href="#booking" class="btn btn-gold">Book a Free Call</a>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
   </button>
 </nav>
 
-<div class="mobile-menu" id="mobile-menu">
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true" hidden>
   <a href="#about"        onclick="closeMobile()">About</a>
   <a href="#how-it-works" onclick="closeMobile()">Process</a>
   <a href="#projects"     onclick="closeMobile()">Work</a>
@@ -577,32 +661,41 @@
   <a href="#booking" onclick="closeMobile()" class="btn btn-gold" style="margin-top:8px;">Book a Free Call</a>
 </div>
 
+<main id="main-content">
+
 <!-- ═══════════════════════════════════ HERO ══════════════════════════════════ -->
-<section id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-content">
+<section id="hero" aria-label="Hero">
+  <!-- Full-bleed 3D canvas — purely decorative -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- LEFT: text content -->
+  <div class="hero-left">
     <p class="t-caption hero-eyebrow reveal">Website Design &amp; Development Studio</p>
-    <h1 class="t-display-xxl hero-headline reveal reveal-d1">
-      Your website<br>should be your<br><span class="gold-text">best salesperson.</span>
+
+    <h1 class="hero-headline reveal reveal-d1">
+      Your website should be your <span class="gold-text">best salesperson.</span>
     </h1>
-    <p class="t-body-lg hero-sub reveal reveal-d2">
+
+    <p class="hero-sub reveal reveal-d2">
       Mr.C's Digital Studio builds premium, conversion-first websites for businesses that are serious about growth.
     </p>
+
     <div class="hero-ctas reveal reveal-d3">
       <a href="#booking"  class="btn btn-gold">Book a Free Discovery Call</a>
       <a href="#projects" class="btn btn-secondary">See our work</a>
     </div>
+
     <div class="hero-trust reveal reveal-d4">
-      <div class="trust-stars">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <div class="trust-stars" aria-label="Rated 4.9 out of 5 stars">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
       </div>
       <span class="trust-rating"><strong>4.9</strong> · 40+ happy clients</span>
-      <div class="trust-sep"></div>
-      <div class="trust-chips">
+      <div class="trust-sep" aria-hidden="true"></div>
+      <div class="trust-chips" aria-label="Industries served">
         <span class="trust-chip">Retail</span>
         <span class="trust-chip">Consulting</span>
         <span class="trust-chip">SaaS</span>
@@ -611,12 +704,14 @@
       </div>
     </div>
   </div>
+
+  <!-- RIGHT: structural spacer (3D fills this visually) -->
+  <div class="hero-right" aria-hidden="true"></div>
 </section>
 
-<!-- ═══════════════════════════════ MARQUEE STRIP ════════════════════════════ -->
-<div class="marquee-wrap">
+<!-- ═══════════════════════════ MARQUEE STRIP ════════════════════════════════ -->
+<div class="marquee-wrap" aria-hidden="true">
   <div class="marquee-track">
-    <!-- Repeated twice for seamless loop -->
     <span class="marquee-item">Premium Design <span class="dot"></span></span>
     <span class="marquee-item">High-Performance Builds <span class="dot"></span></span>
     <span class="marquee-item">Conversion-First Strategy <span class="dot"></span></span>
@@ -636,11 +731,11 @@
   </div>
 </div>
 
-<!-- ═══════════════ TRUST BAR ════════════════════════════════════════════════ -->
+<!-- ═══════════════════════ TRUST BAR ════════════════════════════════════════ -->
 <div id="trust-bar">
   <div class="trust-bar-inner reveal">
     <span class="trust-bar-label">Trusted by</span>
-    <div class="trust-bar-sep"></div>
+    <div class="trust-bar-sep" aria-hidden="true"></div>
     <div class="trust-bar-logos">
       <span class="trust-bar-logo">Prestige Retail Co.</span>
       <span class="trust-bar-logo">Apex Consulting</span>
@@ -655,10 +750,10 @@
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ ABOUT ══════════════════════════════════ -->
-<div id="about">
+<section id="about" aria-labelledby="about-heading">
   <div class="section-inner">
     <p class="t-caption reveal">About</p>
-    <h2 class="t-display-xl about-headline reveal reveal-d1">
+    <h2 id="about-heading" class="t-display-xl about-headline reveal reveal-d1">
       We build for<br>businesses that<br>mean business.
     </h2>
     <div class="about-grid">
@@ -686,288 +781,254 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider">
 
-<!-- ═══════════════════════════════ HOW IT WORKS ════════════════════════════ -->
-<div id="how-it-works">
+<!-- ═══════════════════════════ HOW IT WORKS ═════════════════════════════════ -->
+<section id="how-it-works" aria-labelledby="process-heading">
   <div class="section-inner">
     <p class="t-caption reveal">Process</p>
-    <h2 class="t-display-xl steps-headline reveal reveal-d1">From call to<br>launch in weeks.</h2>
+    <h2 id="process-heading" class="t-display-xl steps-headline reveal reveal-d1">From call to<br>launch in weeks.</h2>
     <div class="steps-grid">
       <div class="step reveal">
-        <div class="step-number">01</div>
-        <div class="step-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round">
-            <path d="M3 4.5h12M3 9h8M3 13.5h5"/>
-          </svg>
+        <div class="step-number" aria-hidden="true">01</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"><path d="M3 4.5h12M3 9h8M3 13.5h5"/></svg>
         </div>
         <h3>Free Discovery Call</h3>
         <p>We learn your goals, your audience, and what success looks like for your business. No pressure. No sales pitch. Just an honest conversation.</p>
         <span class="step-timeline">30 minutes</span>
       </div>
       <div class="step reveal reveal-d1">
-        <div class="step-number">02</div>
-        <div class="step-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round">
-            <rect x="2" y="2" width="14" height="14" rx="3"/>
-            <path d="M6 9l2 2 4-4"/>
-          </svg>
+        <div class="step-number" aria-hidden="true">02</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="14" height="14" rx="3"/><path d="M6 9l2 2 4-4"/></svg>
         </div>
         <h3>Strategy &amp; Build</h3>
-        <p>We design and develop your custom site from scratch — no templates, no hand-offs. Every section, every word, and every interaction is intentional.</p>
+        <p>We design and develop your custom site from scratch — no templates, no hand-offs. Every section, word, and interaction is intentional.</p>
         <span class="step-timeline">2 – 6 weeks delivery</span>
       </div>
       <div class="step reveal reveal-d2">
-        <div class="step-number">03</div>
-        <div class="step-icon">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round">
-            <path d="M9 2v4M9 12v4M2 9h4M12 9h4"/>
-            <circle cx="9" cy="9" r="3"/>
-          </svg>
+        <div class="step-number" aria-hidden="true">03</div>
+        <div class="step-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"><path d="M9 2v4M9 12v4M2 9h4M12 9h4"/><circle cx="9" cy="9" r="3"/></svg>
         </div>
         <h3>Launch &amp; Grow</h3>
-        <p>We launch with confidence, track performance from day one, and stay in your corner post-launch. Your site improves over time, not just on day one.</p>
+        <p>We launch with confidence, track performance from day one, and stay in your corner post-launch. Your site improves over time.</p>
         <span class="step-timeline">Ongoing support</span>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ PROJECTS ══════════════════════════════ -->
-<div id="projects">
+<section id="projects" aria-labelledby="projects-heading">
   <div class="section-inner">
     <div class="projects-header">
       <div>
         <p class="t-caption reveal">Selected work</p>
-        <h2 class="t-display-xl reveal reveal-d1">Projects.</h2>
+        <h2 id="projects-heading" class="t-display-xl reveal reveal-d1">Projects.</h2>
       </div>
       <a href="#booking" class="btn btn-gold reveal reveal-d1">Book a Free Discovery Call →</a>
     </div>
     <div class="card-grid">
 
-      <div class="project-card reveal">
-        <div class="card-thumb">
-          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0D0A28,#2A1060);">
-            <svg width="44" height="44" viewBox="0 0 48 48" fill="none" opacity="0.35">
-              <rect x="8" y="8" width="32" height="24" rx="3" stroke="#D4A853" stroke-width="1.5"/>
-              <line x1="8" y1="36" x2="40" y2="36" stroke="#D4A853" stroke-width="1.5"/>
-              <line x1="24" y1="36" x2="24" y2="42" stroke="#D4A853" stroke-width="1.5"/>
-              <line x1="16" y1="42" x2="32" y2="42" stroke="#D4A853" stroke-width="1.5"/>
-            </svg>
-          </div>
-        </div>
+      <article class="project-card reveal">
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0D0A28,#2A1060);">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="8" y="8" width="32" height="24" rx="3" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="36" x2="40" y2="36" stroke="#D4A853" stroke-width="1.5"/><line x1="24" y1="36" x2="24" y2="42" stroke="#D4A853" stroke-width="1.5"/><line x1="16" y1="42" x2="32" y2="42" stroke="#D4A853" stroke-width="1.5"/></svg>
+        </div></div>
         <span class="card-tag">E-commerce</span>
         <p class="card-title">Prestige Retail Co.</p>
         <p class="card-desc">A high-converting online store with custom product pages, seamless checkout, and brand-forward design that drives repeat purchases.</p>
         <span class="card-result">Conversion rate up 68% in 30 days</span>
-      </div>
+      </article>
 
-      <div class="spotlight-card spotlight-violet reveal reveal-d1" data-parallax-card="0.05">
+      <div class="spotlight-card spotlight-violet reveal reveal-d1" data-parallax-card="0.05" aria-hidden="true">
         <h3>Design that<br>sells itself.</h3>
         <p>Our sites do the talking so you don't have to.</p>
       </div>
 
-      <div class="project-card reveal reveal-d2">
-        <div class="card-thumb">
-          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0A1A10,#0F2E1A);">
-            <svg width="44" height="44" viewBox="0 0 48 48" fill="none" opacity="0.35">
-              <circle cx="24" cy="20" r="8" stroke="#D4A853" stroke-width="1.5"/>
-              <path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
+      <article class="project-card reveal reveal-d2">
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0A1A10,#0F2E1A);">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><circle cx="24" cy="20" r="8" stroke="#D4A853" stroke-width="1.5"/><path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div></div>
         <span class="card-tag">Service Business</span>
         <p class="card-title">Apex Consulting Group</p>
         <p class="card-desc">A professional services site engineered to generate qualified leads and establish authority in a highly competitive market.</p>
         <span class="card-result">3× more qualified leads per month</span>
-      </div>
+      </article>
 
-      <div class="project-card reveal">
-        <div class="card-thumb">
-          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#200A0A,#3D1020);">
-            <svg width="44" height="44" viewBox="0 0 48 48" fill="none" opacity="0.35">
-              <rect x="6" y="14" width="16" height="20" rx="2" stroke="#D4A853" stroke-width="1.5"/>
-              <rect x="26" y="8" width="16" height="14" rx="2" stroke="#D4A853" stroke-width="1.5"/>
-              <rect x="26" y="26" width="16" height="8" rx="2" stroke="#D4A853" stroke-width="1.5"/>
-            </svg>
-          </div>
-        </div>
+      <article class="project-card reveal">
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#200A0A,#3D1020);">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="6" y="14" width="16" height="20" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="8" width="16" height="14" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="26" width="16" height="8" rx="2" stroke="#D4A853" stroke-width="1.5"/></svg>
+        </div></div>
         <span class="card-tag">Creative Portfolio</span>
         <p class="card-title">Nova Creative Studio</p>
         <p class="card-desc">A cinematic portfolio with scroll-driven animations and immersive layout that puts the work front and centre.</p>
         <span class="card-result">Bounce rate reduced by 41%</span>
-      </div>
+      </article>
 
-      <div class="spotlight-card spotlight-rose reveal reveal-d1" data-parallax-card="0.04">
+      <div class="spotlight-card spotlight-rose reveal reveal-d1" data-parallax-card="0.04" aria-hidden="true">
         <h3>Performance<br>built in.</h3>
         <p>90+ Lighthouse scores, lightning-fast loads, and mobile-first from day one — every time.</p>
       </div>
 
-      <div class="project-card reveal reveal-d2">
-        <div class="card-thumb">
-          <div class="card-thumb-pattern" style="background:linear-gradient(135deg,#08081E,#141440);">
-            <svg width="44" height="44" viewBox="0 0 48 48" fill="none" opacity="0.35">
-              <rect x="8" y="10" width="32" height="28" rx="4" stroke="#D4A853" stroke-width="1.5"/>
-              <line x1="8" y1="18" x2="40" y2="18" stroke="#D4A853" stroke-width="1.5"/>
-              <circle cx="13" cy="14" r="1.5" fill="#D4A853"/>
-              <circle cx="18" cy="14" r="1.5" fill="#D4A853"/>
-              <circle cx="23" cy="14" r="1.5" fill="#D4A853"/>
-            </svg>
-          </div>
-        </div>
+      <article class="project-card reveal reveal-d2">
+        <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#08081E,#141440);">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="8" y="10" width="32" height="28" rx="4" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="18" x2="40" y2="18" stroke="#D4A853" stroke-width="1.5"/><circle cx="13" cy="14" r="1.5" fill="#D4A853"/><circle cx="18" cy="14" r="1.5" fill="#D4A853"/><circle cx="23" cy="14" r="1.5" fill="#D4A853"/></svg>
+        </div></div>
         <span class="card-tag">SaaS Landing Page</span>
         <p class="card-title">Flux SaaS</p>
         <p class="card-desc">A conversion-optimised landing page for a B2B SaaS product, engineered from scratch to maximise free-trial signups.</p>
         <span class="card-result">Free-trial signups up 2.4×</span>
-      </div>
+      </article>
 
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider">
 
-<!-- ═══════════════════════════════ TESTIMONIALS ════════════════════════════ -->
-<div id="testimonials">
+<!-- ═══════════════════════════ TESTIMONIALS ════════════════════════════════ -->
+<section id="testimonials" aria-labelledby="testimonials-heading">
   <div class="section-inner">
     <p class="t-caption reveal">What clients say</p>
-    <h2 class="t-display-xl testimonials-headline reveal reveal-d1">Don't take<br>our word for it.</h2>
+    <h2 id="testimonials-heading" class="t-display-xl testimonials-headline reveal reveal-d1">Don't take<br>our word for it.</h2>
     <div class="testimonials-grid">
 
-      <div class="testimonial-card reveal">
-        <div class="testimonial-stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <blockquote class="testimonial-card reveal">
+        <div class="testimonial-stars" aria-label="5 stars">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
         </div>
-        <p class="testimonial-quote">Working with Mr.C completely transformed our online presence. Enquiries through our website tripled in the first month after launch — I only wish we'd done it sooner.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">SM</div>
+        <p class="testimonial-quote">Working with Mr.C completely transformed our online presence. Enquiries tripled in the first month after launch — I only wish we'd done it sooner.</p>
+        <footer class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">SM</div>
           <div><p class="testimonial-name">Sarah M.</p><p class="testimonial-role">Owner, Prestige Retail Co.</p></div>
-        </div>
-      </div>
+        </footer>
+      </blockquote>
 
-      <div class="testimonial-card reveal reveal-d1">
-        <div class="testimonial-stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <blockquote class="testimonial-card reveal reveal-d1">
+        <div class="testimonial-stars" aria-label="5 stars">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
         </div>
-        <p class="testimonial-quote">Finally, a web studio that genuinely understands conversion. Our new site paid for itself within six weeks. The ROI case was clear from week one — I'd recommend Mr.C without hesitation.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">JT</div>
+        <p class="testimonial-quote">Finally, a studio that genuinely understands conversion. Our new site paid for itself within six weeks. The ROI was clear from week one — I'd recommend Mr.C without hesitation.</p>
+        <footer class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">JT</div>
           <div><p class="testimonial-name">James T.</p><p class="testimonial-role">Director, Apex Consulting Group</p></div>
-        </div>
-      </div>
+        </footer>
+      </blockquote>
 
-      <div class="testimonial-card reveal reveal-d2">
-        <div class="testimonial-stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <blockquote class="testimonial-card reveal reveal-d2">
+        <div class="testimonial-stars" aria-label="5 stars">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="#D4A853" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
         </div>
-        <p class="testimonial-quote">The process was smooth from day one. They delivered in under three weeks, stayed ahead of every deadline, and the results speak for themselves. A genuinely brilliant team.</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">PK</div>
+        <p class="testimonial-quote">The process was smooth from day one. They delivered in under three weeks, stayed ahead of every deadline, and the results speak for themselves. Genuinely brilliant.</p>
+        <footer class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">PK</div>
           <div><p class="testimonial-name">Priya K.</p><p class="testimonial-role">Founder, Flux SaaS</p></div>
-        </div>
-      </div>
+        </footer>
+      </blockquote>
 
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ FAQ ════════════════════════════════════ -->
-<div id="faq">
+<section id="faq" aria-labelledby="faq-heading">
   <div class="section-inner">
     <p class="t-caption reveal">Questions</p>
-    <h2 class="t-display-xl faq-headline reveal reveal-d1">Everything you<br>want to know.</h2>
+    <h2 id="faq-heading" class="t-display-xl faq-headline reveal reveal-d1">Everything you<br>want to know.</h2>
     <div class="faq-grid reveal reveal-d1">
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>How much does a website cost?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner">Most projects start from <strong>$2,500</strong>. The exact investment depends on scope — we'll give you a clear, fixed-price proposal after your discovery call. No hidden fees, no surprises. Most clients see their site pay for itself within 6–12 weeks.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">Most projects start from <strong>$2,500</strong>. The exact investment depends on scope — we'll give you a clear, fixed-price proposal after your discovery call. No hidden fees, no surprises. Most clients see their site pay for itself within 6–12 weeks.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>How long does a build take?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner"><strong>Landing pages</strong> typically take 2–3 weeks. <strong>Full business websites</strong> take 4–6 weeks. We agree on a timeline before we start and we hit it — no drift, no delays.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner"><strong>Landing pages</strong> typically take 2–3 weeks. <strong>Full business websites</strong> take 4–6 weeks. We agree on a timeline before we start and we hit it — no drift, no delays.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>Do I need to have everything ready to start?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner">No. All you need is <strong>30 minutes for a discovery call</strong>. We help you clarify your goals, messaging, and structure — that's part of our process.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">No. All you need is <strong>30 minutes for a discovery call</strong>. We help you clarify your goals, messaging, and structure — that's part of our process.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>Will I be able to update the site myself?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. We build on platforms you can manage <strong>without a developer</strong>. Every project includes a full handover session so you're confident from day one.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">Yes. We build on platforms you can manage <strong>without a developer</strong>. Every project includes a full handover session so you're confident from day one.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>What if I already have a website?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner">That's fine — we either <strong>rebuild from scratch</strong> or <strong>redesign what you have</strong>. We'll audit your existing site on the discovery call and give you our honest recommendation.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">That's fine — we either <strong>rebuild from scratch</strong> or <strong>redesign what you have</strong>. We'll audit your existing site on the discovery call and give you our honest recommendation.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" aria-expanded="false">
           <span>Still have questions?</span>
-          <div class="faq-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
+          <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner">The fastest way to get answers is to <strong><a href="#booking">book a free 30-minute discovery call</a></strong>. No obligation, straight answers — not a sales pitch. We respond to all enquiries within 24 hours.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">The fastest way to get answers is to <a href="#booking"><strong>book a free 30-minute discovery call</strong></a>. No obligation, straight answers. We respond to all enquiries within 24 hours.</div></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ BOOKING ══════════════════════════════ -->
-<div id="booking">
+<section id="booking" aria-labelledby="booking-heading">
   <div class="section-inner">
     <p class="t-caption reveal">Book a call</p>
-    <h2 class="t-display-xl booking-headline reveal reveal-d1">Ready to build<br>something great?</h2>
+    <h2 id="booking-heading" class="t-display-xl booking-headline reveal reveal-d1">Ready to build<br>something great?</h2>
     <div class="booking-grid">
       <div class="booking-intro reveal reveal-d1">
         <p>Tell us about your project and we'll come back to you within 24 hours to schedule your free discovery call.</p>
-        <div class="perks">
-          <div class="perk"><span class="perk-dot"></span><span>Free 30-minute discovery call — no strings attached</span></div>
-          <div class="perk"><span class="perk-dot"></span><span>Fixed-price proposal within 48 hours</span></div>
-          <div class="perk"><span class="perk-dot"></span><span>Delivered in weeks, not months</span></div>
-          <div class="perk"><span class="perk-dot"></span><span>Ongoing support after launch</span></div>
-        </div>
+        <ul class="perks" aria-label="What you get">
+          <li class="perk"><span class="perk-dot" aria-hidden="true"></span><span>Free 30-minute discovery call — no strings attached</span></li>
+          <li class="perk"><span class="perk-dot" aria-hidden="true"></span><span>Fixed-price proposal within 48 hours</span></li>
+          <li class="perk"><span class="perk-dot" aria-hidden="true"></span><span>Delivered in weeks, not months</span></li>
+          <li class="perk"><span class="perk-dot" aria-hidden="true"></span><span>Ongoing support after launch</span></li>
+        </ul>
       </div>
       <div class="reveal reveal-d2">
-        <form id="booking-form" novalidate>
+        <form id="booking-form" novalidate aria-label="Book a discovery call">
           <div class="form-row">
             <div class="form-group">
               <label for="name">Full name</label>
-              <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name">
             </div>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" id="email" name="email" placeholder="jane@company.com" required>
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required autocomplete="email">
             </div>
           </div>
           <div class="form-row">
@@ -1003,31 +1064,33 @@
             <button type="submit" class="btn btn-gold">Book a Free Discovery Call →</button>
           </div>
         </form>
-        <div class="form-success" id="form-success">
-          <div class="form-success-icon">✦</div>
+        <div class="form-success" id="form-success" role="alert" aria-live="polite">
+          <div class="form-success-icon" aria-hidden="true">✦</div>
           <h3>We've got your message.</h3>
           <p>We'll be in touch within 24 hours to schedule your free discovery call.</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+</main><!-- end #main-content -->
 
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ FOOTER ══════════════════════════════ -->
-<footer>
+<footer role="contentinfo">
   <div class="footer-inner">
-    <span class="footer-logo" style="background:linear-gradient(135deg,#fff 40%,#D4A853 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MR.C</span>
+    <span class="footer-logo">MR.C</span>
     <span class="footer-copy">© 2025 Mr.C's Digital Studio. All rights reserved.</span>
     <div class="footer-right">
-      <div class="footer-links">
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="#about">About</a>
         <a href="#how-it-works">Process</a>
         <a href="#projects">Work</a>
         <a href="#faq">FAQ</a>
-      </div>
-      <a href="#booking" class="btn btn-gold" style="font-size:13px;padding:9px 16px;">Book a Free Call</a>
+      </nav>
+      <a href="#booking" class="btn btn-gold" style="font-size:13px;padding:10px 18px;min-height:44px;">Book a Free Call</a>
     </div>
   </div>
 </footer>
@@ -1035,117 +1098,126 @@
 <!-- ═══════════════════════════════════ SCRIPTS ══════════════════════════════ -->
 <script>
 /* ══════════════════════════════════════════════════════════
-   THREE.JS — HERO CRYSTAL
+   THREE.JS — ENHANCED HERO CRYSTAL
+   Respect prefers-reduced-motion (Apple HIG)
 ══════════════════════════════════════════════════════════ */
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  const hero   = document.getElementById('hero');
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const scene    = new THREE.Scene();
-  const W        = canvas.clientWidth  || window.innerWidth;
-  const H        = canvas.clientHeight || window.innerHeight;
-  const camera   = new THREE.PerspectiveCamera(55, W / H, 0.1, 100);
-  camera.position.set(0, 0, 8);
+  const canvas = document.getElementById('hero-canvas');
+  const scene  = new THREE.Scene();
+  const W = canvas.clientWidth  || window.innerWidth;
+  const H = canvas.clientHeight || window.innerHeight;
+
+  const camera = new THREE.PerspectiveCamera(48, W / H, 0.1, 100);
+  camera.position.set(0, 0, 10);
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(W, H);
-  renderer.toneMapping     = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.4;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.7;
 
-  /* ── Crystal group ── */
+  /* ── Crystal group — positioned to right column ── */
   const group = new THREE.Group();
-  group.position.set(2.4, 0, 0); // sit on right side
+  group.position.set(3.2, 0, 0);
   scene.add(group);
 
-  const icoGeo0 = new THREE.IcosahedronGeometry(1.55, 1);
-  const icoGeo1 = new THREE.IcosahedronGeometry(1.80, 1);
-  const icoGeo2 = new THREE.IcosahedronGeometry(1.95, 1);
-  const icoGeo3 = new THREE.IcosahedronGeometry(2.00, 1);
+  /* Geometry set — significantly larger than previous version */
+  const geoCore  = new THREE.IcosahedronGeometry(2.10, 1);
+  const geoMid   = new THREE.IcosahedronGeometry(2.45, 1);
+  const geoOuter = new THREE.IcosahedronGeometry(2.65, 1);
+  const geoEdge  = new THREE.IcosahedronGeometry(2.70, 1);
+  const geoInner = new THREE.IcosahedronGeometry(2.18, 1);
 
-  // Core — deep amethyst, metallic
+  /* Layer 1 — Deep metallic amethyst core */
   const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x2D0B70, emissive: 0x14054A, emissiveIntensity: 0.9,
+    color: 0x1E0660, emissive: 0x0E0440,
+    emissiveIntensity: 1.4,
     metalness: 1.0, roughness: 0.0,
   });
-  group.add(new THREE.Mesh(icoGeo0, coreMat));
+  const coreMesh = new THREE.Mesh(geoCore, coreMat);
+  group.add(coreMesh);
 
-  // Mid inner shell — violet, back-facing
+  /* Layer 2 — Violet inner shell (back-face for interior glow) */
   const midMat = new THREE.MeshStandardMaterial({
-    color: 0x6D28D9, emissive: 0x3B0C8A, emissiveIntensity: 0.4,
-    metalness: 0.85, roughness: 0.05,
-    transparent: true, opacity: 0.45, side: THREE.BackSide,
+    color: 0x6D28D9, emissive: 0x3B0C8A, emissiveIntensity: 0.7,
+    metalness: 0.88, roughness: 0.04,
+    transparent: true, opacity: 0.52, side: THREE.BackSide,
   });
-  group.add(new THREE.Mesh(icoGeo1, midMat));
+  group.add(new THREE.Mesh(geoMid, midMat));
 
-  // Outer shell — translucent amethyst
+  /* Layer 3 — Outer translucent shell (light refraction) */
   const outerMat = new THREE.MeshStandardMaterial({
-    color: 0x8B5CF6, metalness: 0.7, roughness: 0.1,
-    transparent: true, opacity: 0.12, side: THREE.FrontSide,
+    color: 0x8B5CF6, metalness: 0.72, roughness: 0.08,
+    transparent: true, opacity: 0.14,
   });
-  group.add(new THREE.Mesh(icoGeo2, outerMat));
+  group.add(new THREE.Mesh(geoOuter, outerMat));
 
-  // Gold edge lines — crisp luxury finish
-  const edgeGeo = new THREE.EdgesGeometry(icoGeo3);
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0xD4A853, transparent: true, opacity: 0.85 });
-  group.add(new THREE.LineSegments(edgeGeo, edgeMat));
+  /* Layer 4 — Gold edge lines: primary luxury signature */
+  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xD4A853, transparent: true, opacity: 0.92 });
+  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoEdge), goldEdgeMat));
 
-  // Inner secondary edge — dimmer gold
-  const edgeGeo2 = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.60, 1));
-  const edgeMat2 = new THREE.LineBasicMaterial({ color: 0xF0C96A, transparent: true, opacity: 0.25 });
-  group.add(new THREE.LineSegments(edgeGeo2, edgeMat2));
+  /* Layer 5 — Inner soft-gold edge for depth */
+  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xF5E07A, transparent: true, opacity: 0.28 });
+  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoInner), softEdgeMat));
 
-  // Rings — Saturn-like luxury accent
-  const ringGeom = new THREE.TorusGeometry(2.7, 0.012, 8, 80);
-  const ringMat  = new THREE.MeshBasicMaterial({ color: 0xD4A853, transparent: true, opacity: 0.5 });
-  const ring1    = new THREE.Mesh(ringGeom, ringMat);
-  ring1.rotation.x = Math.PI / 3.5;
+  /* Layer 6 — Outer atmosphere sphere (deep space ambience) */
+  const atmMat = new THREE.MeshBasicMaterial({
+    color: 0x1E0870, transparent: true, opacity: 0.09, side: THREE.BackSide,
+  });
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(4.2, 24, 24), atmMat));
+
+  /* ── Three orbital rings at varied angles ── */
+  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xD4A853, transparent: true, opacity: 0.60 });
+  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xF0C96A, transparent: true, opacity: 0.32 });
+  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0x9B7020, transparent: true, opacity: 0.18 });
+
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.018, 8, 120), ringMat1);
+  ring1.rotation.x = Math.PI / 3.2;
   group.add(ring1);
 
-  const ring2 = ring1.clone();
-  ring2.rotation.x = -Math.PI / 3.5;
-  ring2.rotation.y = Math.PI / 3;
-  ring2.material   = new THREE.MeshBasicMaterial({ color: 0xF0C96A, transparent: true, opacity: 0.25 });
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.9, 0.011, 8, 100), ringMat2);
+  ring2.rotation.x = -Math.PI / 3.8;
+  ring2.rotation.y =  Math.PI / 4;
   group.add(ring2);
 
-  /* ── Particles ── */
-  const pCount = window.innerWidth < 768 ? 60 : 160;
-  const pos    = new Float32Array(pCount * 3);
-  const col    = new Float32Array(pCount * 3);
+  const ring3 = new THREE.Mesh(new THREE.TorusGeometry(4.4, 0.007, 8, 100), ringMat3);
+  ring3.rotation.x = Math.PI / 2; /* equatorial */
+  group.add(ring3);
+
+  /* ── Particles — spherically distributed around crystal ── */
+  const pCount = window.innerWidth < 768 ? 90 : 220;
+  const pPos   = new Float32Array(pCount * 3);
+  const pCol   = new Float32Array(pCount * 3);
   for (let i = 0; i < pCount; i++) {
-    pos[i*3]   = (Math.random() - 0.5) * 16;
-    pos[i*3+1] = (Math.random() - 0.5) * 14;
-    pos[i*3+2] = (Math.random() - 0.5) * 10;
-    const gold = Math.random() > 0.45;
-    if (gold) { col[i*3]=0.83; col[i*3+1]=0.66; col[i*3+2]=0.32; }
-    else       { col[i*3]=0.55; col[i*3+1]=0.36; col[i*3+2]=0.93; }
+    /* Distribute on a shell between r=2.8 and r=8 */
+    const r     = 2.8 + Math.random() * 5.2;
+    const theta = Math.random() * Math.PI * 2;
+    const phi   = Math.acos(2 * Math.random() - 1);
+    pPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+    pPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+    pPos[i*3+2] = r * Math.cos(phi);
+    const isGold = Math.random() > 0.42;
+    if (isGold) { pCol[i*3]=0.83; pCol[i*3+1]=0.66; pCol[i*3+2]=0.32; }
+    else        { pCol[i*3]=0.55; pCol[i*3+1]=0.36; pCol[i*3+2]=0.93; }
   }
   const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  pGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
-  const pMat = new THREE.PointsMaterial({ size: 0.045, vertexColors: true, transparent: true, opacity: 0.65 });
-  scene.add(new THREE.Points(pGeo, pMat));
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
+  const pMat = new THREE.PointsMaterial({ size: 0.065, vertexColors: true, transparent: true, opacity: 0.78, sizeAttenuation: true });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
 
-  /* ── Lights ── */
-  const goldLight   = new THREE.PointLight(0xD4A853, 6, 18);
-  goldLight.position.set(4, 3, 5);
-  scene.add(goldLight);
+  /* ── Five-light dramatic rig ── */
+  const lGold   = new THREE.PointLight(0xD4A853, 16, 24); lGold.position.set( 5,  3,  7); scene.add(lGold);
+  const lViolet = new THREE.PointLight(0x7C3AED, 12, 20); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
+  const lCyan   = new THREE.PointLight(0x06B6D4,  6, 16); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
+  const lRose   = new THREE.PointLight(0xDB2777,  5, 14); lRose.position.set(-3,  4,  4); scene.add(lRose);
+  const lWarm   = new THREE.PointLight(0xF5E07A,  4, 12); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
+  scene.add(new THREE.AmbientLight(0x06021A, 8));
 
-  const violetLight = new THREE.PointLight(0x7C3AED, 5, 14);
-  violetLight.position.set(-4, -2, 3);
-  scene.add(violetLight);
-
-  const cyanLight   = new THREE.PointLight(0x06B6D4, 2.5, 12);
-  cyanLight.position.set(1, 4, -3);
-  scene.add(cyanLight);
-
-  const roseLight   = new THREE.PointLight(0xDB2777, 1.5, 10);
-  roseLight.position.set(-2, 3, 2);
-  scene.add(roseLight);
-
-  scene.add(new THREE.AmbientLight(0x06020F, 3));
-
-  /* ── Mouse tracking ── */
+  /* ── State ── */
   let mX = 0, mY = 0, tRX = 0, tRY = 0, scrollProg = 0;
   document.addEventListener('mousemove', e => {
     mX = (e.clientX / window.innerWidth  - 0.5) * 2;
@@ -1154,8 +1226,6 @@
   window.addEventListener('scroll', () => {
     scrollProg = window.scrollY / window.innerHeight;
   }, { passive: true });
-
-  /* ── Resize ── */
   window.addEventListener('resize', () => {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     camera.aspect = w / h;
@@ -1163,72 +1233,75 @@
     renderer.setSize(w, h);
   });
 
-  /* ── Animation loop ── */
   const clock = new THREE.Clock();
   let   frame = 0;
 
-  function animate() {
+  (function animate() {
     requestAnimationFrame(animate);
     frame++;
     const t = clock.getElapsedTime();
 
-    // Smooth mouse
-    tRY += (mX * 0.6 - tRY) * 0.04;
-    tRX += (-mY * 0.35 - tRX) * 0.04;
+    /* Smooth mouse tracking */
+    tRY += (mX * 0.65 - tRY) * 0.038;
+    tRX += (-mY * 0.38 - tRX) * 0.038;
 
-    // Rotate crystal
-    group.rotation.y = t * 0.14 + tRY;
-    group.rotation.x = Math.sin(t * 0.18) * 0.18 + tRX;
-    group.rotation.z = t * 0.04;
+    /* Crystal rotation */
+    group.rotation.y = t * 0.11 + tRY;
+    group.rotation.x = Math.sin(t * 0.15) * 0.14 + tRX;
+    group.rotation.z = t * 0.032;
 
-    // Float
-    group.position.y = Math.sin(t * 0.45) * 0.18;
+    /* Floating */
+    group.position.y = Math.sin(t * 0.42) * 0.24;
 
-    // Scroll: fade & retreat
+    /* Pulsing emissive — luxury "heartbeat" */
+    coreMat.emissiveIntensity = 1.1 + Math.sin(t * 1.9) * 0.6;
+
+    /* Scroll: retreat crystal as user scrolls past hero */
     const sp = Math.min(scrollProg, 1);
-    group.position.z = -sp * 4;
-    const s = Math.max(0.05, 1 - sp * 0.6);
-    group.scale.setScalar(s);
-    renderer.domElement.style.opacity = (1 - sp * 1.4).toString();
+    group.position.z    = -sp * 5.5;
+    group.scale.setScalar(Math.max(0.05, 1 - sp * 0.68));
+    canvas.style.opacity = Math.max(0, 1 - sp * 1.6).toString();
 
-    // Ring spin
-    ring1.rotation.z = t * 0.12;
-    ring2.rotation.z = -t * 0.09;
+    /* Ring rotations */
+    ring1.rotation.z = t * 0.10;
+    ring2.rotation.z = -t * 0.075;
+    ring3.rotation.y = t * 0.045;
 
-    // Light orbit — skip every other frame for perf
+    /* Orbiting lights (every other frame for perf) */
     if (frame % 2 === 0) {
-      goldLight.position.x   =  Math.sin(t * 0.4) * 5;
-      goldLight.position.y   =  Math.cos(t * 0.3) * 3;
-      violetLight.position.x =  Math.cos(t * 0.5) * -5;
-      violetLight.position.y =  Math.sin(t * 0.35) * 3;
+      lGold.position.x    =  Math.sin(t * 0.36) * 7;
+      lGold.position.y    =  Math.cos(t * 0.27) * 5;
+      lViolet.position.x  =  Math.cos(t * 0.46) * -7;
+      lViolet.position.y  =  Math.sin(t * 0.31) * 4;
+      lCyan.position.x    =  Math.sin(t * 0.52 + 2) * 5;
     }
 
+    /* Particle drift */
+    particles.rotation.y = t * 0.022;
+    particles.rotation.x = t * 0.009;
+
     renderer.render(scene, camera);
-  }
-  animate();
+  })();
 })();
 
 /* ══════════════════════════════════════════════════════════
-   AMBIENT GOLD PARTICLES (CSS/DOM)
+   AMBIENT PARTICLES (CSS/DOM) — gold & violet dust
 ══════════════════════════════════════════════════════════ */
-(function() {
-  const wrap = document.createElement('div');
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const wrap  = document.createElement('div');
   wrap.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
-  const count = window.innerWidth < 768 ? 14 : 28;
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    const size   = 1 + Math.random() * 2.5;
-    const gold   = Math.random() > 0.45;
-    const dur    = 10 + Math.random() * 16;
-    const drift  = (Math.random() - 0.5) * 120;
-    p.className  = 'amb-particle';
-    p.style.cssText = `
-      width:${size}px; height:${size}px;
-      left:${Math.random()*100}vw;
-      background:${gold ? '#D4A853' : '#7C3AED'};
-      opacity:${0.15 + Math.random()*0.35};
-      --dur:${dur}s; --delay:${-Math.random()*dur}s; --drift:${drift}px;
-    `;
+  const n = window.innerWidth < 768 ? 16 : 30;
+  for (let i = 0; i < n; i++) {
+    const p    = document.createElement('div');
+    const sz   = 1 + Math.random() * 2.5;
+    const gold = Math.random() > 0.45;
+    const dur  = 12 + Math.random() * 16;
+    p.className = 'amb-particle';
+    p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;`
+      + `background:${gold ? '#D4A853' : '#7C3AED'};`
+      + `opacity:${0.12 + Math.random()*0.32};`
+      + `--dur:${dur}s;--delay:${-Math.random()*dur}s;--drift:${(Math.random()-.5)*130}px;`;
     wrap.appendChild(p);
   }
   document.body.appendChild(wrap);
@@ -1239,37 +1312,37 @@
 ══════════════════════════════════════════════════════════ */
 gsap.registerPlugin(ScrollTrigger);
 
-// Stat counter animation
+/* Animated stat counters */
 document.querySelectorAll('.stat-number[data-target]').forEach(el => {
   const target = parseFloat(el.dataset.target);
   const suffix = el.dataset.suffix || '';
   ScrollTrigger.create({
-    trigger: el, start: 'top 85%', once: true,
+    trigger: el, start: 'top 86%', once: true,
     onEnter() {
       const obj = { val: 0 };
       gsap.to(obj, {
-        val: target, duration: 2.2, ease: 'power3.out',
-        onUpdate() { el.textContent = (Number.isInteger(target) ? Math.round(obj.val) : obj.val.toFixed(1)) + suffix; }
+        val: target, duration: 2.4, ease: 'power3.out',
+        onUpdate() { el.textContent = Math.round(obj.val) + suffix; }
       });
     }
   });
 });
 
-// Section headings: extra pull-up
-gsap.utils.toArray('#about .t-display-xl, #how-it-works .t-display-xl, #projects .t-display-xl, #testimonials .t-display-xl, #faq .t-display-xl, #booking .t-display-xl').forEach(el => {
+/* Section heading entrance — stronger pull-up */
+gsap.utils.toArray('h2.t-display-xl, h2.t-display-lg').forEach(el => {
   gsap.from(el, {
-    y: 50, opacity: 0, duration: 1.1, ease: 'power3.out',
+    y: 48, opacity: 0, duration: 1.1, ease: 'power3.out',
     scrollTrigger: { trigger: el, start: 'top 88%' }
   });
 });
 
-// Steps slide in from sides
+/* Steps — slide in from opposing sides */
 ScrollTrigger.create({
   trigger: '.steps-grid', start: 'top 80%', once: true,
   onEnter() {
-    gsap.from('.step:nth-child(1)', { x: -50, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.step:nth-child(2)', { y:  40, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.1 });
-    gsap.from('.step:nth-child(3)', { x:  50, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.2 });
+    gsap.from('.step:nth-child(1)', { x: -55, opacity: 0, duration: 1.0, ease: 'power3.out', delay: 0.0 });
+    gsap.from('.step:nth-child(2)', { y:  45, opacity: 0, duration: 1.0, ease: 'power3.out', delay: 0.1 });
+    gsap.from('.step:nth-child(3)', { x:  55, opacity: 0, duration: 1.0, ease: 'power3.out', delay: 0.2 });
   }
 });
 
@@ -1281,13 +1354,13 @@ document.querySelectorAll('.project-card, .testimonial-card').forEach(card => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
     const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `perspective(900px) rotateX(${y * -10}deg) rotateY(${x * 10}deg) translateZ(10px)`;
+    card.style.transition = 'none';
+    card.style.transform  = `perspective(900px) rotateX(${y * -9}deg) rotateY(${x * 9}deg) translateZ(12px)`;
   });
   card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
-    card.style.transition = 'transform 0.5s cubic-bezier(.22,1,.36,1)';
+    card.style.transition = 'transform 0.55s cubic-bezier(.22,1,.36,1), box-shadow 0.35s, border-color 0.2s';
+    card.style.transform  = 'perspective(900px) rotateX(0) rotateY(0) translateZ(0)';
   });
-  card.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
 });
 
 /* ══════════════════════════════════════════════════════════
@@ -1297,12 +1370,13 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
 }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* Hero reveals on load — no scroll needed */
 document.querySelectorAll('#hero .reveal').forEach((el, i) => {
   setTimeout(() => el.classList.add('visible'), 100 + i * 90);
 });
 
 /* ══════════════════════════════════════════════════════════
-   PARALLAX (blobs & cards)
+   PARALLAX (spotlight cards)
 ══════════════════════════════════════════════════════════ */
 const parallaxCards = document.querySelectorAll('[data-parallax-card]');
 let ticking = false;
@@ -1311,31 +1385,38 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 function runParallax() {
   parallaxCards.forEach(el => {
-    const center = el.getBoundingClientRect().top + el.getBoundingClientRect().height / 2 - window.innerHeight / 2;
-    el.style.transform = `translateY(${center * parseFloat(el.dataset.parallaxCard) * -1}px)`;
+    const r = el.getBoundingClientRect();
+    const c = r.top + r.height / 2 - window.innerHeight / 2;
+    el.style.transform = `translateY(${c * parseFloat(el.dataset.parallaxCard) * -1}px)`;
   });
   ticking = false;
 }
 runParallax();
 
 /* ══════════════════════════════════════════════════════════
-   HAMBURGER & MOBILE MENU
+   HAMBURGER & MOBILE MENU (HIG: aria-expanded)
 ══════════════════════════════════════════════════════════ */
 const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 hamburger.addEventListener('click', () => {
   const open = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open.toString());
+  hamburger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  if (open) { mobileMenu.removeAttribute('hidden'); } else { mobileMenu.setAttribute('hidden', ''); }
   document.body.style.overflow = open ? 'hidden' : '';
 });
 function closeMobile() {
   mobileMenu.classList.remove('open');
+  mobileMenu.setAttribute('hidden', '');
   hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.setAttribute('aria-label', 'Open navigation menu');
   document.body.style.overflow = '';
 }
 
 /* ══════════════════════════════════════════════════════════
-   FAQ ACCORDION
+   FAQ ACCORDION (HIG: aria-expanded on buttons)
 ══════════════════════════════════════════════════════════ */
 document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1356,12 +1437,14 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 });
 
 /* ══════════════════════════════════════════════════════════
-   FORM SUBMIT
+   FORM SUBMIT (HIG: aria-live region for success message)
 ══════════════════════════════════════════════════════════ */
-document.getElementById('booking-form').addEventListener('submit', function(e) {
+document.getElementById('booking-form').addEventListener('submit', function (e) {
   e.preventDefault();
   this.style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+  const success = document.getElementById('form-success');
+  success.style.display = 'block';
+  success.focus(); /* move focus to success message (accessibility) */
 });
 </script>
 </body>
