@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mr.C's Digital Studio — Your Website Should Be Your Best Salesperson</title>
   <meta name="description" content="Mr.C's Digital Studio builds premium, conversion-first websites for businesses that are serious about growth. Book a free discovery call today.">
+  
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:title" content="Mr.C's Digital Studio">
+  <meta property="og:description" content="Premium, conversion-first websites for serious businesses.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mrc-digital.com/">
+  <meta property="og:image" content="https://mrc-digital.com/og-image.jpg">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -22,7 +30,7 @@
       --c-gold-dim:      rgba(212,168,83,0.10);
       --c-gold-border:   rgba(212,168,83,0.20);
       --c-ink:           #ffffff;
-      --c-ink-muted:     #9A9AB0;   /* lightened for HIG contrast ≥ 4.5:1 */
+      --c-ink-muted:     #B8B8CC;   /* lightened for HIG contrast ≥ 4.5:1 */
       --c-canvas:        #060612;
       --c-surface-1:     #0D0D1F;
       --c-surface-2:     #13132A;
@@ -248,7 +256,7 @@
     .mobile-menu a { font-size: 26px; font-weight: 500; letter-spacing: -0.04em; color: var(--c-ink); min-height: 44px; display: flex; align-items: center; }
 
     /* ── Section wrapper ─────────────────────────────────────── */
-    .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 40px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
     .divider { border: none; border-top: 1px solid var(--c-hairline-soft); }
 
     /* ══════════════════════════════════════════════════════════
@@ -298,7 +306,7 @@
     .hero-left {
       position: relative;
       z-index: 3;
-      padding: 120px 40px 100px 60px;
+      padding: 120px 40px 100px 40px;
     }
     /* Right column — structural placeholder, crystal fills this visually */
     .hero-right { position: relative; z-index: 1; min-height: 100vh; }
@@ -380,7 +388,7 @@
     .trust-bar-label { font-size: 11px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-ink-muted); white-space: nowrap; flex-shrink: 0; }
     .trust-bar-sep { width: 1px; height: 20px; background: var(--c-hairline); flex-shrink: 0; }
     .trust-bar-logos { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-    .trust-bar-logo { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; color: var(--c-ink-muted); opacity: 0.45; transition: opacity 0.2s, color 0.2s; }
+    .trust-bar-logo { font-size: 13px; font-weight: 600; letter-spacing: -0.02em; color: var(--c-ink-muted); opacity: 0.60; transition: opacity 0.2s, color 0.2s; }
     .trust-bar-logo:hover { opacity: 1; color: var(--c-gold); }
 
     /* ── About ───────────────────────────────────────────────── */
@@ -511,7 +519,7 @@
     .faq-answer-inner a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
 
     /* ── Booking ─────────────────────────────────────────────── */
-    .booking-headline { margin: 14px 0 56px; }
+    .booking-headline { margin: 14px 0 40px; }
     .booking-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
     .booking-intro p { font-size: 17px; color: var(--c-ink-muted); line-height: 1.65; }
     .perks { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
@@ -536,7 +544,7 @@
       appearance: none;
       -webkit-appearance: none;
     }
-    input::placeholder, textarea::placeholder { color: #2E2E50; }
+    input::placeholder, textarea::placeholder { color: #4A4A6A; }
     input:focus, select:focus, textarea:focus { border-color: var(--c-gold); box-shadow: 0 0 0 3px rgba(212,168,83,0.18); }
     select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-color: var(--c-surface-1); padding-right: 36px; }
     option { background: var(--c-surface-1); }
@@ -594,6 +602,8 @@
         align-items: center;
       }
       .hero-left { padding: 110px 24px 80px; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .hero-ctas .btn { width: 100%; }
       .hero-right { display: none; }
       /* Softer vignette on mobile — text is full width */
       #hero::after {
@@ -838,7 +848,7 @@
 
       <article class="project-card reveal">
         <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0D0A28,#2A1060);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="8" y="8" width="32" height="24" rx="3" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="36" x2="40" y2="36" stroke="#D4A853" stroke-width="1.5"/><line x1="24" y1="36" x2="24" y2="42" stroke="#D4A853" stroke-width="1.5"/><line x1="16" y1="42" x2="32" y2="42" stroke="#D4A853" stroke-width="1.5"/></svg>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><rect x="8" y="8" width="32" height="24" rx="3" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="36" x2="40" y2="36" stroke="#D4A853" stroke-width="1.5"/><line x1="24" y1="36" x2="24" y2="42" stroke="#D4A853" stroke-width="1.5"/><line x1="16" y1="42" x2="32" y2="42" stroke="#D4A853" stroke-width="1.5"/></svg>
         </div></div>
         <span class="card-tag">E-commerce</span>
         <p class="card-title">Prestige Retail Co.</p>
@@ -853,7 +863,7 @@
 
       <article class="project-card reveal reveal-d2">
         <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#0A1A10,#0F2E1A);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><circle cx="24" cy="20" r="8" stroke="#D4A853" stroke-width="1.5"/><path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><circle cx="24" cy="20" r="8" stroke="#D4A853" stroke-width="1.5"/><path d="M10 42c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div></div>
         <span class="card-tag">Service Business</span>
         <p class="card-title">Apex Consulting Group</p>
@@ -863,7 +873,7 @@
 
       <article class="project-card reveal">
         <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#200A0A,#3D1020);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="6" y="14" width="16" height="20" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="8" width="16" height="14" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="26" width="16" height="8" rx="2" stroke="#D4A853" stroke-width="1.5"/></svg>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><rect x="6" y="14" width="16" height="20" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="8" width="16" height="14" rx="2" stroke="#D4A853" stroke-width="1.5"/><rect x="26" y="26" width="16" height="8" rx="2" stroke="#D4A853" stroke-width="1.5"/></svg>
         </div></div>
         <span class="card-tag">Creative Portfolio</span>
         <p class="card-title">Nova Creative Studio</p>
@@ -878,7 +888,7 @@
 
       <article class="project-card reveal reveal-d2">
         <div class="card-thumb"><div class="card-thumb-pattern" style="background:linear-gradient(135deg,#08081E,#141440);">
-          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.35"><rect x="8" y="10" width="32" height="28" rx="4" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="18" x2="40" y2="18" stroke="#D4A853" stroke-width="1.5"/><circle cx="13" cy="14" r="1.5" fill="#D4A853"/><circle cx="18" cy="14" r="1.5" fill="#D4A853"/><circle cx="23" cy="14" r="1.5" fill="#D4A853"/></svg>
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" opacity="0.55"><rect x="8" y="10" width="32" height="28" rx="4" stroke="#D4A853" stroke-width="1.5"/><line x1="8" y1="18" x2="40" y2="18" stroke="#D4A853" stroke-width="1.5"/><circle cx="13" cy="14" r="1.5" fill="#D4A853"/><circle cx="18" cy="14" r="1.5" fill="#D4A853"/><circle cx="23" cy="14" r="1.5" fill="#D4A853"/></svg>
         </div></div>
         <span class="card-tag">SaaS Landing Page</span>
         <p class="card-title">Flux SaaS</p>
@@ -1079,18 +1089,33 @@
 <hr class="divider">
 
 <!-- ═══════════════════════════════════ FOOTER ══════════════════════════════ -->
-<footer role="contentinfo">
-  <div class="footer-inner">
-    <span class="footer-logo">MR.C</span>
-    <span class="footer-copy">© 2025 Mr.C's Digital Studio. All rights reserved.</span>
-    <div class="footer-right">
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#about">About</a>
-        <a href="#how-it-works">Process</a>
-        <a href="#projects">Work</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <a href="#booking" class="btn btn-gold" style="font-size:13px;padding:10px 18px;min-height:44px;">Book a Free Call</a>
+<footer role="contentinfo" style="padding: 60px 40px; text-align: center;">
+  <div class="footer-inner" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <span class="footer-logo" style="font-size: 24px;">MR.C</span>
+      <p style="color: var(--c-ink-muted); font-size: 15px;">Your website should be your best salesperson.</p>
+    </div>
+    
+    <nav class="footer-links" aria-label="Footer navigation" style="display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
+      <a href="#about" style="color: var(--c-ink-muted); transition: color 0.2s;">About</a>
+      <a href="#how-it-works" style="color: var(--c-ink-muted); transition: color 0.2s;">Process</a>
+      <a href="#projects" style="color: var(--c-ink-muted); transition: color 0.2s;">Work</a>
+      <a href="#faq" style="color: var(--c-ink-muted); transition: color 0.2s;">FAQ</a>
+    </nav>
+    
+    <div style="display: flex; gap: 24px; justify-content: center;">
+      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">Instagram</a>
+      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">LinkedIn</a>
+      <a href="#" style="color: var(--c-ink-muted); transition: color 0.2s;">Twitter</a>
+      <a href="mailto:hello@mrc-digital.com" style="color: var(--c-ink-muted); transition: color 0.2s;">hello@mrc-digital.com</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; align-items: center; border-top: 1px solid var(--c-hairline-soft); padding-top: 40px; width: 100%;">
+      <span class="footer-copy" style="color: var(--c-ink-muted); font-size: 14px;">© 2026 Mr.C's Digital Studio. All rights reserved.</span>
+      <div style="display: flex; gap: 16px; font-size: 13px;">
+        <a href="#" style="color: var(--c-ink-muted);">Privacy Policy</a>
+        <a href="#" style="color: var(--c-ink-muted);">Terms of Service</a>
+      </div>
     </div>
   </div>
 </footer>
