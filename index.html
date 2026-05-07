@@ -184,7 +184,7 @@
     }
 
     /* ── Nav ────────────────────────────────────────────────── */
-    nav {
+    #main-nav {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 300;
@@ -250,6 +250,20 @@
       letter-spacing: -0.01em;
     }
     .nav-dashbar a:hover { color: var(--c-ink); background: rgba(255,255,255,0.06); }
+
+    /* CTA button inside the dashbar uses prism ice-blue to match the logo */
+    .nav-dashbar .btn-gold {
+      background: linear-gradient(135deg, #00BFFF, #A8E6FF, #00BFFF);
+      background-size: 200% auto;
+      color: #00111F;
+      border: 1px solid rgba(168,230,255,0.45);
+      box-shadow: 0 0 12px rgba(0,191,255,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .nav-dashbar .btn-gold:hover {
+      background-position: right center;
+      box-shadow: 0 0 24px rgba(0,191,255,0.5), inset 0 1px 1px rgba(255,255,255,0.5);
+    }
+
     .nav-dashbar-sep {
       width: 1px;
       height: 18px;
@@ -763,7 +777,7 @@
 
     /* ── Responsive ──────────────────────────────────────────── */
     @media (max-width: 960px) {
-      nav { padding: 0 20px; }
+      #main-nav { padding: 0 20px; }
       .nav-dashbar { display: none; }
       .nav-hamburger { display: flex; }
 
@@ -818,7 +832,7 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
-<nav aria-label="Main navigation">
+<nav id="main-nav" aria-label="Main navigation">
 
   <!-- Left column: hamburger on mobile, empty on desktop -->
   <div class="nav-left">
@@ -831,19 +845,19 @@
 
   <!-- Center column: logo -->
   <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
-    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="134" height="48"/>
+    <img src="assets/logo/logo-prism-vertex.svg" alt="MR.C Digital Studio" width="134" height="48"/>
   </a>
 
   <!-- Right column: dashbar with inline links -->
   <div class="nav-right">
-    <nav class="nav-dashbar" aria-label="Site navigation">
+    <div class="nav-dashbar" role="navigation" aria-label="Site navigation">
       <a href="#about">About</a>
       <a href="#how-it-works">Process</a>
       <a href="#projects">Work</a>
       <a href="#faq">FAQ</a>
       <span class="nav-dashbar-sep" aria-hidden="true"></span>
       <a href="#booking" class="btn btn-gold" style="padding: 8px 18px; font-size: 13.5px; min-height: 36px;">Book a Free Call</a>
-    </nav>
+    </div>
   </div>
 
 </nav>
