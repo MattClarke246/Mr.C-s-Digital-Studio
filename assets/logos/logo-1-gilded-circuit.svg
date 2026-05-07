@@ -29,6 +29,12 @@
       <feDropShadow dx="0" dy="0" stdDeviation="7"  flood-color="#D4AF37" flood-opacity="0.45"/>
       <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#C4A47C" flood-opacity="0.20"/>
     </filter>
+
+    <!-- Subtitle glow — tighter radius so small text stays crisp -->
+    <filter id="f1-sub-glow" x="-20%" y="-80%" width="140%" height="360%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#F3E5AB" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="7"   flood-color="#D4AF37" flood-opacity="0.55"/>
+    </filter>
   </defs>
 
   <!-- Background -->
@@ -108,16 +114,17 @@
         filter="url(#f1-glow)"
         letter-spacing="-3">MR.C</text>
 
-  <!-- Separator -->
-  <line x1="165" y1="136" x2="395" y2="136" stroke="url(#g1-fade)" stroke-width="0.6"/>
+  <!-- Separator — widened to frame larger subtitle -->
+  <line x1="130" y1="136" x2="430" y2="136" stroke="url(#g1-fade)" stroke-width="0.8"/>
   <!-- Centre diamond on separator -->
-  <polygon points="280,131 283.5,136 280,141 276.5,136" fill="#D4AF37" fill-opacity="0.45"/>
+  <polygon points="280,131 283.5,136 280,141 276.5,136" fill="#D4AF37" fill-opacity="0.6"/>
 
-  <!-- Subtitle -->
-  <text x="280" y="160"
+  <!-- Subtitle — enlarged and brightened for legibility at small display sizes -->
+  <text x="280" y="165"
         font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="11.5" font-weight="600"
+        font-size="22" font-weight="700"
         text-anchor="middle"
-        fill="#D4AF37" fill-opacity="0.75"
-        letter-spacing="7">DIGITAL STUDIO</text>
+        fill="#F3E5AB"
+        filter="url(#f1-sub-glow)"
+        letter-spacing="4">DIGITAL STUDIO</text>
 </svg>
