@@ -447,8 +447,8 @@
       transform-style: flat;
     }
     .project-card:hover { transform: translateY(-8px); }
-    .card-thumb { width: 100%; aspect-ratio: 4/5; background: var(--c-surface-2); border-radius: 0; overflow: hidden; margin-bottom: 8px; }
-    .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(.22,1,.36,1); }
+    .card-thumb { width: 100%; aspect-ratio: 16/9; background: var(--c-surface-1); border-radius: var(--r-md); overflow: hidden; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+    .card-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 0; transition: transform 0.8s cubic-bezier(.22,1,.36,1); }
     .project-card:hover .card-thumb img { transform: scale(1.04); }
     .card-thumb-pattern { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .card-tag { display: inline-flex; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-ink-muted); width: fit-content; margin-bottom: -6px; }
@@ -476,18 +476,18 @@
 
     /* Spotlight cards */
     .spotlight-card {
-      border-radius: 0;
+      border-radius: var(--r-xl);
       padding: 36px 30px;
       display: flex; flex-direction: column; justify-content: flex-end;
       min-height: 300px;
       position: relative; overflow: hidden;
       will-change: transform;
     }
-    .spotlight-violet { background: linear-gradient(140deg, #0A0A0A 0%, #151515 50%, #222222 100%); border: none; }
-    .spotlight-rose   { background: linear-gradient(140deg, #050505 0%, #11100F 50%, #1C1A18 100%); border: none; }
-    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(196,164,124,0.18) 0%, transparent 70%); pointer-events: none; }
-    .spotlight-card h3 { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #fff; position: relative; z-index: 1; }
-    .spotlight-card p  { font-size: 14px; color: rgba(255,255,255,0.68); line-height: 1.5; position: relative; z-index: 1; }
+    .spotlight-violet { background: linear-gradient(140deg, #D8C3A5 0%, #C4A47C 50%, #B59A6D 100%); border: none; }
+    .spotlight-rose   { background: linear-gradient(140deg, #F0D5AC 0%, #D8C3A5 50%, #C4A47C 100%); border: none; }
+    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); pointer-events: none; }
+    .spotlight-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #000; position: relative; z-index: 1; }
+    .spotlight-card p  { font-size: 14px; color: rgba(0,0,0,0.75); line-height: 1.5; font-weight: 500; position: relative; z-index: 1; }
 
     /* ── Testimonials ────────────────────────────────────────── */
     .testimonials-headline { margin: 14px 0 80px; }
