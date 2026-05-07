@@ -215,19 +215,54 @@
       display: block;
     }
 
-    /* Right column — hamburger dashbar */
+    /* Right column — dashbar */
     .nav-right {
       display: flex;
       align-items: center;
       justify-content: flex-end;
     }
-    .nav-hamburger {
+    
+    .nav-dashbar {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      flex-direction: row;
+      align-items: center;
+      gap: 2px;
+      padding: 5px 6px 5px 10px;
       background: rgba(10, 10, 18, 0.65);
       backdrop-filter: blur(20px) saturate(160%);
       -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .nav-dashbar a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--c-ink-muted);
+      padding: 7px 14px;
+      border-radius: 100px;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+    }
+    .nav-dashbar a:hover { color: var(--c-ink); background: rgba(255,255,255,0.06); }
+    .nav-dashbar-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: rgba(10, 10, 18, 0.65);
       border: 1px solid rgba(255,255,255,0.08);
       border-top: 1px solid rgba(255,255,255,0.14);
       border-radius: 50%;
@@ -241,9 +276,7 @@
       -webkit-tap-highlight-color: transparent;
       box-shadow: 0 2px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
     }
-    .nav-hamburger:hover {
-      background: rgba(30, 30, 40, 0.8);
-    }
+    .nav-hamburger:hover { background: rgba(30, 30, 40, 0.8); }
     .nav-hamburger span {
       display: block;
       width: 20px;
@@ -787,8 +820,13 @@
 <!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
 <nav aria-label="Main navigation">
 
-  <!-- Left column: empty on desktop & mobile to keep logo centered -->
+  <!-- Left column: hamburger on mobile, empty on desktop -->
   <div class="nav-left">
+    <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
   </div>
 
   <!-- Center column: logo -->
@@ -796,13 +834,16 @@
     <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="134" height="48"/>
   </a>
 
-  <!-- Right column: dashbar hamburger button -->
+  <!-- Right column: dashbar with inline links -->
   <div class="nav-right">
-    <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </button>
+    <nav class="nav-dashbar" aria-label="Site navigation">
+      <a href="#about">About</a>
+      <a href="#how-it-works">Process</a>
+      <a href="#projects">Work</a>
+      <a href="#faq">FAQ</a>
+      <span class="nav-dashbar-sep" aria-hidden="true"></span>
+      <a href="#booking" class="btn btn-gold" style="padding: 8px 18px; font-size: 13.5px; min-height: 36px;">Book a Free Call</a>
+    </nav>
   </div>
 
 </nav>
