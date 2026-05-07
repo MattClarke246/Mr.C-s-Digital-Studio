@@ -179,29 +179,34 @@
     }
     .btn-secondary:hover { border-color: var(--c-gold-border); background: rgba(30,30,30,0.7); }
     .btn-gold {
-      /* 7-stop metallic gradient — mirrors the exact colour ramp of the gold logo */
+      /*
+        Bright polished-gold gradient — every stop ≥ 7:1 contrast vs black
+        so the text stays clearly readable throughout the shimmer animation.
+        Think sunlit jewellery, not aged amber.
+      */
       background: linear-gradient(
         105deg,
-        #7A5C2E  0%,
-        #C4A47C  18%,
-        #F3E5AB  35%,
-        #D4AF37  50%,
-        #F3E5AB  65%,
-        #C4A47C  82%,
-        #7A5C2E  100%
+        #C49A38  0%,    /* deep gold       — 7.6:1 contrast w/ #000 */
+        #EDD879  20%,   /* warm bright gold */
+        #FEFCE8  38%,   /* hot specular highlight */
+        #F0C832  52%,   /* vivid centre gold */
+        #FEFCE8  66%,   /* hot specular highlight */
+        #EDD879  84%,   /* warm bright gold */
+        #C49A38  100%   /* deep gold */
       );
       background-size: 250% auto;
       animation: btn-gold-shine 4s ease-in-out infinite;
       color: #000;
       font-weight: 700;
-      border: 1px solid rgba(243,229,171,0.60);
-      /* disable inherited backdrop-filter — gradient is fully opaque, no compositing needed */
+      /* subtle embossed-stamp effect on the text */
+      text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+      border: 1px solid rgba(243,229,171,0.65);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       box-shadow:
-        0 0 14px rgba(212,175,55,0.40),
-        inset 0 1px 0 rgba(255,255,255,0.55),
-        inset 0 -1px 0 rgba(0,0,0,0.18);
+        0 0 14px rgba(212,175,55,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.60),
+        inset 0 -1px 0 rgba(0,0,0,0.15);
       transition: box-shadow 0.25s ease, transform 0.12s ease;
     }
     /* Dashbar variant — tighter sizing to fit the pill */
