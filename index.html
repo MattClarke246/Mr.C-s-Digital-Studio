@@ -104,7 +104,7 @@
       }
       .reveal { opacity: 1 !important; transform: none !important; }
       #hero-canvas { display: none; }
-      .btn-gold { animation: none; }
+      .btn-gold, .about-spotlight, .spotlight-card, .stat-number { animation: none; }
     }
 
     /* ── Typography ──────────────────────────────────────────── */
@@ -448,7 +448,7 @@
 
 
     /* ── About ───────────────────────────────────────────────── */
-    .about-headline { margin: 14px 0 48px; }
+    .about-headline { margin: 14px 0 64px; }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
     .about-spotlight {
       background: linear-gradient(
@@ -491,11 +491,22 @@
     .about-text { display: flex; flex-direction: column; gap: 18px; justify-content: center; }
     .stat-row { display: flex; gap: 36px; margin-top: 16px; flex-wrap: wrap; }
     .stat { display: flex; flex-direction: column; gap: 4px; }
-    .stat-number { font-size: clamp(32px, 4vw, 52px); font-weight: 500; letter-spacing: -0.05em; color: var(--c-gold); }
+    .stat-number {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      background: linear-gradient(105deg, #C49A38 0%, #EDD879 20%, #FEFCE8 38%, #F0C832 52%, #FEFCE8 66%, #EDD879 84%, #C49A38 100%);
+      background-size: 250% auto;
+      animation: btn-gold-shine 4s ease-in-out infinite;
+      animation-delay: -1.5s;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     .stat-label  { font-size: 12px; color: var(--c-ink-muted); letter-spacing: 0.02em; }
 
     /* ── How It Works ────────────────────────────────────────── */
-    .steps-headline { margin: 14px 0 80px; }
+    .steps-headline { margin: 14px 0 64px; }
     .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
     .step {
       background: transparent;
@@ -511,7 +522,7 @@
     .step-timeline::before { content: ''; width: 5px; height: 5px; background: var(--c-gold); border-radius: 50%; flex-shrink: 0; }
 
     /* ── Projects ────────────────────────────────────────────── */
-    .projects-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 60px; gap: 20px; }
+    .projects-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; gap: 20px; }
     .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 24px; }
     .project-card {
       background: transparent;
@@ -560,27 +571,44 @@
     }
     .card-visit:hover { opacity: 0.7; }
 
-    /* Spotlight cards */
+    /* Spotlight cards — same metallic system as about card + buttons */
     .spotlight-card {
+      background: linear-gradient(
+        105deg,
+        #C49A38  0%,
+        #EDD879  20%,
+        #FEFCE8  38%,
+        #F0C832  52%,
+        #FEFCE8  66%,
+        #EDD879  84%,
+        #C49A38  100%
+      );
+      background-size: 250% auto;
+      animation: btn-gold-shine 7s ease-in-out infinite;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: 1px solid rgba(243,229,171,0.65);
+      border-top: 1px solid rgba(255,255,255,0.92);
+      box-shadow:
+        0 0 40px rgba(212,175,55,0.38),
+        0 24px 64px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.70),
+        inset 0 -1px 0 rgba(0,0,0,0.12);
       border-radius: var(--r-xl);
       padding: 36px 30px;
       display: flex; flex-direction: column; justify-content: flex-end;
       min-height: 300px;
       position: relative; overflow: hidden;
-      will-change: transform;
-      box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), inset 0 -1px 2px rgba(0,0,0,0.2), 0 24px 64px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(12px) saturate(150%);
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
     }
-    .spotlight-violet { background: linear-gradient(140deg, #F3E5AB 0%, #D4AF37 50%, #B8860B 100%); border: none; }
-    .spotlight-rose   { background: linear-gradient(140deg, #FFF8DC 0%, #F3E5AB 50%, #D4AF37 100%); border: none; }
-    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); pointer-events: none; }
-    .spotlight-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #000; position: relative; z-index: 1; }
-    .spotlight-card p  { font-size: 14px; color: rgba(0,0,0,0.75); line-height: 1.5; font-weight: 500; position: relative; z-index: 1; }
+    /* Stagger delays so each card catches a different phase of the shimmer */
+    .spotlight-violet { animation-delay: -2.3s; }
+    .spotlight-rose   { animation-delay: -4.7s; }
+    .spotlight-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 220px; height: 220px; background: radial-gradient(circle, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0.12) 45%, transparent 70%); pointer-events: none; }
+    .spotlight-card h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #0a0800; text-shadow: 0 1px 0 rgba(255,255,255,0.45); position: relative; z-index: 1; }
+    .spotlight-card p  { font-size: 14px; color: rgba(0,0,0,0.72); line-height: 1.5; font-weight: 500; position: relative; z-index: 1; }
 
     /* ── Testimonials ────────────────────────────────────────── */
-    .testimonials-headline { margin: 14px 0 80px; }
+    .testimonials-headline { margin: 14px 0 64px; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
     .testimonial-card {
       background: transparent;
@@ -600,7 +628,7 @@
     .testimonial-role { font-size: 12px; color: var(--c-ink-muted); }
 
     /* ── FAQ ─────────────────────────────────────────────────── */
-    .faq-headline { margin: 14px 0 80px; }
+    .faq-headline { margin: 14px 0 64px; }
     .faq-grid { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--c-hairline); }
     .faq-item { background: transparent; overflow: hidden; border-bottom: 1px solid var(--c-hairline); }
     /* HIG: min 44px touch target for FAQ rows */
@@ -616,7 +644,7 @@
     .faq-answer-inner a { color: var(--c-gold); text-decoration: underline; text-underline-offset: 3px; }
 
     /* ── Booking ─────────────────────────────────────────────── */
-    .booking-headline { margin: 14px 0 40px; }
+    .booking-headline { margin: 14px 0 64px; }
     .booking-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
     .booking-intro p { font-size: 17px; color: var(--c-ink-muted); line-height: 1.65; }
     .perks { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
