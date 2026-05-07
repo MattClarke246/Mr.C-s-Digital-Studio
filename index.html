@@ -192,14 +192,23 @@
       );
       background-size: 250% auto;
       animation: btn-gold-shine 4s ease-in-out infinite;
-      color: #080500;
+      color: #000;
       font-weight: 700;
       border: 1px solid rgba(243,229,171,0.60);
+      /* disable inherited backdrop-filter — gradient is fully opaque, no compositing needed */
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
       box-shadow:
         0 0 14px rgba(212,175,55,0.40),
         inset 0 1px 0 rgba(255,255,255,0.55),
         inset 0 -1px 0 rgba(0,0,0,0.18);
       transition: box-shadow 0.25s ease, transform 0.12s ease;
+    }
+    /* Dashbar variant — tighter sizing to fit the pill */
+    .nav-dashbar .btn-gold {
+      padding: 8px 18px;
+      font-size: 13.5px;
+      min-height: 36px;
     }
     .btn-gold:hover {
       box-shadow:
@@ -858,7 +867,7 @@
 
   <!-- Center column: logo -->
   <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
-    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="134" height="48"/>
+    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="134" height="48" fetchpriority="high" decoding="async"/>
   </a>
 
   <!-- Right column: dashbar with inline links -->
@@ -869,7 +878,7 @@
       <a href="#projects">Work</a>
       <a href="#faq">FAQ</a>
       <span class="nav-dashbar-sep" aria-hidden="true"></span>
-      <a href="#booking" class="btn btn-gold" style="padding: 8px 18px; font-size: 13.5px; min-height: 36px;">Book a Free Call</a>
+      <a href="#booking" class="btn btn-gold">Book a Free Call</a>
     </div>
   </div>
 
@@ -1060,7 +1069,7 @@
 
       <article class="project-card reveal">
         <div class="card-thumb">
-          <img src="assets/pantry-pioneers.png" alt="Pantry Belt landing page screenshot" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <img src="assets/pantry-pioneers.png" alt="Pantry Belt landing page screenshot" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
         <span class="card-tag">Community Platform</span>
         <p class="card-title">Pantry Belt</p>
@@ -1075,7 +1084,7 @@
 
       <article class="project-card reveal reveal-d2">
         <div class="card-thumb">
-          <img src="assets/cacao-online.jpg" alt="CACAO Online landing page screenshot" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          <img src="assets/cacao-online.jpg" alt="CACAO Online landing page screenshot" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
         <span class="card-tag">Nonprofit Organisation</span>
         <p class="card-title">CACAO Online</p>
@@ -1085,7 +1094,7 @@
 
       <article class="project-card reveal">
         <div class="card-thumb">
-          <img src="assets/xo-club-header.png" alt="XO Club E-Commerce Website Header" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+          <img src="assets/xo-club-header.png" alt="XO Club E-Commerce Website Header" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain; display: block;">
         </div>
         <span class="card-tag">E-Commerce Website</span>
         <p class="card-title">XO Club</p>
@@ -1307,7 +1316,7 @@
     <!-- Left: logo + tagline -->
     <div class="footer-brand">
       <a href="#" aria-label="Mr.C's Digital Studio — home">
-        <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" class="footer-logo-img" width="168" height="60"/>
+        <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" class="footer-logo-img" width="168" height="60" loading="lazy" decoding="async"/>
       </a>
       <p class="footer-tagline">Your website should be your best salesperson.</p>
     </div>
