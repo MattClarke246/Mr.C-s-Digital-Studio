@@ -1492,8 +1492,9 @@
   const clock = new THREE.Clock();
   let frame = 0;
   const ENTRANCE_DUR = 1.3;
+  let entranceDone = false;
+  let entranceT = 0;
 
-  /* Entrance easing: fast scale-in with slight overshoot then settle */
   function entranceEase(p) {
     if (p < 0.65) { const ep = p / 0.65; return ep * ep * 1.14; }
     return 1.14 - ((p - 0.65) / 0.35) * 0.14;
@@ -1504,86 +1505,83 @@
     frame++;
     const t = clock.getElapsedTime();
 
-    /* ── Entrance animation (first 1.3s) ──────────────────── */
-    const entranceP = Math.min(t / ENTRANCE_DUR, 1.0);
-    const entranceDone = entranceP >= 1.0;
-
+    /* ── Advance entrance (runs until 1.3 s, then latches off) ── */
     if (!entranceDone) {
-      const sc = entranceEase(entranceP);
-      group.scale.setScalar(sc);
-      /* Flash emissive at peak of entry, rings contract inward */
-      coreMat.emissiveIntensity = 4.2 * Math.sin(entranceP * Math.PI);
-      goldEdgeMat.opacity       = entranceP * 0.92;
-      ring1.scale.setScalar(1 + (1 - entranceP) * 2.2);
-      ring2.scale.setScalar(1 + (1 - entranceP) * 1.6);
-      ring3.scale.setScalar(1 + (1 - entranceP) * 1.0);
-      canvas.style.opacity = Math.min(1, entranceP * 2.8).toString();
-    } else {
-      /* Reset ring scales on first frame after entrance */
-      if (ring1.scale.x !== 1) { ring1.scale.setScalar(1); ring2.scale.setScalar(1); ring3.scale.setScalar(1); }
+      entranceT = Math.min(t / ENTRANCE_DUR, 1.0);
+      if (entranceT >= 1.0) {
+        entranceDone = true;
+        ring1.scale.setScalar(1);
+        ring2.scale.setScalar(1);
+        ring3.scale.setScalar(1);
+        goldEdgeMat.opacity = 0.92;
+      }
     }
 
-    /* ── Smooth mouse tracking ────────────────────────────── */
+    /* ── Mouse tracking ───────────────────────────────────────── */
     tRY += (mX * 0.65 - tRY) * 0.038;
     tRX += (-mY * 0.38 - tRX) * 0.038;
 
-    /* ── Touch momentum ───────────────────────────────────── */
+    /* ── Touch momentum ───────────────────────────────────────── */
     if (!isTouching) { touchVelX *= 0.93; touchVelY *= 0.93; }
     touchRotY += touchVelX;
     touchRotX += touchVelY;
 
-    /* ── Idle escalation (after 4s no mouse movement) ─────── */
+    /* ── Idle escalation ──────────────────────────────────────── */
     const idleSecs = (performance.now() - lastMouseMove) / 1000;
     const targetIdle = idleSecs > 4 ? Math.min((idleSecs - 4) / 2.5, 1) : 0;
     idleProgress += (targetIdle - idleProgress) * 0.015;
 
-    /* ── Hover proximity (cursor near crystal) ────────────── */
+    /* ── Hover proximity ──────────────────────────────────────── */
     _crystalNDC.copy(group.position).project(camera);
     const cursorDist = Math.sqrt(
       Math.pow(cursorNDCx - _crystalNDC.x, 2) +
       Math.pow(cursorNDCy - _crystalNDC.y, 2)
     );
-    const targetHover = Math.max(0, 1 - cursorDist / 0.58);
-    hoverInfluence += (targetHover - hoverInfluence) * 0.08;
+    hoverInfluence += (Math.max(0, 1 - cursorDist / 0.58) - hoverInfluence) * 0.08;
     canvas.style.cursor = hoverInfluence > 0.15 ? 'pointer' : 'default';
 
-    /* ── Crystal rotation ─────────────────────────────────── */
+    /* ── Crystal rotation ─────────────────────────────────────── */
     group.rotation.y = t * 0.11 + tRY + touchRotY;
     group.rotation.x = Math.sin(t * 0.15) * 0.14 + tRX + touchRotX;
     group.rotation.z = t * 0.032;
 
-    /* ── Floating ─────────────────────────────────────────── */
-    if (entranceDone) group.position.y = Math.sin(t * 0.42) * 0.24;
+    /* ── Floating (always) ────────────────────────────────────── */
+    group.position.y = Math.sin(t * 0.42) * 0.24;
 
-    /* ── Emissive: heartbeat + hover burst + idle glow ─────── */
-    if (entranceDone) {
-      coreMat.emissiveIntensity = 1.1 + Math.sin(t * 1.9) * 0.6
-        + hoverInfluence * 1.8
-        + idleProgress * 0.9;
-    }
+    /* ── Emissive — heartbeat always runs; entrance adds burst ── */
+    coreMat.emissiveIntensity =
+      1.1 + Math.sin(t * 1.9) * 0.6
+      + hoverInfluence * 1.8
+      + idleProgress  * 0.9
+      + (entranceDone ? 0 : 3.2 * Math.sin(entranceT * Math.PI));
 
-    /* ── Scroll retreat ───────────────────────────────────── */
-    if (entranceDone) {
-      const sp = Math.min(scrollProg, 1);
-      group.position.z    = -sp * 5.5;
-      group.scale.setScalar(Math.max(0.05, 1 - sp * 0.68));
-      canvas.style.opacity = Math.max(0, 1 - sp * 1.6).toString();
-    }
+    /* ── Scale — entrance overshoot × scroll retreat ─────────── */
+    const sp          = Math.min(scrollProg, 1);
+    const scrollScale = Math.max(0.05, 1 - sp * 0.68);
+    const entScale    = entranceDone ? 1.0 : entranceEase(entranceT);
+    group.scale.setScalar(scrollScale * entScale);
+    group.position.z     = -sp * 5.5;
+    canvas.style.opacity = Math.max(0, 1 - sp * 1.6).toString();
 
-    /* ── Ring rotations: base + hover boost + idle escalation ─ */
+    /* ── Ring rotations: base + entrance contraction + boosts ─── */
     const ringMult = 1 + hoverInfluence * 2.2 + idleProgress * 2.8;
     ring1.rotation.z =  t * 0.10  * ringMult;
     ring2.rotation.z = -t * 0.075 * ringMult;
     ring3.rotation.y =  t * 0.045 * ringMult;
+    if (!entranceDone) {
+      ring1.scale.setScalar(1 + (1 - entranceT) * 2.2);
+      ring2.scale.setScalar(1 + (1 - entranceT) * 1.6);
+      ring3.scale.setScalar(1 + (1 - entranceT) * 1.0);
+      goldEdgeMat.opacity = entranceT * 0.92;
+    } else {
+      goldEdgeMat.opacity = 0.92 + hoverInfluence * 0.08;
+    }
 
-    /* ── Gold edge opacity: normal + hover boost ──────────── */
-    if (entranceDone) goldEdgeMat.opacity = 0.92 + hoverInfluence * 0.08;
-
-    /* ── Particle magnetic attraction toward cursor ────────── */
+    /* ── Particle lean toward cursor ──────────────────────────── */
     particles.position.x += (cursorNDCx * hoverInfluence * 0.7 - particles.position.x) * 0.04;
     particles.position.y += (cursorNDCy * hoverInfluence * 0.5 - particles.position.y) * 0.04;
 
-    /* ── Orbiting lights (every other frame for perf) ────── */
+    /* ── Orbiting lights (every other frame for perf) ─────────── */
     if (frame % 2 === 0) {
       lGold.position.x    =  Math.sin(t * 0.36) * 7;
       lGold.position.y    =  Math.cos(t * 0.27) * 5;
@@ -1592,7 +1590,7 @@
       lCyan.position.x    =  Math.sin(t * 0.52 + 2) * 5;
     }
 
-    /* ── Particle drift ───────────────────────────────────── */
+    /* ── Particle drift ───────────────────────────────────────── */
     particles.rotation.y = t * 0.022;
     particles.rotation.x = t * 0.009;
 
