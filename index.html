@@ -545,7 +545,7 @@
       cursor: default;
       transform-style: flat;
     }
-    .project-card:hover { transform: translateY(-8px); }
+    .project-card:hover { transform: none; }
     .card-thumb { 
       width: 100%; aspect-ratio: 16/9; 
       background: rgba(15,15,15,0.6); 
@@ -557,7 +557,7 @@
       border-radius: var(--r-md); overflow: hidden; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; 
     }
     .card-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 0; transition: transform 0.8s cubic-bezier(.22,1,.36,1); }
-    .project-card:hover .card-thumb img { transform: scale(1.04); }
+    .project-card:hover .card-thumb img { transform: none; }
     .card-thumb-pattern { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .card-tag { display: inline-flex; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-ink-muted); width: fit-content; margin-bottom: -6px; }
     .card-title { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; color: var(--c-ink); line-height: 1.2; }
@@ -993,7 +993,7 @@
       We build for<br>businesses that<br>mean business.
     </h2>
     <div class="about-grid">
-      <div class="about-spotlight reveal reveal-d1" data-parallax-card="0.06">
+      <div class="about-spotlight reveal reveal-d1">
         <h3>Strategy-first design<br>that converts.</h3>
         <p>Every pixel is intentional. We combine visual design with performance engineering to deliver sites that look stunning and drive real results.</p>
       </div>
@@ -1082,7 +1082,7 @@
         <a href="https://pantrybelt.com" target="_blank" rel="noopener noreferrer" class="card-visit">Visit site →</a>
       </article>
 
-      <div class="spotlight-card spotlight-violet reveal reveal-d1" data-parallax-card="0.05" aria-hidden="true">
+      <div class="spotlight-card spotlight-violet reveal reveal-d1" aria-hidden="true">
         <h3>Design that<br>sells itself.</h3>
         <p>Our sites do the talking so you don't have to.</p>
       </div>
@@ -1107,7 +1107,7 @@
         <a href="https://xoclub.store" target="_blank" rel="noopener noreferrer" class="card-visit">Visit store →</a>
       </article>
 
-      <div class="spotlight-card spotlight-rose reveal reveal-d1" data-parallax-card="0.04" aria-hidden="true">
+      <div class="spotlight-card spotlight-rose reveal reveal-d1" aria-hidden="true">
         <h3>Performance<br>built in.</h3>
         <p>90+ Lighthouse scores, lightning-fast loads, and mobile-first from day one — every time.</p>
       </div>
@@ -1618,9 +1618,9 @@ grids.forEach(gridSelector => {
 });
 
 /* ══════════════════════════════════════════════════════════
-   3D CARD TILT (project + testimonial cards)
+   3D CARD TILT (testimonial cards only — project cards are static)
 ══════════════════════════════════════════════════════════ */
-document.querySelectorAll('.project-card, .testimonial-card').forEach(card => {
+document.querySelectorAll('.testimonial-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
@@ -1646,23 +1646,6 @@ document.querySelectorAll('#hero .reveal').forEach((el, i) => {
   setTimeout(() => el.classList.add('visible'), 100 + i * 90);
 });
 
-/* ══════════════════════════════════════════════════════════
-   PARALLAX (spotlight cards)
-══════════════════════════════════════════════════════════ */
-const parallaxCards = document.querySelectorAll('[data-parallax-card]');
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) { requestAnimationFrame(runParallax); ticking = true; }
-}, { passive: true });
-function runParallax() {
-  parallaxCards.forEach(el => {
-    const r = el.getBoundingClientRect();
-    const c = r.top + r.height / 2 - window.innerHeight / 2;
-    el.style.transform = `translateY(${c * parseFloat(el.dataset.parallaxCard) * -1}px)`;
-  });
-  ticking = false;
-}
-runParallax();
 
 /* ══════════════════════════════════════════════════════════
    HAMBURGER & MOBILE MENU (HIG: aria-expanded)
