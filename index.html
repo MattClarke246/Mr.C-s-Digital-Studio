@@ -215,81 +215,64 @@
       display: block;
     }
 
-    /* Right column — dashbar pill */
+    /* Right column — hamburger dashbar */
     .nav-right {
       display: flex;
       align-items: center;
       justify-content: flex-end;
     }
-    .nav-dashbar {
+    .nav-hamburger {
       display: flex;
-      align-items: center;
-      gap: 2px;
-      padding: 5px 6px 5px 10px;
+      flex-direction: column;
+      gap: 6px;
       background: rgba(10, 10, 18, 0.65);
       backdrop-filter: blur(20px) saturate(160%);
       -webkit-backdrop-filter: blur(20px) saturate(160%);
       border: 1px solid rgba(255,255,255,0.08);
       border-top: 1px solid rgba(255,255,255,0.14);
-      border-radius: 100px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.45),
-                  inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-    .nav-dashbar a {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--c-ink-muted);
-      padding: 7px 14px;
-      border-radius: 100px;
-      transition: color 0.15s, background 0.15s;
-      white-space: nowrap;
-      min-height: 36px;
-      display: flex;
-      align-items: center;
-      letter-spacing: -0.01em;
-    }
-    .nav-dashbar a:hover { color: var(--c-ink); background: rgba(255,255,255,0.06); }
-    .nav-dashbar-sep {
-      width: 1px;
-      height: 18px;
-      background: rgba(255,255,255,0.12);
-      flex-shrink: 0;
-      margin: 0 4px;
-    }
-
-    /* Hamburger — hidden on desktop, shown on mobile */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
+      border-radius: 50%;
       cursor: pointer;
-      background: none;
-      border: none;
       padding: 0;
-      min-width: 44px;
-      min-height: 44px;
+      width: 48px;
+      height: 48px;
       align-items: center;
       justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
       -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
     }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--c-ink); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger:hover {
+      background: rgba(30, 30, 40, 0.8);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--c-gold);
+      border-radius: var(--r-pill);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
     .mobile-menu {
-      display: none;
       position: fixed;
-      inset: 72px 0 0 0;
-      z-index: 290;
-      background: rgba(5,5,5,0.97);
+      inset: 0;
+      z-index: 299;
+      background: rgba(5,5,5,0.96);
       backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(.22,1,.36,1);
     }
-    .mobile-menu.open { display: flex; }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
     .mobile-menu a { font-size: 26px; font-weight: 500; letter-spacing: -0.04em; color: var(--c-ink); min-height: 44px; display: flex; align-items: center; }
 
     /* ── Section wrapper ─────────────────────────────────────── */
@@ -804,30 +787,22 @@
 <!-- ═══════════════════════════════════ NAV ══════════════════════════════════ -->
 <nav aria-label="Main navigation">
 
-  <!-- Left column: hamburger on mobile, empty on desktop -->
+  <!-- Left column: empty on desktop & mobile to keep logo centered -->
   <div class="nav-left">
+  </div>
+
+  <!-- Center column: logo -->
+  <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
+    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="134" height="48"/>
+  </a>
+
+  <!-- Right column: dashbar hamburger button -->
+  <div class="nav-right">
     <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </button>
-  </div>
-
-  <!-- Center column: logo -->
-  <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
-    <img src="assets/logo/logo-prism-vertex.svg" alt="MR.C Digital Studio" width="134" height="48"/>
-  </a>
-
-  <!-- Right column: dashbar pill -->
-  <div class="nav-right">
-    <nav class="nav-dashbar" aria-label="Site navigation">
-      <a href="#about">About</a>
-      <a href="#how-it-works">Process</a>
-      <a href="#projects">Work</a>
-      <a href="#faq">FAQ</a>
-      <span class="nav-dashbar-sep" aria-hidden="true"></span>
-      <a href="#booking" class="btn btn-gold" style="padding: 8px 18px; font-size: 13.5px; min-height: 36px;">Book a Free Call</a>
-    </nav>
   </div>
 
 </nav>
