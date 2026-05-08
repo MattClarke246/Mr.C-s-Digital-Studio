@@ -1381,6 +1381,7 @@
           <div class="form-success-icon" aria-hidden="true">✦</div>
           <h3>Message received.</h3>
           <p>Mr.C will be in touch within 24 hours to schedule your free discovery call.</p>
+          <button type="button" class="btn btn-secondary" id="form-success-close" style="margin-top: 24px; padding: 10px 24px;">Close &amp; Return</button>
         </div>
       </div>
     </div>
@@ -1814,6 +1815,20 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     btn.textContent = originalText;
     btn.disabled = false;
   }
+});
+
+document.getElementById('form-success-close').addEventListener('click', function () {
+  const form = document.getElementById('booking-form');
+  const success = document.getElementById('form-success');
+  
+  // Hide success message
+  success.style.display = 'none';
+  
+  // Reset form fields
+  form.reset();
+  
+  // Show form again
+  form.style.display = 'block';
 });
 
 </script>
