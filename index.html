@@ -13,8 +13,8 @@
   <meta property="og:url" content="https://mrcdigitalstudio.com/">
   <meta property="og:image" content="https://mrcdigitalstudio.com/assets/Mr.C-digital-header-opt.jpg">
 
-  <meta name="theme-color" content="#050505">
-  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#050505" id="meta-theme-color">
+  <meta name="color-scheme" content="dark light">
   <link rel="canonical" href="https://mrcdigitalstudio.com/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050505'/%3E%3Ctext x='16' y='23' font-family='Georgia%2C serif' font-weight='700' font-size='20' fill='%23D4AF37' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 
@@ -23,6 +23,10 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
+  <!-- Preload Critical Scripts -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" as="script">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" as="script">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" as="script">
 
   <style>
     /* ── Design tokens ───────────────────────────────────────── */
@@ -47,6 +51,399 @@
       --r-xs:   4px;  --r-sm:   6px;  --r-md:   10px;
       --r-lg:   15px; --r-xl:   20px; --r-xxl:  30px;
       --r-pill: 100px; --r-full: 9999px;
+    }
+
+    /* ── Light mode token overrides ───────────────────────────── */
+    [data-theme="light"] {
+      --c-primary:       #1A1A1A;
+      --c-on-primary:    #FFFFFF;
+      --c-gold:          #B8860B;
+      --c-gold-light:    #DAA520;
+      --c-gold-dim:      rgba(184,134,11,0.10);
+      --c-gold-border:   rgba(184,134,11,0.30);
+      --c-ink:           #1A1A1A;
+      --c-ink-muted:     #555555;
+      --c-canvas:        #FAF8F5;
+      --c-surface-1:     #FFFFFF;
+      --c-surface-2:     #F0EDE8;
+      --c-hairline:      #E0DCD5;
+      --c-hairline-soft: #EBE7E1;
+      --c-amethyst:      #E8E4DF;
+      --c-rose:          #C4A47C;
+      --c-success:       #16a34a;
+    }
+
+    /* ── Light-mode component overrides ─────────────────────── */
+    [data-theme="light"] body {
+      background: var(--c-canvas);
+      color: var(--c-ink);
+    }
+
+    [data-theme="light"] #main-nav {
+      background: rgba(250,248,245,0.82);
+      border-bottom-color: var(--c-hairline);
+    }
+    [data-theme="light"] .nav-dashbar {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(0,0,0,0.08);
+      border-top-color: rgba(255,255,255,0.9);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    [data-theme="light"] .nav-dashbar a {
+      color: #555;
+    }
+    [data-theme="light"] .nav-dashbar a:hover {
+      color: #1A1A1A;
+      background: rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .nav-hamburger {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .nav-hamburger span {
+      background: var(--c-gold);
+    }
+
+    [data-theme="light"] .mobile-menu {
+      background: rgba(250,248,245,0.97);
+    }
+    [data-theme="light"] .mobile-menu a {
+      color: #1A1A1A;
+    }
+
+    /* Hero: lighter vignette so text reads on light bg */
+    [data-theme="light"] #hero::after {
+      background: linear-gradient(
+        98deg,
+        var(--c-canvas)      0%,
+        rgba(250,248,245,0.92) 18%,
+        rgba(250,248,245,0.6) 38%,
+        rgba(250,248,245,0.15) 58%,
+        transparent            74%
+      );
+    }
+    [data-theme="light"] .hero-headline {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .hero-sub {
+      color: #555;
+    }
+    [data-theme="light"] .btn-primary {
+      background: rgba(26,26,26,0.92);
+      color: #fff;
+      border-color: rgba(0,0,0,0.15);
+    }
+    [data-theme="light"] .btn-secondary {
+      background: rgba(255,255,255,0.7);
+      color: #1A1A1A;
+      border-color: rgba(0,0,0,0.12);
+    }
+    [data-theme="light"] .btn-secondary:hover {
+      background: rgba(255,255,255,0.9);
+      border-color: var(--c-gold-border);
+    }
+
+    /* Trust chips */
+    [data-theme="light"] .trust-chip {
+      background: rgba(184,134,11,0.08);
+      border-color: rgba(184,134,11,0.25);
+      color: #8B6914;
+    }
+    [data-theme="light"] .trust-rating {
+      color: #555;
+    }
+    [data-theme="light"] .trust-rating strong {
+      color: #1A1A1A;
+    }
+
+    /* About gold card — darken text for contrast on light canvas */
+    [data-theme="light"] .about-headline,
+    [data-theme="light"] .steps-headline,
+    [data-theme="light"] .pricing-headline,
+    [data-theme="light"] .faq-headline,
+    [data-theme="light"] .booking-headline,
+    [data-theme="light"] .testimonials-headline,
+    [data-theme="light"] #projects-heading {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .t-body-lg {
+      color: #444;
+    }
+    [data-theme="light"] .t-body {
+      color: #555;
+    }
+    [data-theme="light"] .t-caption {
+      color: #8B6914;
+    }
+
+    /* Steps */
+    [data-theme="light"] .step h3 {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .step p {
+      color: #555;
+    }
+    [data-theme="light"] .step-number {
+      color: #B8860B;
+    }
+    [data-theme="light"] .step-number::after {
+      background: linear-gradient(90deg, var(--c-hairline), transparent);
+    }
+    [data-theme="light"] .step-timeline {
+      color: #8B6914;
+    }
+
+    /* Project cards */
+    [data-theme="light"] .card-thumb {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(0,0,0,0.08);
+      border-top-color: rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    [data-theme="light"] .card-title {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .card-desc {
+      color: #555;
+    }
+    [data-theme="light"] .card-result {
+      color: #8B6914;
+      border-top-color: var(--c-hairline);
+    }
+    [data-theme="light"] .card-visit {
+      color: #1A1A1A;
+      border-bottom-color: var(--c-gold);
+    }
+
+    /* Testimonials */
+    [data-theme="light"] .testimonial-card {
+      border-left-color: var(--c-hairline);
+    }
+    [data-theme="light"] .testimonial-card:hover {
+      border-left-color: var(--c-gold);
+    }
+    [data-theme="light"] .testimonial-quote {
+      color: #333;
+    }
+    [data-theme="light"] .testimonial-name {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .testimonial-author {
+      border-top-color: var(--c-hairline);
+    }
+
+    /* FAQ */
+    [data-theme="light"] .faq-grid {
+      border-top-color: var(--c-hairline);
+    }
+    [data-theme="light"] .faq-item {
+      border-bottom-color: var(--c-hairline);
+    }
+    [data-theme="light"] .faq-question span {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .faq-icon svg line {
+      stroke: #1A1A1A;
+    }
+    [data-theme="light"] .faq-answer-inner {
+      color: #555;
+    }
+    [data-theme="light"] .faq-answer-inner strong {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .faq-answer-inner a {
+      color: #8B6914;
+    }
+
+    /* Pricing add-on cards */
+    [data-theme="light"] .pricing-add-card {
+      background: rgba(255,255,255,0.85);
+      border-color: rgba(0,0,0,0.08);
+      border-top-color: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    [data-theme="light"] .pricing-add-label {
+      color: #888;
+    }
+    [data-theme="light"] .pricing-add-amount {
+      color: #8B6914;
+    }
+    [data-theme="light"] .pricing-add-desc {
+      color: #555;
+    }
+    [data-theme="light"] .pricing-client-note {
+      border-color: var(--c-hairline);
+    }
+    [data-theme="light"] .pricing-client-note p {
+      color: #555;
+    }
+    [data-theme="light"] .pricing-client-note strong {
+      color: #1A1A1A;
+    }
+
+    /* Booking form */
+    [data-theme="light"] input,
+    [data-theme="light"] select,
+    [data-theme="light"] textarea {
+      background: #fff;
+      color: #1A1A1A;
+      border-color: var(--c-hairline);
+    }
+    [data-theme="light"] input::placeholder,
+    [data-theme="light"] textarea::placeholder {
+      color: #999;
+    }
+    [data-theme="light"] input:focus,
+    [data-theme="light"] select:focus,
+    [data-theme="light"] textarea:focus {
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.12);
+    }
+    [data-theme="light"] label {
+      color: #777;
+    }
+    [data-theme="light"] .booking-intro p {
+      color: #555;
+    }
+    [data-theme="light"] .perk span {
+      color: #555;
+    }
+    [data-theme="light"] .perk-dot {
+      background: var(--c-gold);
+    }
+
+    /* Form success */
+    [data-theme="light"] .form-success {
+      background: #fff;
+      border-color: rgba(184,134,11,0.25);
+    }
+    [data-theme="light"] .form-success h3 {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .form-success p {
+      color: #555;
+    }
+
+    /* Footer */
+    [data-theme="light"] footer[role="contentinfo"] {
+      border-top-color: var(--c-hairline);
+    }
+    [data-theme="light"] .footer-inner {
+      border-bottom-color: var(--c-hairline);
+    }
+    [data-theme="light"] .footer-tagline {
+      color: #777;
+    }
+    [data-theme="light"] .footer-links a {
+      color: #666;
+    }
+    [data-theme="light"] .footer-links a:hover {
+      color: var(--c-gold);
+    }
+    [data-theme="light"] .footer-email {
+      color: #666;
+    }
+    [data-theme="light"] .footer-copy {
+      color: #999;
+    }
+    [data-theme="light"] .footer-legal a {
+      color: #999;
+    }
+    [data-theme="light"] .footer-legal a:hover {
+      color: #1A1A1A;
+    }
+
+    /* Gold text shimmer — deeper gold tones for light mode */
+    [data-theme="light"] .gold-text {
+      background: linear-gradient(90deg, #8B6914, #B8860B, #DAA520, #B8860B, #8B6914);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Stat numbers — richer gold on light */
+    [data-theme="light"] .stat-number {
+      background: linear-gradient(105deg, #8B6914 0%, #B8860B 25%, #DAA520 50%, #B8860B 75%, #8B6914 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="light"] .stat-label {
+      color: #777;
+    }
+
+    /* Ambient particles — slightly more opaque on light */
+    [data-theme="light"] .amb-particle {
+      opacity: 0.08 !important;
+    }
+
+    /* Crystal canvas — swap dark bloom for luminous blue-gold glow */
+    [data-theme="light"] #hero-canvas {
+      filter:
+        drop-shadow(0 0 40px rgba(37,99,235,0.18))
+        drop-shadow(0 0 80px rgba(212,175,55,0.10))
+        drop-shadow(0 0 140px rgba(37,99,235,0.06));
+    }
+
+    /* ── Theme toggle button ───────────────────────────────── */
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: background 0.2s, border-color 0.2s, transform 0.3s;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--c-gold-border);
+      transform: rotate(15deg);
+    }
+    .theme-toggle:active {
+      transform: scale(0.92);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s;
+    }
+    /* Sun icon — hidden in dark mode, shown in light */
+    .theme-toggle .icon-sun {
+      display: none;
+      color: #B8860B;
+    }
+    .theme-toggle .icon-moon {
+      display: block;
+      color: var(--c-gold);
+    }
+    [data-theme="light"] .theme-toggle {
+      border-color: rgba(0,0,0,0.1);
+      background: rgba(0,0,0,0.04);
+    }
+    [data-theme="light"] .theme-toggle:hover {
+      background: rgba(0,0,0,0.08);
+      border-color: var(--c-gold-border);
+    }
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: block;
+    }
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    /* Mobile menu theme toggle */
+    .mobile-theme-toggle {
+      margin-top: 8px;
     }
 
     /* ── Reset ───────────────────────────────────────────────── */
@@ -957,6 +1354,10 @@
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <span class="nav-dashbar-sep" aria-hidden="true"></span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
       <a href="#booking" class="btn btn-gold">Book a Free Call</a>
     </div>
   </div>
@@ -969,6 +1370,10 @@
   <a href="#projects"     onclick="closeMobile()">Work</a>
   <a href="#pricing"      onclick="closeMobile()">Pricing</a>
   <a href="#faq"          onclick="closeMobile()">FAQ</a>
+  <button class="theme-toggle mobile-theme-toggle" id="mobile-theme-toggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
   <a href="#booking" onclick="closeMobile()" class="btn btn-gold" style="margin-top:8px;">Book a Free Call</a>
 </div>
 
@@ -1515,10 +1920,10 @@
   });
   group.add(new THREE.Mesh(new THREE.SphereGeometry(4.2, 24, 24), atmMat));
 
-  /* ── Three orbital rings at varied angles ── */
-  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xC4A47C, transparent: true, opacity: 0.60 });
-  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xD8C3A5, transparent: true, opacity: 0.32 });
-  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0x8A7052, transparent: true, opacity: 0.18 });
+  /* ── Three orbital rings at varied angles — bright metallic gold ── */
+  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xFFD700, transparent: true, opacity: 0.82 });
+  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xF0C832, transparent: true, opacity: 0.55 });
+  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0xDAA520, transparent: true, opacity: 0.35 });
 
   const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.018, 8, 120), ringMat1);
   ring1.rotation.x = Math.PI / 3.2;
@@ -1556,13 +1961,13 @@
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
 
-  /* ── Five-light dramatic rig (Neutral/Gold) ── */
-  const lGold   = new THREE.PointLight(0xC4A47C, 16, 24); lGold.position.set( 5,  3,  7); scene.add(lGold);
-  const lViolet = new THREE.PointLight(0x8A7052, 12, 20); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
-  const lCyan   = new THREE.PointLight(0xFFFFFF,  6, 16); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
-  const lRose   = new THREE.PointLight(0xD8C3A5,  5, 14); lRose.position.set(-3,  4,  4); scene.add(lRose);
-  const lWarm   = new THREE.PointLight(0x2A2A2A,  4, 12); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
-  scene.add(new THREE.AmbientLight(0x0A0A0A, 8));
+  /* ── Five-light dramatic rig — brighter metallic gold ── */
+  const lGold   = new THREE.PointLight(0xFFD700, 22, 28); lGold.position.set( 5,  3,  7); scene.add(lGold);
+  const lViolet = new THREE.PointLight(0xDAA520, 16, 22); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
+  const lCyan   = new THREE.PointLight(0xFFFACD,  8, 18); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
+  const lRose   = new THREE.PointLight(0xF0C832,  7, 16); lRose.position.set(-3,  4,  4); scene.add(lRose);
+  const lWarm   = new THREE.PointLight(0x3A3020,  5, 14); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
+  scene.add(new THREE.AmbientLight(0x0F0D08, 10));
 
   /* ── State ── */
   let mX = 0, mY = 0, tRX = 0, tRY = 0, scrollProg = 0;
@@ -1633,6 +2038,86 @@
 
     renderer.render(scene, camera);
   })();
+
+  /* ── Theme-aware crystal materials ── */
+  function updateCrystalTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+    if (isLight) {
+      /*
+       * LIGHT MODE — Royal Sapphire
+       * Think: polished blue diamond under gallery lighting.
+       * Deep base + vivid electric-blue emissive = luminous depth.
+       * High metalness + near-zero roughness = mirror-sharp facets.
+       */
+
+      /* Core — near-black navy base, electric cobalt inner fire */
+      coreMat.color.setHex(0x071428);
+      coreMat.emissive.setHex(0x2563EB);
+      coreMat.emissiveIntensity = 1.8;
+      coreMat.metalness = 0.97;
+      coreMat.roughness = 0.03;
+
+      /* Mid shell — deep indigo glass, glowing blue refraction */
+      midMat.color.setHex(0x0D1F42);
+      midMat.emissive.setHex(0x1D4ED8);
+      midMat.emissiveIntensity = 1.1;
+      midMat.opacity = 0.50;
+
+      /* Outer shell — whisper of blue glass, almost invisible */
+      outerMat.color.setHex(0x1E3A5F);
+      outerMat.opacity = 0.08;
+
+      /* Atmosphere — completely invisible, no frame */
+      atmMat.color.setHex(0xF0F4F8);
+      atmMat.opacity = 0.0;
+
+      /* Edge wireframes — bright crisp gold for HD detail */
+      goldEdgeMat.color.setHex(0xFFD700);
+      goldEdgeMat.opacity = 1.0;
+      softEdgeMat.color.setHex(0xBFD4F2);
+      softEdgeMat.opacity = 0.40;
+
+    } else {
+      /* DARK MODE — Original obsidian */
+      coreMat.color.setHex(0x0A0A0A);
+      coreMat.emissive.setHex(0x050505);
+      coreMat.emissiveIntensity = 1.4;
+      coreMat.metalness = 0.9;
+      coreMat.roughness = 0.1;
+
+      midMat.color.setHex(0x1A1A1A);
+      midMat.emissive.setHex(0x0F0F0F);
+      midMat.emissiveIntensity = 0.7;
+      midMat.opacity = 0.62;
+
+      outerMat.color.setHex(0x2A2A2A);
+      outerMat.opacity = 0.18;
+
+      atmMat.color.setHex(0x050505);
+      atmMat.opacity = 0.09;
+
+      /* Edge wireframes — original values */
+      goldEdgeMat.color.setHex(0xC4A47C);
+      goldEdgeMat.opacity = 0.92;
+      softEdgeMat.color.setHex(0xD8C3A5);
+      softEdgeMat.opacity = 0.28;
+    }
+
+    coreMat.needsUpdate = true;
+    midMat.needsUpdate = true;
+    outerMat.needsUpdate = true;
+    atmMat.needsUpdate = true;
+    goldEdgeMat.needsUpdate = true;
+    softEdgeMat.needsUpdate = true;
+  }
+
+  /* Apply on load */
+  updateCrystalTheme();
+
+  /* Watch for theme changes */
+  new MutationObserver(updateCrystalTheme)
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();
 
 /* ══════════════════════════════════════════════════════════
@@ -1826,6 +2311,55 @@ document.getElementById('form-success-close').addEventListener('click', function
   // Show form again
   form.style.display = 'block';
 });
+
+/* ══════════════════════════════════════════════════════════
+   THEME TOGGLE — Light / Dark mode
+   Respects: localStorage > system preference > default (dark)
+══════════════════════════════════════════════════════════ */
+(function() {
+  const root = document.documentElement;
+  const metaTheme = document.getElementById('meta-theme-color');
+  const toggles = document.querySelectorAll('.theme-toggle');
+
+  function getPreferred() {
+    const stored = localStorage.getItem('mrc-theme');
+    if (stored) return stored;
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+    return 'dark';
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    metaTheme.setAttribute('content', theme === 'light' ? '#FAF8F5' : '#050505');
+
+    // Update aria labels on all toggles
+    toggles.forEach(btn => {
+      btn.setAttribute('aria-label',
+        theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+      );
+    });
+  }
+
+  // Apply on load
+  applyTheme(getPreferred());
+
+  // Click handler for all theme toggles
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('mrc-theme', next);
+      applyTheme(next);
+    });
+  });
+
+  // Listen for system preference changes
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    if (!localStorage.getItem('mrc-theme')) {
+      applyTheme(e.matches ? 'light' : 'dark');
+    }
+  });
+})();
 
 </script>
 </body>
