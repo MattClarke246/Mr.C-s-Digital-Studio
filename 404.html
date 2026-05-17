@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Mr.C's Digital Studio</title>
+  <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23050505'/%3E%3Ctext x='16' y='23' font-family='Georgia%2C serif' font-weight='700' font-size='20' fill='%23BCA54B' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-gold: #BCA54B;
+      --c-ink: #F5F5F7;
+      --c-ink-muted: #A1A1AA;
+      --c-canvas: #050505;
+      --c-surface: #121212;
+    }
+    body {
+      background: var(--c-canvas);
+      color: var(--c-ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .content {
+      padding: 40px;
+    }
+    h1 { font-size: 64px; font-weight: 500; letter-spacing: -0.04em; margin-bottom: 16px; color: var(--c-gold); }
+    p { color: var(--c-ink-muted); margin-bottom: 32px; font-size: 18px; max-width: 400px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 999px;
+      text-decoration: none;
+      background: var(--c-gold);
+      color: #1a1a1a;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="content">
+    <h1>404</h1>
+    <p>We couldn't find the page you were looking for. It might have been moved or deleted.</p>
+    <a href="/" class="btn">Return to Home</a>
+  </main>
+</body>
+</html>
