@@ -1908,11 +1908,11 @@
   group.add(new THREE.Mesh(geoOuter, outerMat));
 
   /* Layer 4 — Gold edge lines: primary luxury signature */
-  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xC4A47C, transparent: true, opacity: 0.92 });
+  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xC9B585, transparent: true, opacity: 0.92 });
   group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoEdge), goldEdgeMat));
 
   /* Layer 5 — Inner soft-gold edge for depth */
-  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xD8C3A5, transparent: true, opacity: 0.28 });
+  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xD6CAAC, transparent: true, opacity: 0.28 });
   group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoInner), softEdgeMat));
 
   /* Layer 6 — Outer atmosphere sphere (deep space ambience) */
@@ -1922,9 +1922,9 @@
   group.add(new THREE.Mesh(new THREE.SphereGeometry(4.2, 24, 24), atmMat));
 
   /* ── Three orbital rings at varied angles — bright metallic gold ── */
-  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xFFD700, transparent: true, opacity: 0.82 });
-  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xF0C832, transparent: true, opacity: 0.55 });
-  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0xDAA520, transparent: true, opacity: 0.35 });
+  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xE6CE69, transparent: true, opacity: 0.82 });
+  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xE0C642, transparent: true, opacity: 0.55 });
+  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0xD4BF61, transparent: true, opacity: 0.35 });
 
   const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.018, 8, 120), ringMat1);
   ring1.rotation.x = Math.PI / 3.2;
@@ -1963,10 +1963,10 @@
   scene.add(particles);
 
   /* ── Five-light dramatic rig — brighter metallic gold ── */
-  const lGold   = new THREE.PointLight(0xFFD700, 22, 28); lGold.position.set( 5,  3,  7); scene.add(lGold);
-  const lViolet = new THREE.PointLight(0xDAA520, 16, 22); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
+  const lGold   = new THREE.PointLight(0xE6CE69, 22, 28); lGold.position.set( 5,  3,  7); scene.add(lGold);
+  const lViolet = new THREE.PointLight(0xD4BF61, 16, 22); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
   const lCyan   = new THREE.PointLight(0xFFFACD,  8, 18); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
-  const lRose   = new THREE.PointLight(0xF0C832,  7, 16); lRose.position.set(-3,  4,  4); scene.add(lRose);
+  const lRose   = new THREE.PointLight(0xE0C642,  7, 16); lRose.position.set(-3,  4,  4); scene.add(lRose);
   const lWarm   = new THREE.PointLight(0x3A3020,  5, 14); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
   scene.add(new THREE.AmbientLight(0x0F0D08, 10));
 
@@ -2074,7 +2074,7 @@
       atmMat.opacity = 0.0;
 
       /* Edge wireframes — bright crisp gold for HD detail */
-      goldEdgeMat.color.setHex(0xFFD700);
+      goldEdgeMat.color.setHex(0xE6CE69);
       goldEdgeMat.opacity = 1.0;
       softEdgeMat.color.setHex(0xBFD4F2);
       softEdgeMat.opacity = 0.40;
@@ -2099,9 +2099,9 @@
       atmMat.opacity = 0.09;
 
       /* Edge wireframes — original values */
-      goldEdgeMat.color.setHex(0xC4A47C);
+      goldEdgeMat.color.setHex(0xC9B585);
       goldEdgeMat.opacity = 0.92;
-      softEdgeMat.color.setHex(0xD8C3A5);
+      softEdgeMat.color.setHex(0xD6CAAC);
       softEdgeMat.opacity = 0.28;
     }
 
