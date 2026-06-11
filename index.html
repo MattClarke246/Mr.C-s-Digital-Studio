@@ -1082,13 +1082,26 @@
       pointer-events: none;
     }
     .pricing-from { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(0,0,0,0.5); margin-bottom: 8px; }
-    .pricing-amount { font-size: clamp(60px, 8vw, 96px); font-weight: 800; letter-spacing: -0.05em; color: #0a0800; text-shadow: 0 1px 0 rgba(255,255,255,0.45); line-height: 1; margin-bottom: 6px; }
+    .pricing-amount { font-size: clamp(36px, 5.5vw, 56px); font-weight: 800; letter-spacing: -0.03em; color: #0a0800; text-shadow: 0 1px 0 rgba(255,255,255,0.45); line-height: 1.1; margin-bottom: 6px; }
     .pricing-plan { font-size: 14px; font-weight: 600; color: rgba(0,0,0,0.58); letter-spacing: 0.02em; margin-bottom: 32px; }
     .pricing-divider { height: 1px; background: rgba(0,0,0,0.15); margin-bottom: 28px; }
     .pricing-list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 32px; }
     .pricing-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 500; color: rgba(0,0,0,0.78); line-height: 1.4; }
     .pricing-list li::before { content: ''; width: 5px; height: 5px; background: rgba(0,0,0,0.45); border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
     .pricing-scale { font-size: 13px; color: rgba(0,0,0,0.55); line-height: 1.65; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.12); }
+    .pricing-main .btn-dark {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: #0a0800; color: #FEFCE8; font-size: 14px; font-weight: 600;
+      letter-spacing: 0.02em; padding: 14px 32px; border-radius: var(--r-lg);
+      border: none; cursor: pointer; text-decoration: none;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+      margin-top: 8px;
+    }
+    .pricing-main .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+    }
     /* Right stack */
     .pricing-stack { display: flex; flex-direction: column; gap: 16px; }
     .pricing-add-card {
@@ -1637,15 +1650,15 @@
 <section id="pricing" aria-labelledby="pricing-heading">
   <div class="section-inner">
     <p class="t-caption reveal">Investment</p>
-    <h2 id="pricing-heading" class="t-display-xl pricing-headline reveal">Simple, transparent<br>pricing.</h2>
+    <h2 id="pricing-heading" class="t-display-xl pricing-headline reveal">Your website,<br>built to earn.</h2>
 
     <div class="pricing-grid reveal reveal-d1">
 
-      <!-- Featured card: landing page starting rate (gold metallic) -->
+      <!-- Featured card: value-focused (gold metallic) -->
       <div class="pricing-main">
-        <p class="pricing-from">Starting from</p>
-        <div class="pricing-amount">$1,000</div>
-        <p class="pricing-plan">Landing Page &nbsp;·&nbsp; Single Page Build</p>
+        <p class="pricing-from">Every project is</p>
+        <div class="pricing-amount">Custom-Quoted</div>
+        <p class="pricing-plan">Scoped &amp; priced after your free discovery call</p>
         <div class="pricing-divider"></div>
         <ul class="pricing-list">
           <li>Custom design built from scratch — no templates</li>
@@ -1653,31 +1666,31 @@
           <li>Fully mobile-responsive &amp; performance-optimised</li>
           <li>Delivered within 2–3 weeks</li>
           <li>Managed &amp; maintained exclusively by Mr.C</li>
+          <li>Fixed-price quote — no surprises, no hidden fees</li>
         </ul>
         <p class="pricing-scale">
-          Need more pages or a more complex build? Price scales with the number of pages and project scope. You'll receive a clear, fixed-price quote after your discovery call — no surprises.
+          From single landing pages to full multi-page business sites — every project is scoped to your goals and budget. You'll receive a clear, fixed-price proposal before any work begins.
         </p>
+        <a href="#booking" class="btn-dark">Get Your Free Quote →</a>
       </div>
 
-      <!-- Right stack: add-ons + client note -->
+      <!-- Right stack: included benefits + client note -->
       <div class="pricing-stack">
 
         <div class="pricing-add-card">
-          <p class="pricing-add-label">Monthly Maintenance</p>
+          <p class="pricing-add-label">Ongoing Maintenance</p>
           <div class="pricing-add-row">
-            <span class="pricing-add-amount">$50</span>
-            <span class="pricing-add-unit">/ month</span>
+            <span class="pricing-add-amount" style="font-size:28px;">Managed &amp; Protected</span>
           </div>
-          <p class="pricing-add-desc">Keeps your site secure, up-to-date, and performing at its best. Required on all active projects.</p>
+          <p class="pricing-add-desc">Mr.C keeps your site secure, up-to-date, and performing at its best — so you never have to worry about the technical side. Maintenance plan details are covered on your discovery call.</p>
         </div>
 
         <div class="pricing-add-card">
           <p class="pricing-add-label">Edits &amp; Updates</p>
           <div class="pricing-add-row">
-            <span class="pricing-add-amount">$50</span>
-            <span class="pricing-add-unit">/ hr &amp; up</span>
+            <span class="pricing-add-amount" style="font-size:28px;">Handled for You</span>
           </div>
-          <p class="pricing-add-desc">All changes are handled directly by Mr.C — no client editing access is provided. This keeps your site performing exactly as designed. Rate scales with the complexity of each request and is always scoped before work begins.</p>
+          <p class="pricing-add-desc">Need a change? All updates are handled directly by Mr.C — keeping your site performing exactly as designed. Rates are scoped and agreed before work begins, so you're always in control.</p>
         </div>
 
         <div class="pricing-client-note">
@@ -1724,7 +1737,7 @@
           <span>What happens after my site launches?</span>
           <div class="faq-icon" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="1" x2="5" y2="9"/><line x1="1" y1="5" x2="9" y2="5"/></svg></div>
         </button>
-        <div class="faq-answer" role="region"><div class="faq-answer-inner">Mr.C remains your point of contact after launch. Any future updates — new pages, copy changes, design tweaks — are handled at the standard <strong>$50/hr</strong> rate with no retainer required. Hosting is arranged separately and discussed during the discovery call based on your project's needs.</div></div>
+        <div class="faq-answer" role="region"><div class="faq-answer-inner">Mr.C remains your point of contact after launch. Any future updates — new pages, copy changes, design tweaks — are scoped and quoted before work begins, so you're always in control. No retainer required. Hosting is arranged separately and discussed during the discovery call based on your project's needs.</div></div>
       </div>
     </div>
   </div>
@@ -1772,13 +1785,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="budget">Budget range</label>
+              <label for="budget">Where are you at?</label>
               <select id="budget" name="budget" required>
                 <option value="" disabled selected>Select a range</option>
-                <option>$1,000 – $3,000</option>
-                <option>$3,000 – $7,500</option>
-                <option>$7,500 – $15,000</option>
-                <option>$15,000+</option>
+                <option>Just getting started</option>
+                <option>Ready to invest in growth</option>
+                <option>Scaling an existing business</option>
+                <option>Not sure yet — let's discuss</option>
               </select>
             </div>
           </div>
