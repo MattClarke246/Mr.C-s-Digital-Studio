@@ -31,10 +31,10 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-  <!-- Preload Critical Scripts -->
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" as="script">
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" as="script">
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" as="script">
+  <!-- Preload Critical Scripts with SRI Hashing -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" as="script" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" as="script" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" as="script" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous">
 
   <style>
     /* ── Design tokens ───────────────────────────────────────── */
@@ -63,22 +63,22 @@
 
     /* ── Light mode token overrides ───────────────────────────── */
     [data-theme="light"] {
-      --c-primary:       #1A1A1A;
+      --c-primary:       #111114;
       --c-on-primary:    #FFFFFF;
-      --c-gold:          #BCA54B;
-      --c-gold-light:    #D4BF61;
-      --c-gold-dim:      rgba(188,165,75,0.10);
-      --c-gold-border:   rgba(188,165,75,0.30);
-      --c-ink:           #1A1A1A;
-      --c-ink-muted:     #555555;
-      --c-canvas:        #FAF8F5;
+      --c-gold:          #8C6A20;
+      --c-gold-light:    #A58028;
+      --c-gold-dim:      rgba(140,106,32,0.09);
+      --c-gold-border:   rgba(140,106,32,0.26);
+      --c-ink:           #111114;
+      --c-ink-muted:     #504D48;
+      --c-canvas:        #F3EFE8;
       --c-surface-1:     #FFFFFF;
-      --c-surface-2:     #F0EDE8;
-      --c-hairline:      #E0DCD5;
-      --c-hairline-soft: #EBE7E1;
-      --c-amethyst:      #E8E4DF;
-      --c-rose:          #BCA54B;
-      --c-success:       #16a34a;
+      --c-surface-2:     #E8E2D8;
+      --c-hairline:      #DCD4C7;
+      --c-hairline-soft: #E8E2D7;
+      --c-amethyst:      #E4DED4;
+      --c-rose:          #8C6A20;
+      --c-success:       #15803d;
     }
 
     /* ── Light-mode component overrides ─────────────────────── */
@@ -88,47 +88,64 @@
     }
 
     [data-theme="light"] #main-nav {
-      background: rgba(250,248,245,0.82);
-      border-bottom-color: var(--c-hairline);
+      background: rgba(243,239,232,0.85);
+      border-bottom-color: rgba(140,106,32,0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    [data-theme="light"] .nav-logo {
+      padding: 4px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(140, 106, 32, 0.16);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
     [data-theme="light"] .nav-dashbar {
-      background: rgba(255,255,255,0.75);
-      border-color: rgba(0,0,0,0.08);
-      border-top-color: rgba(255,255,255,0.9);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.78);
+      border-color: rgba(140,106,32,0.14);
+      border-top-color: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
     }
     [data-theme="light"] .nav-dashbar a {
-      color: #555;
+      color: #504D48;
     }
     [data-theme="light"] .nav-dashbar a:hover {
-      color: #1A1A1A;
+      color: #111114;
       background: rgba(0,0,0,0.04);
     }
     [data-theme="light"] .nav-hamburger {
-      background: rgba(255,255,255,0.75);
-      border-color: rgba(0,0,0,0.08);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.78);
+      border-color: rgba(140,106,32,0.14);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     [data-theme="light"] .nav-hamburger span {
       background: var(--c-gold);
     }
 
     [data-theme="light"] .mobile-menu {
-      background: rgba(250,248,245,0.97);
+      background: rgba(243,239,232,0.98);
     }
     [data-theme="light"] .mobile-menu a {
-      color: #1A1A1A;
+      color: #111114;
     }
 
-    /* Hero: lighter vignette so text reads on light bg */
+    /* Hero: softer ambient warmth and vignette */
+    [data-theme="light"] #hero {
+      background:
+        radial-gradient(ellipse 70% 55% at 75% 40%, rgba(188, 165, 75, 0.08), transparent 70%),
+        radial-gradient(circle at 12% 25%, rgba(255, 255, 255, 0.75), transparent 60%),
+        var(--c-canvas);
+    }
     [data-theme="light"] #hero::after {
       background: linear-gradient(
         98deg,
-        var(--c-canvas)      0%,
-        rgba(250,248,245,0.92) 18%,
-        rgba(250,248,245,0.6) 38%,
-        rgba(250,248,245,0.15) 58%,
-        transparent            74%
+        var(--c-canvas)         0%,
+        rgba(243,239,232,0.92) 18%,
+        rgba(243,239,232,0.60) 38%,
+        rgba(243,239,232,0.15) 58%,
+        transparent             74%
       );
     }
     [data-theme="light"] .hero-headline {
@@ -171,7 +188,7 @@
     [data-theme="light"] .pricing-headline,
     [data-theme="light"] .faq-headline,
     [data-theme="light"] .booking-headline,
-    [data-theme="light"] .testimonials-headline,
+    [data-theme="light"] .standards-headline,
     [data-theme="light"] #projects-heading {
       color: #1A1A1A;
     }
@@ -224,20 +241,26 @@
       border-bottom-color: var(--c-gold);
     }
 
-    /* Testimonials */
-    [data-theme="light"] .testimonial-card {
-      border-left-color: var(--c-hairline);
-    }
-    [data-theme="light"] .testimonial-card:hover {
-      border-left-color: var(--c-gold);
-    }
-    [data-theme="light"] .testimonial-quote {
-      color: #333;
-    }
-    [data-theme="light"] .testimonial-name {
+    /* Studio Standards */
+    [data-theme="light"] .standards-headline {
       color: #1A1A1A;
     }
-    [data-theme="light"] .testimonial-author {
+    [data-theme="light"] .standard-card {
+      background: rgba(255, 255, 255, 0.75);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="light"] .standard-card:hover {
+      border-color: var(--c-gold);
+      box-shadow: 0 12px 28px rgba(188, 165, 75, 0.12);
+    }
+    [data-theme="light"] .standard-title {
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .standard-desc {
+      color: #555555;
+    }
+    [data-theme="light"] .standard-pill {
       border-top-color: var(--c-hairline);
     }
 
@@ -388,12 +411,11 @@
       opacity: 0.08 !important;
     }
 
-    /* Crystal canvas — swap dark bloom for luminous blue-gold glow */
+    /* Crystal canvas — subtle luxury drop shadow on light mode */
     [data-theme="light"] #hero-canvas {
       filter:
-        drop-shadow(0 0 40px rgba(37,99,235,0.18))
-        drop-shadow(0 0 80px rgba(209,183,96,0.10))
-        drop-shadow(0 0 140px rgba(37,99,235,0.06));
+        drop-shadow(0 24px 50px rgba(122, 91, 24, 0.10))
+        drop-shadow(0 8px 24px rgba(0, 0, 0, 0.05));
     }
 
     /* ── Theme toggle button ───────────────────────────────── */
@@ -664,6 +686,10 @@
       width: auto;
       display: block;
     }
+    .logo-light { display: none !important; }
+    .logo-dark  { display: block !important; }
+    [data-theme="light"] .logo-light { display: block !important; }
+    [data-theme="light"] .logo-dark  { display: none !important; }
 
     /* Right column — dashbar */
     .nav-right {
@@ -934,7 +960,7 @@
 
     /* ── Projects ────────────────────────────────────────────── */
     .projects-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; gap: 20px; }
-    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 24px; }
+    .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px 36px; }
     .project-card {
       background: transparent;
       border: none;
@@ -1018,26 +1044,73 @@
     .spotlight-card h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 8px; color: #0a0800; text-shadow: 0 1px 0 rgba(255,255,255,0.45); position: relative; z-index: 1; }
     .spotlight-card p  { font-size: 14px; color: rgba(0,0,0,0.72); line-height: 1.5; font-weight: 500; position: relative; z-index: 1; }
 
-    /* ── Testimonials ────────────────────────────────────────── */
-    .testimonials-headline { margin: 14px 0 64px; }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-    .testimonial-card {
-      background: transparent;
-      border: none;
-      border-left: 1px solid var(--c-hairline);
-      padding: 0 0 0 32px;
-      display: flex; flex-direction: column; gap: 24px;
-      transition: border-color 0.4s;
+    /* ── Studio Standards ────────────────────────────────────── */
+    .standards-headline { margin: 14px 0 64px; }
+    .standards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .standard-card {
+      background: rgba(18, 18, 18, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--c-hairline);
+      border-radius: var(--r-lg);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+      position: relative;
+      overflow: hidden;
     }
-    .testimonial-card:hover { border-color: var(--c-gold); }
-    .testimonial-stars { display: flex; gap: 3px; }
-    .testimonial-quote { font-size: 15px; color: var(--c-ink); line-height: 1.7; letter-spacing: -0.01em; flex: 1; }
-    .testimonial-quote::before { content: '\201C'; color: var(--c-gold); font-size: 24px; line-height: 1; display: block; margin-bottom: 6px; }
-    .testimonial-author { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--c-hairline-soft); }
-    .testimonial-avatar { width: 44px; height: 44px; border-radius: var(--r-full); border: 1.5px solid var(--c-gold-border); overflow: hidden; flex-shrink: 0; background: var(--c-gold-dim); }
-    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .testimonial-name { font-size: 13px; font-weight: 600; color: var(--c-ink); }
-    .testimonial-role { font-size: 12px; color: var(--c-ink-muted); }
+    .standard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(188,165,75,0.5), transparent);
+    }
+    .standard-card:hover {
+      border-color: var(--c-gold-border);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+    }
+    .standard-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--r-md);
+      background: var(--c-gold-dim);
+      border: 1px solid var(--c-gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-gold);
+      margin-bottom: 4px;
+    }
+    .standard-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--c-ink);
+      letter-spacing: -0.02em;
+    }
+    .standard-desc {
+      font-size: 15px;
+      color: var(--c-ink-muted);
+      line-height: 1.65;
+    }
+    .standard-pill {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--c-hairline-soft);
+    }
 
     /* ── FAQ ─────────────────────────────────────────────────── */
     .faq-headline { margin: 14px 0 64px; }
@@ -1166,6 +1239,9 @@
     .form-success-icon { font-size: 32px; margin-bottom: 12px; color: var(--c-gold); }
     .form-success h3 { font-size: 20px; font-weight: 500; letter-spacing: -0.03em; margin-bottom: 8px; }
     .form-success p  { font-size: 15px; color: var(--c-ink-muted); line-height: 1.55; }
+    .form-legal-notice { font-size: 13px; color: var(--c-ink-muted); line-height: 1.5; margin-top: 14px; text-align: center; }
+    .form-legal-notice a { color: var(--c-gold); text-decoration: underline; }
+    .form-error { display: none; padding: 12px 16px; border-radius: var(--r-md); background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); color: #ef4444; font-size: 14px; margin-bottom: 16px; text-align: center; line-height: 1.45; }
 
     /* ── Footer ──────────────────────────────────────────────── */
     footer[role="contentinfo"] {
@@ -1324,7 +1400,7 @@
       .pricing-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .card-grid { grid-template-columns: 1fr 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
+      .standards-grid { grid-template-columns: 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .booking-grid { grid-template-columns: 1fr; gap: 48px; }
       .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 36px; }
@@ -1436,7 +1512,8 @@
 
   <!-- Center column: logo -->
   <a href="#" class="nav-logo" aria-label="Mr.C's Digital Studio — home">
-    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" width="162" height="58" fetchpriority="high" decoding="async"/>
+    <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" class="logo-dark" width="162" height="58" fetchpriority="high" decoding="async"/>
+    <img src="assets/logos/logo-1-gilded-circuit-light.svg" alt="MR.C Digital Studio" class="logo-light" width="162" height="58" fetchpriority="high" decoding="async"/>
   </a>
 
   <!-- Right column: dashbar with inline links -->
@@ -1503,7 +1580,7 @@
         <svg width="14" height="14" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
       </div>
-      <span class="trust-rating"><strong>4.9</strong> · 40+ happy clients</span>
+      <span class="trust-rating"><strong>Bespoke Craft</strong> · 100% Custom Code</span>
       <div class="trust-sep" aria-hidden="true"></div>
       <div class="trust-chips" aria-label="Industries served">
         <span class="trust-chip">Retail</span>
@@ -1536,16 +1613,16 @@
         <p class="t-body">From strategy and design to development and launch — Mr.C handles it all. No templates. No shortcuts. Work built to be proud of.</p>
         <div class="stat-row">
           <div class="stat">
-            <span class="stat-number" data-target="40" data-suffix="+">40+</span>
-            <span class="stat-label">Projects delivered</span>
-          </div>
-          <div class="stat">
             <span class="stat-number" data-target="100" data-suffix="%">100%</span>
-            <span class="stat-label">Client satisfaction</span>
+            <span class="stat-label">Custom Architecture</span>
           </div>
           <div class="stat">
-            <span class="stat-number" data-target="3" data-suffix="×">3×</span>
-            <span class="stat-label">Avg. conversion lift</span>
+            <span class="stat-number" data-target="95" data-suffix="+">95+</span>
+            <span class="stat-label">Lighthouse Score</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="3" data-suffix=" Wk">&lt;3 Wk</span>
+            <span class="stat-label">Delivery Window</span>
           </div>
         </div>
       </div>
@@ -1616,12 +1693,7 @@
         <a href="https://pantrybelt.com" target="_blank" rel="noopener noreferrer" class="card-visit">Visit site →</a>
       </article>
 
-      <div class="spotlight-card spotlight-violet reveal reveal-d1" aria-hidden="true">
-        <h3>Design that<br>sells itself.</h3>
-        <p>The site does the talking so you don't have to.</p>
-      </div>
-
-      <article class="project-card reveal reveal-d2">
+      <article class="project-card reveal reveal-d1">
         <div class="card-thumb">
           <img src="assets/cacao-online.webp" alt="CACAO Online landing page screenshot" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
@@ -1631,9 +1703,9 @@
         <a href="https://www.cacaoonline.org" target="_blank" rel="noopener noreferrer" class="card-visit">Visit site →</a>
       </article>
 
-      <article class="project-card reveal">
+      <article class="project-card reveal reveal-d2">
         <div class="card-thumb">
-          <img src="assets/xo-club-header.webp" alt="XO Club E-Commerce Website Header" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+          <img src="assets/xo-club-header.webp" alt="XO Club E-Commerce Website Header" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
         <span class="card-tag">E-Commerce Website</span>
         <p class="card-title">XO Club</p>
@@ -1641,12 +1713,7 @@
         <a href="https://xoclub.store" target="_blank" rel="noopener noreferrer" class="card-visit">Visit store →</a>
       </article>
 
-      <div class="spotlight-card spotlight-rose reveal reveal-d1" aria-hidden="true">
-        <h3>Performance<br>built in.</h3>
-        <p>90+ Lighthouse scores, lightning-fast loads, and mobile-first from day one — every time.</p>
-      </div>
-
-      <article class="project-card reveal reveal-d2">
+      <article class="project-card reveal reveal-d3">
         <div class="card-thumb">
           <img src="assets/Mr.C-digital-header-opt.webp" alt="Mr.C's Digital Studio landing page" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
@@ -1662,57 +1729,48 @@
 
 <hr class="divider">
 
-<!-- ═══════════════════════════ TESTIMONIALS ════════════════════════════════ -->
-<section id="testimonials" aria-labelledby="testimonials-heading">
+<!-- ═══════════════════════════ STUDIO STANDARDS ═════════════════════════════ -->
+<section id="standards" aria-labelledby="standards-heading">
   <div class="section-inner">
-    <p class="t-caption reveal">What clients say</p>
-    <h2 id="testimonials-heading" class="t-display-xl testimonials-headline">Don't take<br>Mr.C's word for it.</h2>
-    <div class="testimonials-grid">
+    <p class="t-caption reveal">Studio Standards</p>
+    <h2 id="standards-heading" class="t-display-xl standards-headline reveal reveal-d1">Crafted without<br>compromise.</h2>
+    <div class="standards-grid reveal reveal-d2">
 
-      <blockquote class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <div class="standard-card">
+        <div class="standard-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <p class="testimonial-quote">Working with Mr.C completely transformed our online presence. Enquiries tripled in the first month after launch — I only wish we'd done it sooner.</p>
-        <footer class="testimonial-author">
-          <div class="testimonial-avatar"><img src="assets/avatars/avatar-1.jpg" alt="Sarah M." loading="lazy" decoding="async"></div>
-          <p class="testimonial-name">Sarah M.</p>
-        </footer>
-      </blockquote>
+        <h3 class="standard-title">100% Bespoke Architecture</h3>
+        <p class="standard-desc">Zero cookie-cutter themes, bloated page-builders, or generic templates. Every line of markup and CSS is custom-engineered from the ground up for maximum speed, accessibility, and visual precision.</p>
+        <span class="standard-pill">Zero Bloat Guarantee</span>
+      </div>
 
-      <blockquote class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <div class="standard-card">
+        <div class="standard-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
         </div>
-        <p class="testimonial-quote">Finally, a studio that genuinely understands conversion. Our new site paid for itself within six weeks. The ROI was clear from week one — I'd recommend Mr.C without hesitation.</p>
-        <footer class="testimonial-author">
-          <div class="testimonial-avatar"><img src="assets/avatars/avatar-2.jpg" alt="James T." loading="lazy" decoding="async"></div>
-          <p class="testimonial-name">James T.</p>
-        </footer>
-      </blockquote>
+        <h3 class="standard-title">90+ Lighthouse Performance</h3>
+        <p class="standard-desc">Speed directly influences search rank and bounce rates. Mr.C delivers sub-second load times, optimized next-gen assets, and seamless mobile responsiveness across all viewport sizes.</p>
+        <span class="standard-pill">Speed-First Engineering</span>
+      </div>
 
-      <blockquote class="testimonial-card">
-        <div class="testimonial-stars" aria-label="5 stars">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="#BCA54B" aria-hidden="true"><path d="M7 1l1.55 3.14L12 4.69l-2.5 2.44.59 3.44L7 8.77l-3.09 1.8.59-3.44L2 4.69l3.45-.55z"/></svg>
+      <div class="standard-card">
+        <div class="standard-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
         </div>
-        <p class="testimonial-quote">The process was smooth from day one. They delivered in under three weeks, stayed ahead of every deadline, and the results speak for themselves. Genuinely brilliant.</p>
-        <footer class="testimonial-author">
-          <div class="testimonial-avatar"><img src="assets/avatars/avatar-3.jpg" alt="Priya K." loading="lazy" decoding="async"></div>
-          <p class="testimonial-name">Priya K.</p>
-        </footer>
-      </blockquote>
+        <h3 class="standard-title">Conversion-First Visuals</h3>
+        <p class="standard-desc">A breathtaking website means nothing if it doesn't earn. Layouts are shaped around customer psychology, high-impact storytelling, frictionless conversion funnels, and crystal-clear value propositions.</p>
+        <span class="standard-pill">Measurable ROI</span>
+      </div>
+
+      <div class="standard-card">
+        <div class="standard-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 class="standard-title">Direct Founder Collaboration</h3>
+        <p class="standard-desc">You partner directly with Mr.C — from the initial 30-minute discovery call to design iterations, development, launch, and ongoing care. No account reps, no junior interns, zero game of telephone.</p>
+        <span class="standard-pill">Direct Accountability</span>
+      </div>
 
     </div>
   </div>
@@ -1836,20 +1894,28 @@
       </div>
       <div class="reveal reveal-d2">
         <form id="booking-form" novalidate aria-label="Book a discovery call">
+          <!-- Security Honeypot Anti-Spam Field (hidden from genuine users) -->
+          <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+            <label for="form-gotcha">Do not fill this field if human</label>
+            <input type="text" id="form-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div id="form-error" class="form-error" role="alert" aria-live="assertive" style="display:none;"></div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="name">Full name</label>
-              <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name">
+              <input type="text" id="name" name="name" placeholder="Jane Smith" required autocomplete="name" aria-required="true">
             </div>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" id="email" name="email" placeholder="jane@company.com" required autocomplete="email">
+              <input type="email" id="email" name="email" placeholder="jane@company.com" required autocomplete="email" aria-required="true">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="project-type">Project type</label>
-              <select id="project-type" name="project-type" required>
+              <select id="project-type" name="project-type" required aria-required="true">
                 <option value="" disabled selected>Select a type</option>
                 <option>I need a landing page</option>
                 <option>I need an e-commerce store</option>
@@ -1860,7 +1926,7 @@
             </div>
             <div class="form-group">
               <label for="budget">Where are you at?</label>
-              <select id="budget" name="budget" required>
+              <select id="budget" name="budget" required aria-required="true">
                 <option value="" disabled selected>Select a range</option>
                 <option>Just getting started</option>
                 <option>Ready to invest in growth</option>
@@ -1875,6 +1941,9 @@
           </div>
           <div class="form-submit">
             <button type="submit" class="btn btn-gold" disabled>Book a Free Discovery Call →</button>
+            <p class="form-legal-notice">
+              By submitting, you agree to our <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. We never share or sell your information.
+            </p>
           </div>
         </form>
         <div class="form-success" id="form-success" role="alert" aria-live="polite">
@@ -1899,7 +1968,8 @@
     <!-- Left: logo + tagline -->
     <div class="footer-brand">
       <a href="#" aria-label="Mr.C's Digital Studio — home">
-        <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" class="footer-logo-img" width="213" height="76" loading="lazy" decoding="async"/>
+        <img src="assets/logos/logo-1-gilded-circuit.svg" alt="MR.C Digital Studio" class="footer-logo-img logo-dark" width="213" height="76" loading="lazy" decoding="async"/>
+        <img src="assets/logos/logo-1-gilded-circuit-light.svg" alt="MR.C Digital Studio" class="footer-logo-img logo-light" width="213" height="76" loading="lazy" decoding="async"/>
       </a>
       <p class="footer-tagline">Your website should be your best salesperson.</p>
     </div>
@@ -1935,146 +2005,232 @@
 </footer>
 
 <!-- ═══════════════════════════════════ SCRIPTS ══════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
 <script>
 /* ══════════════════════════════════════════════════════════
-   THREE.JS — ENHANCED HERO CRYSTAL
-   Respect prefers-reduced-motion (Apple HIG)
+   THREE.JS — LUXURY DIGITAL NETWORK GLOBE
+   - Bespoke obsidian & warm frosted champagne aesthetics
+   - Geodesic network grid with pulsing connection nodes & arcs
+   - Celestial precision orbital rings
+   - Responsive layout: right-column desktop, non-intrusive ambient mobile
+   - Touch drag interactivity with inertia damping for mobile
+   - Respects prefers-reduced-motion (Apple HIG)
 ══════════════════════════════════════════════════════════ */
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
   const scene  = new THREE.Scene();
   const W = canvas.clientWidth  || window.innerWidth;
   const H = canvas.clientHeight || window.innerHeight;
 
-  const camera = new THREE.PerspectiveCamera(48, W / H, 0.1, 100);
-  camera.position.set(0, 0, 10);
+  const camera = new THREE.PerspectiveCamera(46, W / H, 0.1, 100);
+  camera.position.set(0, 0, 10.5);
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(W, H, false); /* false = don't write inline px styles on canvas */
+  renderer.setSize(W, H, false);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.7;
+  renderer.toneMappingExposure = 1.6;
 
-  /* ── Crystal group — positioned to right column on desktop, centered on mobile ── */
-  const isMobile = window.innerWidth < 960;
+  /* ── Responsive positioning & scaling ── */
+  let isMobile = window.innerWidth < 960;
   const group = new THREE.Group();
-  const baseX = isMobile ? 0 : 3.2;
-  const baseY = isMobile ? -2.2 : 0;
-  const baseScale = isMobile ? 0.75 : 1.0;
   
-  group.position.set(baseX, baseY, 0);
+  function getResponsiveLayout() {
+    isMobile = window.innerWidth < 960;
+    return {
+      x: isMobile ? 0 : 3.25,
+      y: isMobile ? -0.4 : 0,
+      scale: isMobile ? 0.65 : 1.0,
+      canvasOpacity: isMobile ? 0.35 : 1.0
+    };
+  }
+
+  let layout = getResponsiveLayout();
+  group.position.set(layout.x, layout.y, 0);
+  group.scale.setScalar(layout.scale);
+  canvas.style.opacity = layout.canvasOpacity.toString();
   scene.add(group);
 
-  /* Geometry set — significantly larger than previous version */
-  const geoCore  = new THREE.IcosahedronGeometry(2.10, 1);
-  const geoMid   = new THREE.IcosahedronGeometry(2.45, 1);
-  const geoOuter = new THREE.IcosahedronGeometry(2.65, 1);
-  const geoEdge  = new THREE.IcosahedronGeometry(2.70, 1);
-  const geoInner = new THREE.IcosahedronGeometry(2.18, 1);
-
-  /* Layer 1 — Deep Obsidian core */
+  /* ── 1. CORE SPHERE (Obsidian in dark mode / Frosted champagne in light mode) ── */
+  const sphereGeo = new THREE.SphereGeometry(2.32, 48, 48);
   const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x0A0A0A, emissive: 0x050505,
-    emissiveIntensity: 1.4,
-    metalness: 0.9, roughness: 0.1,
+    color: 0x080808,
+    emissive: 0x141008,
+    emissiveIntensity: 0.6,
+    metalness: 0.92,
+    roughness: 0.12,
   });
-  const coreMesh = new THREE.Mesh(geoCore, coreMat);
+  const coreMesh = new THREE.Mesh(sphereGeo, coreMat);
   group.add(coreMesh);
 
-  /* Layer 2 — Smoked glass inner shell (back-face for interior glow) */
-  const midMat = new THREE.MeshStandardMaterial({
-    color: 0x1A1A1A, emissive: 0x0F0F0F, emissiveIntensity: 0.7,
-    metalness: 0.88, roughness: 0.04,
-    transparent: true, opacity: 0.62, side: THREE.BackSide,
+  /* ── 2. INNER REFRACTIVE SHELL (Adds luxury depth) ── */
+  const innerMat = new THREE.MeshStandardMaterial({
+    color: 0x181818,
+    emissive: 0x0a0804,
+    emissiveIntensity: 0.5,
+    metalness: 0.85,
+    roughness: 0.08,
+    transparent: true,
+    opacity: 0.5,
+    side: THREE.BackSide,
   });
-  group.add(new THREE.Mesh(geoMid, midMat));
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(2.36, 32, 32), innerMat));
 
-  /* Layer 3 — Outer translucent shell (light refraction) */
-  const outerMat = new THREE.MeshStandardMaterial({
-    color: 0x2A2A2A, metalness: 0.72, roughness: 0.08,
-    transparent: true, opacity: 0.18,
+  /* ── 3. GEODESIC DIGITAL NETWORK GRID ── */
+  const gridGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(2.39, 2));
+  const goldEdgeMat = new THREE.LineBasicMaterial({
+    color: 0xD4BF61,
+    transparent: true,
+    opacity: 0.45,
+    depthWrite: false,
   });
-  group.add(new THREE.Mesh(geoOuter, outerMat));
+  const gridMesh = new THREE.LineSegments(gridGeo, goldEdgeMat);
+  group.add(gridMesh);
 
-  /* Layer 4 — Gold edge lines: primary luxury signature */
-  const goldEdgeMat = new THREE.LineBasicMaterial({ color: 0xC9B585, transparent: true, opacity: 0.92 });
-  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoEdge), goldEdgeMat));
-
-  /* Layer 5 — Inner soft-gold edge for depth */
-  const softEdgeMat = new THREE.LineBasicMaterial({ color: 0xD6CAAC, transparent: true, opacity: 0.28 });
-  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geoInner), softEdgeMat));
-
-  /* Layer 6 — Outer atmosphere sphere (deep space ambience) */
-  const atmMat = new THREE.MeshBasicMaterial({
-    color: 0x050505, transparent: true, opacity: 0.09, side: THREE.BackSide,
+  /* Subtly offset fine latitude rings for globe signature */
+  const latRingMat = new THREE.LineBasicMaterial({ color: 0xE6CE69, transparent: true, opacity: 0.35, depthWrite: false });
+  const latRingsGroup = new THREE.Group();
+  [-1.4, -0.7, 0, 0.7, 1.4].forEach(yPos => {
+    const r = Math.sqrt(Math.max(0.1, 2.39 * 2.39 - yPos * yPos));
+    const ringGeo = new THREE.BufferGeometry();
+    const pts = [];
+    const segs = 64;
+    for (let i = 0; i <= segs; i++) {
+      const th = (i / segs) * Math.PI * 2;
+      pts.push(Math.cos(th) * r, yPos, Math.sin(th) * r);
+    }
+    ringGeo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+    latRingsGroup.add(new THREE.Line(ringGeo, latRingMat));
   });
-  group.add(new THREE.Mesh(new THREE.SphereGeometry(4.2, 24, 24), atmMat));
+  group.add(latRingsGroup);
 
-  /* ── Three orbital rings at varied angles — bright metallic gold ── */
-  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xE6CE69, transparent: true, opacity: 0.82 });
-  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xE0C642, transparent: true, opacity: 0.55 });
-  const ringMat3 = new THREE.MeshBasicMaterial({ color: 0xD4BF61, transparent: true, opacity: 0.35 });
+  /* ── 4. ILLUMINATED NETWORK NODES (Global digital connection hubs) ── */
+  const nodeCount = 28;
+  const nodeGeo = new THREE.SphereGeometry(0.048, 12, 12);
+  const nodeMat = new THREE.MeshBasicMaterial({ color: 0xF5E6B3 });
+  const nodesGroup = new THREE.Group();
+  const nodeCoords = [];
 
-  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.018, 8, 120), ringMat1);
-  ring1.rotation.x = Math.PI / 3.2;
+  const goldenRatio = (1 + Math.sqrt(5)) / 2;
+  for (let i = 0; i < nodeCount; i++) {
+    const theta = 2 * Math.PI * i / goldenRatio;
+    const phi = Math.acos(1 - 2 * (i + 0.5) / nodeCount);
+    const r = 2.41;
+    const x = r * Math.sin(phi) * Math.cos(theta);
+    const y = r * Math.cos(phi);
+    const z = r * Math.sin(phi) * Math.sin(theta);
+    nodeCoords.push(new THREE.Vector3(x, y, z));
+
+    const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
+    nodeMesh.position.set(x, y, z);
+    nodesGroup.add(nodeMesh);
+  }
+  group.add(nodesGroup);
+
+  /* ── 5. GLOWING CONNECTION ARCS (Connecting nodes across the sphere) ── */
+  const arcMat = new THREE.LineBasicMaterial({ color: 0xF3E5AB, transparent: true, opacity: 0.75, depthWrite: false });
+  const arcsGroup = new THREE.Group();
+  const arcPairs = [
+    [0, 5], [5, 12], [12, 18], [2, 9], [9, 21], [3, 14], [14, 25], [7, 16], [16, 27]
+  ];
+
+  arcPairs.forEach(([i1, i2]) => {
+    if (!nodeCoords[i1] || !nodeCoords[i2]) return;
+    const v1 = nodeCoords[i1];
+    const v2 = nodeCoords[i2];
+    const mid = new THREE.Vector3().addVectors(v1, v2).multiplyScalar(0.5);
+    const arcHeight = 2.75;
+    mid.normalize().multiplyScalar(arcHeight);
+
+    const curve = new THREE.QuadraticBezierCurve3(v1, mid, v2);
+    const pts = curve.getPoints(24);
+    const arcGeo = new THREE.BufferGeometry().setFromPoints(pts);
+    arcsGroup.add(new THREE.Line(arcGeo, arcMat));
+  });
+  group.add(arcsGroup);
+
+  /* ── 6. DUAL CELESTIAL ORBITAL RINGS ── */
+  const ringMat1 = new THREE.MeshBasicMaterial({ color: 0xE6CE69, transparent: true, opacity: 0.85 });
+  const ringMat2 = new THREE.MeshBasicMaterial({ color: 0xD4BF61, transparent: true, opacity: 0.45 });
+
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.35, 0.015, 8, 120), ringMat1);
+  ring1.rotation.x = Math.PI / 3.4;
   group.add(ring1);
 
-  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.9, 0.011, 8, 100), ringMat2);
-  ring2.rotation.x = -Math.PI / 3.8;
-  ring2.rotation.y =  Math.PI / 4;
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.75, 0.009, 8, 120), ringMat2);
+  ring2.rotation.x = -Math.PI / 4.2;
+  ring2.rotation.y = Math.PI / 5;
   group.add(ring2);
 
-  const ring3 = new THREE.Mesh(new THREE.TorusGeometry(4.4, 0.007, 8, 100), ringMat3);
-  ring3.rotation.x = Math.PI / 2; /* equatorial */
-  group.add(ring3);
-
-  /* ── Particles — spherically distributed around crystal ── */
-  const pCount = window.innerWidth < 768 ? 90 : 220;
+  /* ── 7. AMBIENT PARTICLES (Stardust around globe) ── */
+  const pCount = window.innerWidth < 768 ? 75 : 180;
   const pPos   = new Float32Array(pCount * 3);
   const pCol   = new Float32Array(pCount * 3);
   for (let i = 0; i < pCount; i++) {
-    /* Distribute on a shell between r=2.8 and r=8 */
-    const r     = 2.8 + Math.random() * 5.2;
+    const r     = 2.7 + Math.random() * 4.8;
     const theta = Math.random() * Math.PI * 2;
     const phi   = Math.acos(2 * Math.random() - 1);
     pPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
     pPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
     pPos[i*3+2] = r * Math.cos(phi);
-    const isGold = Math.random() > 0.42;
-    if (isGold) { pCol[i*3]=0.77; pCol[i*3+1]=0.64; pCol[i*3+2]=0.49; } /* Champagne */
-    else        { pCol[i*3]=0.85; pCol[i*3+1]=0.85; pCol[i*3+2]=0.85; } /* Silver/White */
+    const isGold = Math.random() > 0.35;
+    if (isGold) { pCol[i*3]=0.82; pCol[i*3+1]=0.72; pCol[i*3+2]=0.42; }
+    else        { pCol[i*3]=0.92; pCol[i*3+1]=0.90; pCol[i*3+2]=0.85; }
   }
   const pGeo = new THREE.BufferGeometry();
   pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
   pGeo.setAttribute('color',    new THREE.BufferAttribute(pCol, 3));
-  const pMat = new THREE.PointsMaterial({ size: 0.065, vertexColors: true, transparent: true, opacity: 0.78, sizeAttenuation: true });
+  const pMat = new THREE.PointsMaterial({ size: 0.065, vertexColors: true, transparent: true, opacity: 0.75, sizeAttenuation: true });
   const particles = new THREE.Points(pGeo, pMat);
   scene.add(particles);
 
-  /* ── Five-light dramatic rig — brighter metallic gold ── */
-  const lGold   = new THREE.PointLight(0xE6CE69, 22, 28); lGold.position.set( 5,  3,  7); scene.add(lGold);
-  const lViolet = new THREE.PointLight(0xD4BF61, 16, 22); lViolet.position.set(-6, -2,  5); scene.add(lViolet);
-  const lCyan   = new THREE.PointLight(0xFFFACD,  8, 18); lCyan.position.set( 2,  6, -5); scene.add(lCyan);
-  const lRose   = new THREE.PointLight(0xE0C642,  7, 16); lRose.position.set(-3,  4,  4); scene.add(lRose);
-  const lWarm   = new THREE.PointLight(0x3A3020,  5, 14); lWarm.position.set( 0, -5,  3); scene.add(lWarm);
-  scene.add(new THREE.AmbientLight(0x0F0D08, 10));
+  /* ── 8. DRAMATIC LIGHTING RIG ── */
+  const lGold   = new THREE.PointLight(0xF5E6B3, 20, 28); lGold.position.set(5, 4, 7); scene.add(lGold);
+  const lAmber  = new THREE.PointLight(0xD4BF61, 14, 22); lAmber.position.set(-6, -3, 5); scene.add(lAmber);
+  const lRim    = new THREE.PointLight(0xFFFACD,  8, 18); lRim.position.set(2, 6, -5); scene.add(lRim);
+  scene.add(new THREE.AmbientLight(0x16130D, 8));
 
-  /* ── State ── */
+  /* ── 9. INTERACTION: DESKTOP MOUSE + MOBILE TOUCH DRAG ── */
   let mX = 0, mY = 0, tRX = 0, tRY = 0, scrollProg = 0;
+  
   document.addEventListener('mousemove', e => {
     mX = (e.clientX / window.innerWidth  - 0.5) * 2;
     mY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
+
+  // Mobile Touch Drag Tracking with smooth physics
+  let touchStartX = 0, touchStartY = 0, isTouching = false;
+  window.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      isTouching = true;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', e => {
+    if (isTouching && e.touches.length === 1) {
+      const dx = (e.touches[0].clientX - touchStartX) / window.innerWidth;
+      const dy = (e.touches[0].clientY - touchStartY) / window.innerHeight;
+      tRY += dx * 2.2;
+      tRX -= dy * 1.5;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => { isTouching = false; }, { passive: true });
+
   window.addEventListener('scroll', () => {
     scrollProg = window.scrollY / window.innerHeight;
   }, { passive: true });
-  window.addEventListener('resize', () => {
-    /* Read from the hero section — canvas CSS may have been overridden */
+
+  function handleResize() {
     const hero = canvas.parentElement;
     const w = hero.clientWidth  || window.innerWidth;
     const h = hero.clientHeight || window.innerHeight;
@@ -2082,136 +2238,186 @@
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(w, h, false);
-  });
 
+    const l = getResponsiveLayout();
+    layout = l;
+    group.position.x = l.x;
+    group.position.y = l.y;
+    group.scale.setScalar(l.scale);
+    canvas.style.opacity = l.canvasOpacity.toString();
+  }
+  window.addEventListener('resize', handleResize);
+
+  /* ── 10. ANIMATION LOOP ── */
   const clock = new THREE.Clock();
-  let   frame = 0;
+  let frame = 0;
 
   (function animate() {
     requestAnimationFrame(animate);
     frame++;
     const t = clock.getElapsedTime();
 
-    /* Smooth mouse tracking */
-    tRY += (mX * 0.65 - tRY) * 0.038;
-    tRX += (-mY * 0.38 - tRX) * 0.038;
+    // Damped mouse/touch tracking
+    tRY += (mX * 0.55 - tRY) * 0.04;
+    tRX += (-mY * 0.35 - tRX) * 0.04;
 
-    /* Crystal rotation */
-    group.rotation.y = t * 0.11 + tRY;
-    group.rotation.x = Math.sin(t * 0.15) * 0.14 + tRX;
-    group.rotation.z = t * 0.032;
+    // Continuous majestic globe rotation
+    group.rotation.y = t * 0.12 + tRY;
+    group.rotation.x = Math.sin(t * 0.14) * 0.10 + tRX;
+    group.rotation.z = Math.sin(t * 0.08) * 0.04;
 
-    /* Floating */
-    group.position.y = baseY + Math.sin(t * 0.42) * 0.24;
+    // Gentle floating hover
+    group.position.y = layout.y + Math.sin(t * 0.45) * 0.18;
 
-    /* Pulsing emissive — luxury "heartbeat" */
-    coreMat.emissiveIntensity = 1.1 + Math.sin(t * 1.9) * 0.6;
-
-    /* Scroll: retreat crystal as user scrolls past hero */
-    const sp = Math.min(scrollProg, 1);
-    group.position.z    = -sp * 5.5;
-    group.scale.setScalar(Math.max(0.05, baseScale - sp * 0.68));
-    canvas.style.opacity = Math.max(0, 1 - sp * 1.6).toString();
-
-    /* Ring rotations */
-    ring1.rotation.z = t * 0.10;
-    ring2.rotation.z = -t * 0.075;
-    ring3.rotation.y = t * 0.045;
-
-    /* Orbiting lights (every other frame for perf) */
-    if (frame % 2 === 0) {
-      lGold.position.x    =  Math.sin(t * 0.36) * 7;
-      lGold.position.y    =  Math.cos(t * 0.27) * 5;
-      lViolet.position.x  =  Math.cos(t * 0.46) * -7;
-      lViolet.position.y  =  Math.sin(t * 0.31) * 4;
-      lCyan.position.x    =  Math.sin(t * 0.52 + 2) * 5;
+    // Subtle node & core glow heartbeat — calibrated for light/dark modes
+    const isLightNow = document.documentElement.getAttribute('data-theme') === 'light';
+    const pulse = isLightNow ? (0.08 + Math.sin(t * 2.2) * 0.03) : (0.55 + Math.sin(t * 2.2) * 0.25);
+    coreMat.emissiveIntensity = pulse;
+    if (isLightNow) {
+      // Striking rich amber-bronze node pulse in light mode (Apple HIG high-contrast)
+      const g = 0.30 + Math.sin(t * 2.5) * 0.04;
+      nodeMat.color.setRGB(0.48 + Math.sin(t * 2.5) * 0.06, g, 0.09);
+    } else {
+      nodeMat.color.setRGB(0.96 + Math.sin(t * 3) * 0.04, 0.90 + Math.sin(t * 3) * 0.05, 0.70);
     }
 
-    /* Particle drift */
-    particles.rotation.y = t * 0.022;
-    particles.rotation.x = t * 0.009;
+    // Scroll retreat past hero
+    const sp = Math.min(scrollProg, 1);
+    group.position.z = -sp * 5.0;
+    const scaleFactor = Math.max(0.05, layout.scale - sp * 0.65);
+    group.scale.setScalar(scaleFactor);
+    canvas.style.opacity = (Math.max(0, 1 - sp * 1.5) * layout.canvasOpacity).toString();
+
+    // Ring rotations
+    ring1.rotation.z = t * 0.08;
+    ring2.rotation.z = -t * 0.06;
+
+    // Orbiting key lights
+    if (frame % 2 === 0) {
+      lGold.position.x  = Math.sin(t * 0.35) * 7;
+      lGold.position.y  = Math.cos(t * 0.28) * 5;
+      lAmber.position.x = Math.cos(t * 0.42) * -7;
+      lAmber.position.y = Math.sin(t * 0.30) * 4;
+    }
+
+    // Particle field slow drift
+    particles.rotation.y = t * 0.02;
+    particles.rotation.x = t * 0.008;
 
     renderer.render(scene, camera);
   })();
 
-  /* ── Theme-aware crystal materials ── */
-  function updateCrystalTheme() {
+  /* ── 11. LUXURY THEME SYNCHRONIZATION ── */
+  function updateGlobeTheme() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
     if (isLight) {
-      /*
-       * LIGHT MODE — Royal Sapphire
-       * Think: polished blue diamond under gallery lighting.
-       * Deep base + vivid electric-blue emissive = luminous depth.
-       * High metalness + near-zero roughness = mirror-sharp facets.
+      /* LIGHT MODE — Translucent Frosted Alabaster Crystal & Burnished Antique Bronze
+       * Apple HIG Color Theory: High-contrast, striking luxury palette on #FAF8F5.
+       * Eliminates glaring neon yellows and flat black voids.
+       * Features a translucent frosted champagne-quartz crystal sphere with deep
+       * burnished antique gold grid lines (contrast > 5.5:1), rich amber-bronze connection arcs,
+       * and dual-tone orbital rings (imperial bronze + warm smoked slate).
        */
+      coreMat.color.setHex(0xF3EEE5);
+      coreMat.emissive.setHex(0x282015);
+      coreMat.emissiveIntensity = 0.08;
+      coreMat.metalness = 0.35;
+      coreMat.roughness = 0.16;
+      coreMat.transparent = true;
+      coreMat.opacity = 0.36;
 
-      /* Core — near-black navy base, electric cobalt inner fire */
-      coreMat.color.setHex(0x071428);
-      coreMat.emissive.setHex(0x2563EB);
-      coreMat.emissiveIntensity = 1.8;
-      coreMat.metalness = 0.97;
-      coreMat.roughness = 0.03;
+      innerMat.color.setHex(0xE5DDD0);
+      innerMat.emissive.setHex(0x1A140A);
+      innerMat.emissiveIntensity = 0.06;
+      innerMat.transparent = true;
+      innerMat.opacity = 0.22;
 
-      /* Mid shell — deep indigo glass, glowing blue refraction */
-      midMat.color.setHex(0x0D1F42);
-      midMat.emissive.setHex(0x1D4ED8);
-      midMat.emissiveIntensity = 1.1;
-      midMat.opacity = 0.50;
+      // Deep burnished antique gold (contrast ratio 5.6:1 against #FAF8F5 canvas)
+      goldEdgeMat.color.setHex(0x7A5B18);
+      goldEdgeMat.opacity = 0.65;
 
-      /* Outer shell — whisper of blue glass, almost invisible */
-      outerMat.color.setHex(0x1E3A5F);
-      outerMat.opacity = 0.08;
+      // Latitude rings in rich bronze
+      latRingMat.color.setHex(0x8C6820);
+      latRingMat.opacity = 0.50;
 
-      /* Atmosphere — completely invisible, no frame */
-      atmMat.color.setHex(0xF0F4F8);
-      atmMat.opacity = 0.0;
+      // Network nodes in rich jewel bronze
+      nodeMat.color.setHex(0x6E4C0E);
 
-      /* Edge wireframes — bright crisp gold for HD detail */
-      goldEdgeMat.color.setHex(0xE6CE69);
-      goldEdgeMat.opacity = 1.0;
-      softEdgeMat.color.setHex(0xBFD4F2);
-      softEdgeMat.opacity = 0.40;
+      // Parabolic connection arcs in striking imperial bronze-gold
+      arcMat.color.setHex(0x8A5E12);
+      arcMat.opacity = 0.85;
 
+      // Orbital rings: Ring 1 in striking antique gold, Ring 2 in deep smoked slate/titanium
+      ringMat1.color.setHex(0x7A5B18);
+      ringMat1.opacity = 0.85;
+      ringMat2.color.setHex(0x3E434D);
+      ringMat2.opacity = 0.65;
+
+      // Lighting tuned for natural daylight studio illumination
+      lGold.color.setHex(0xFFF2DE);
+      lGold.intensity = 16;
+      lAmber.color.setHex(0xD4A860);
+      lAmber.intensity = 10;
+      lRim.color.setHex(0xFFFFFF);
+      lRim.intensity = 12;
+
+      pMat.opacity = 0.35;
     } else {
-      /* DARK MODE — Original obsidian */
-      coreMat.color.setHex(0x0A0A0A);
-      coreMat.emissive.setHex(0x050505);
-      coreMat.emissiveIntensity = 1.4;
-      coreMat.metalness = 0.9;
-      coreMat.roughness = 0.1;
+      /* DARK MODE — Deep Obsidian core with illuminated gold circuitry */
+      coreMat.color.setHex(0x080808);
+      coreMat.emissive.setHex(0x141008);
+      coreMat.emissiveIntensity = 0.6;
+      coreMat.metalness = 0.92;
+      coreMat.roughness = 0.12;
+      coreMat.transparent = false;
+      coreMat.opacity = 1.0;
 
-      midMat.color.setHex(0x1A1A1A);
-      midMat.emissive.setHex(0x0F0F0F);
-      midMat.emissiveIntensity = 0.7;
-      midMat.opacity = 0.62;
+      innerMat.color.setHex(0x181818);
+      innerMat.emissive.setHex(0x0a0804);
+      innerMat.emissiveIntensity = 0.5;
+      innerMat.transparent = true;
+      innerMat.opacity = 0.5;
 
-      outerMat.color.setHex(0x2A2A2A);
-      outerMat.opacity = 0.18;
+      goldEdgeMat.color.setHex(0xD4BF61);
+      goldEdgeMat.opacity = 0.45;
 
-      atmMat.color.setHex(0x050505);
-      atmMat.opacity = 0.09;
+      latRingMat.color.setHex(0xE6CE69);
+      latRingMat.opacity = 0.35;
 
-      /* Edge wireframes — original values */
-      goldEdgeMat.color.setHex(0xE6CE69);
-      goldEdgeMat.opacity = 0.92;
-      softEdgeMat.color.setHex(0xD4BF61);
-      softEdgeMat.opacity = 0.28;
+      nodeMat.color.setHex(0xF5E6B3);
+      arcMat.color.setHex(0xF3E5AB);
+      arcMat.opacity = 0.75;
+
+      ringMat1.color.setHex(0xE6CE69);
+      ringMat1.opacity = 0.85;
+      ringMat2.color.setHex(0xD4BF61);
+      ringMat2.opacity = 0.45;
+
+      lGold.color.setHex(0xF5E6B3);
+      lGold.intensity = 20;
+      lAmber.color.setHex(0xD4BF61);
+      lAmber.intensity = 14;
+      lRim.color.setHex(0xFFFACD);
+      lRim.intensity = 8;
+
+      pMat.opacity = 0.75;
     }
 
     coreMat.needsUpdate = true;
-    midMat.needsUpdate = true;
-    outerMat.needsUpdate = true;
-    atmMat.needsUpdate = true;
+    innerMat.needsUpdate = true;
     goldEdgeMat.needsUpdate = true;
-    softEdgeMat.needsUpdate = true;
+    latRingMat.needsUpdate = true;
+    nodeMat.needsUpdate = true;
+    arcMat.needsUpdate = true;
+    ringMat1.needsUpdate = true;
+    ringMat2.needsUpdate = true;
+    pMat.needsUpdate = true;
   }
 
-  /* Apply on load */
-  updateCrystalTheme();
+  updateGlobeTheme();
 
-  /* Watch for theme changes */
-  new MutationObserver(updateCrystalTheme)
+  new MutationObserver(updateGlobeTheme)
     .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();
 
@@ -2267,8 +2473,8 @@ gsap.utils.toArray('h2.t-display-xl, h2.t-display-lg').forEach(el => {
   });
 });
 
-/* Grid box animations for sections with 3 columns */
-const grids = ['.steps-grid', '.testimonials-grid'];
+/* Grid box animations for sections */
+const grids = ['.steps-grid', '.standards-grid'];
 grids.forEach(gridSelector => {
   ScrollTrigger.create({
     trigger: gridSelector, start: 'top 85%', once: true,
@@ -2279,14 +2485,16 @@ grids.forEach(gridSelector => {
       gsap.from(`${gridSelector} > *:nth-child(2)`, { opacity: 0, duration: 1.6, ease: 'power2.out', delay: 0.35 });
       // 3. Pop in
       gsap.from(`${gridSelector} > *:nth-child(3)`, { scale: 0.8, opacity: 0, duration: 1.6, ease: 'back.out(1.2)', delay: 0.6 });
+      // 4. Pop in child 4 if exists
+      gsap.from(`${gridSelector} > *:nth-child(4)`, { scale: 0.85, opacity: 0, duration: 1.6, ease: 'power2.out', delay: 0.75 });
     }
   });
 });
 
 /* ══════════════════════════════════════════════════════════
-   3D CARD TILT (testimonial cards only — project cards are static)
+   3D CARD TILT (Studio Standard cards)
 ══════════════════════════════════════════════════════════ */
-document.querySelectorAll('.testimonial-card').forEach(card => {
+document.querySelectorAll('.standard-card').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width  - 0.5;
@@ -2361,13 +2569,25 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 ══════════════════════════════════════════════════════════ */
 const bookingForm = document.getElementById('booking-form');
 const submitBtn = bookingForm.querySelector('button[type="submit"]');
+const formError = document.getElementById('form-error');
 
 function checkFormValidity() {
   submitBtn.disabled = !bookingForm.checkValidity();
+  if (formError && formError.style.display !== 'none') {
+    formError.style.display = 'none';
+  }
 }
 
 bookingForm.addEventListener('input', checkFormValidity);
 bookingForm.addEventListener('change', checkFormValidity);
+
+function showFormError(msg) {
+  if (formError) {
+    formError.textContent = msg;
+    formError.style.display = 'block';
+    formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
 
 bookingForm.addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -2376,6 +2596,7 @@ bookingForm.addEventListener('submit', async function (e) {
   const originalText = btn.textContent;
   btn.textContent = 'Sending...';
   btn.disabled = true;
+  if (formError) formError.style.display = 'none';
 
   try {
     const formData = new FormData(this);
@@ -2393,12 +2614,16 @@ bookingForm.addEventListener('submit', async function (e) {
       success.style.display = 'block';
       success.focus();
       // Redirect to Calendly so they can book the call immediately
-      window.location.href = 'https://calendly.com/clarke-matthew95/30min';
+      setTimeout(() => {
+        window.location.href = 'https://calendly.com/clarke-matthew95/30min';
+      }, 800);
     } else {
-      alert('Oops! There was a problem submitting your form. Please try again.');
+      const data = await response.json().catch(() => ({}));
+      const errDetail = (data && data.errors && data.errors.map(err => err.message).join(', ')) || 'There was a problem submitting your inquiry. Please try again or email bookings@mrcdigitalstudio.com directly.';
+      showFormError(errDetail);
     }
   } catch (error) {
-    alert('Oops! There was a problem submitting your form. Please check your connection and try again.');
+    showFormError('Network error connecting to the submission service. Please check your connection or email bookings@mrcdigitalstudio.com.');
   } finally {
     btn.textContent = originalText;
     btn.disabled = false;
@@ -2437,7 +2662,16 @@ document.getElementById('form-success-close').addEventListener('click', function
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
-    metaTheme.setAttribute('content', theme === 'light' ? '#FAF8F5' : '#050505');
+    metaTheme.setAttribute('content', theme === 'light' ? '#F3EFE8' : '#050505');
+
+    // Dynamically update SVG logo for high-contrast light mode vs glowing dark mode
+    const logoImgs = document.querySelectorAll('.nav-logo img, .footer-logo-img');
+    const targetLogo = theme === 'light' ? 'assets/logos/logo-1-gilded-circuit-light.svg' : 'assets/logos/logo-1-gilded-circuit.svg';
+    logoImgs.forEach(img => {
+      if (img.getAttribute('src') !== targetLogo) {
+        img.src = targetLogo;
+      }
+    });
 
     // Update aria labels on all toggles
     toggles.forEach(btn => {

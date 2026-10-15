@@ -32,9 +32,7 @@
 
   </defs>
 
-  <!-- Background -->
-  <rect width="560" height="200" fill="#050505"/>
-  <rect width="560" height="200" fill="url(#g1-bg)"/>
+  <!-- Background is transparent to support dark and light modes seamlessly -->
 
   <!-- ── TOP-LEFT CIRCUIT CORNER ────────────────────────────── -->
   <polyline points="15,55 15,15 55,15"     fill="none" stroke="#D4AF37" stroke-opacity="0.6" stroke-width="1.5" stroke-linecap="square"/>
